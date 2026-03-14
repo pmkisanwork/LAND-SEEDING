@@ -1,783 +1,1060 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PM KISAN Land Seeding | All Work Online</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Baloo+2:wght@400;600;800&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --green: #1a6b2f;
-      --green-mid: #2d9c4a;
-      --green-light: #4ec96e;
-      --gold: #e8a500;
-      --gold-light: #ffd24c;
-      --cream: #fdf8ef;
-      --dark: #0f2518;
-      --white: #ffffff;
-      --shadow: 0 8px 32px rgba(26,107,47,0.15);
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Login | PM KISAN Land Seeding | All Work Online</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --g1: #0d4a1f;
+  --g2: #1a7a35;
+  --g3: #25a84a;
+  --g4: #4ecb6e;
+  --gold: #f0a500;
+  --gold2: #ffd056;
+  --cream: #f9f5ec;
+  --dark: #0a1e10;
+  --text: #1a2e1e;
+  --muted: #5a7a60;
+  --white: #ffffff;
+  --border: rgba(37,168,74,0.2);
+  --error: #e53e3e;
+  --success: #25a84a;
+}
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--cream);
-      color: var(--dark);
-      overflow-x: hidden;
-    }
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--dark);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-    /* ---- TOP TICKER ---- */
-    .ticker-bar {
-      background: var(--dark);
-      color: var(--gold-light);
-      font-size: 0.78rem;
-      padding: 7px 0;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .ticker-inner {
-      display: inline-block;
-      animation: ticker 28s linear infinite;
-      font-family: 'Baloo 2', sans-serif;
-    }
-    @keyframes ticker {
-      0% { transform: translateX(100vw); }
-      100% { transform: translateX(-100%); }
-    }
+/* NOISE TEXTURE */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
 
-    /* ---- HEADER ---- */
-    header {
-      background: linear-gradient(135deg, var(--green) 0%, #0f3d1e 100%);
-      padding: 0 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-    .header-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 68px;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-    .logo-icon {
-      width: 44px; height: 44px;
-      background: var(--gold);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px;
-    }
-    .logo-text {
-      color: white;
-      font-family: 'Baloo 2', sans-serif;
-      font-weight: 800;
-      font-size: 1.2rem;
-      line-height: 1.1;
-    }
-    .logo-text span { color: var(--gold-light); display: block; font-size: 0.7rem; font-weight: 400; letter-spacing: 1px; }
+/* TICKER */
+.ticker {
+  background: #071510;
+  color: var(--gold2);
+  font-size: .73rem;
+  font-weight: 500;
+  padding: 8px 0;
+  overflow: hidden;
+  letter-spacing: .3px;
+  position: relative;
+  z-index: 200;
+}
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker 35s linear infinite;
+}
+.ticker-track span { padding: 0 28px; }
+.ticker-track .dot { color: var(--g4); font-size: 1.2em; vertical-align: middle; }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-    nav { display: flex; gap: 4px; }
-    nav a {
-      color: rgba(255,255,255,0.85);
-      text-decoration: none;
-      font-size: 0.82rem;
-      font-weight: 500;
-      padding: 8px 14px;
-      border-radius: 8px;
-      transition: all 0.2s;
-      letter-spacing: 0.3px;
-    }
-    nav a:hover, nav a.active {
-      background: rgba(255,255,255,0.15);
-      color: var(--gold-light);
-    }
-    nav a.active {
-      background: var(--gold);
-      color: var(--dark);
-      font-weight: 700;
-    }
+/* HEADER */
+header {
+  background: linear-gradient(180deg, #071510 0%, var(--g1) 100%);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo-mark {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 14px rgba(240,165,0,.4);
+}
+.logo-name {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #fff;
+  line-height: 1.1;
+}
+.logo-name small {
+  display: block;
+  font-size: .62rem;
+  font-weight: 400;
+  color: rgba(255,255,255,.5);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+nav { display: flex; align-items: center; gap: 2px; }
+nav a {
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
+  font-size: .78rem;
+  font-weight: 500;
+  padding: 7px 12px;
+  border-radius: 8px;
+  transition: all .2s;
+  white-space: nowrap;
+}
+nav a:hover { background: rgba(255,255,255,.1); color: var(--gold2); }
+nav a.active { background: var(--g3); color: #fff; }
+nav a.cta {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: var(--dark);
+  font-weight: 700;
+  margin-left: 6px;
+}
+nav a.cta:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(240,165,0,.4); }
 
-    /* ---- HERO SECTION ---- */
-    .hero {
-      background: linear-gradient(160deg, #0f3d1e 0%, var(--green) 50%, #1e7a38 100%);
-      padding: 60px 2rem 80px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(232,165,0,0.18) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-    .hero::after {
-      content: '🌾';
-      position: absolute;
-      bottom: -20px; left: 5%;
-      font-size: 160px;
-      opacity: 0.07;
-    }
-    .hero-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 40px;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(232,165,0,0.2);
-      border: 1px solid rgba(232,165,0,0.4);
-      color: var(--gold-light);
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-bottom: 16px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-    .hero h1 {
-      font-family: 'Baloo 2', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 800;
-      color: white;
-      line-height: 1.2;
-      margin-bottom: 16px;
-    }
-    .hero h1 span { color: var(--gold-light); }
-    .hero p {
-      color: rgba(255,255,255,0.8);
-      font-size: 1rem;
-      line-height: 1.7;
-      max-width: 500px;
-      margin-bottom: 28px;
-    }
-    .hero-cta {
-      display: flex; gap: 14px; flex-wrap: wrap;
-    }
-    .btn-gold {
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      color: var(--dark);
-      font-weight: 700;
-      padding: 13px 28px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-      box-shadow: 0 4px 16px rgba(232,165,0,0.4);
-    }
-    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,165,0,0.5); }
-    .btn-outline {
-      background: transparent;
-      color: white;
-      font-weight: 600;
-      padding: 12px 28px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 0.9rem;
-      border: 2px solid rgba(255,255,255,0.4);
-      transition: all 0.2s;
-    }
-    .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.1); }
+/* ═══════════ MAIN LAYOUT ═══════════ */
+.page-wrap {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100vh - 120px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: linear-gradient(135deg, #071510 0%, #0d3319 40%, #0f4a22 70%, #0d3a1c 100%);
+}
 
-    .hero-right {
-      flex-shrink: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .hero-stat {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 14px;
-      padding: 20px;
-      text-align: center;
-      min-width: 120px;
-    }
-    .hero-stat .num {
-      font-family: 'Baloo 2', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--gold-light);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .hero-stat .label {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.7);
-      font-weight: 500;
-    }
+/* ANIMATED BG CIRCLES */
+.bg-circle {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.bc1 { width:600px;height:600px;background:radial-gradient(circle,rgba(37,168,74,.1) 0%,transparent 65%);top:-200px;right:-100px;animation:float1 8s ease-in-out infinite; }
+.bc2 { width:400px;height:400px;background:radial-gradient(circle,rgba(240,165,0,.07) 0%,transparent 65%);bottom:-150px;left:5%;animation:float2 10s ease-in-out infinite; }
+.bc3 { width:250px;height:250px;background:radial-gradient(circle,rgba(78,203,110,.09) 0%,transparent 65%);top:50%;right:20%;animation:float1 6s ease-in-out infinite reverse; }
+@keyframes float1{0%,100%{transform:translate(0,0)scale(1)}50%{transform:translate(-20px,20px)scale(1.05)}}
+@keyframes float2{0%,100%{transform:translate(0,0)scale(1)}50%{transform:translate(15px,-15px)scale(.97)}}
 
-    /* ---- ALERT BANNER ---- */
-    .alert-section {
-      max-width: 1200px;
-      margin: -30px auto 0;
-      padding: 0 2rem;
-      position: relative;
-      z-index: 10;
-    }
-    .alert-card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      padding: 20px 28px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      border-left: 5px solid var(--gold);
-    }
-    .alert-icon { font-size: 2rem; flex-shrink: 0; }
-    .alert-card h3 {
-      font-family: 'Baloo 2', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--dark);
-      margin-bottom: 3px;
-    }
-    .alert-card p { font-size: 0.83rem; color: #555; line-height: 1.5; }
-    .alert-card p strong { color: var(--green); }
+/* GRID LINES */
+.page-wrap::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(37,168,74,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(37,168,74,.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
+  z-index:0;
+}
 
-    /* ---- STEPS SECTION ---- */
-    .section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 60px 2rem;
-    }
-    .section-tag {
-      display: inline-block;
-      background: #e8f5ec;
-      color: var(--green);
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 5px 14px;
-      border-radius: 20px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .section-title {
-      font-family: 'Baloo 2', sans-serif;
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-weight: 800;
-      color: var(--dark);
-      margin-bottom: 8px;
-    }
-    .section-sub {
-      color: #666;
-      font-size: 0.92rem;
-      margin-bottom: 40px;
-    }
+/* ═══════════ LEFT PANEL ═══════════ */
+.left-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 50px 60px 60px;
+}
 
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-    }
-    .step-card {
-      background: white;
-      border-radius: 16px;
-      padding: 28px 22px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      border-top: 4px solid var(--green-light);
-      position: relative;
-      transition: all 0.25s;
-    }
-    .step-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-    .step-num {
-      position: absolute;
-      top: -14px; right: 20px;
-      background: var(--green);
-      color: white;
-      font-family: 'Baloo 2', sans-serif;
-      font-weight: 800;
-      font-size: 0.85rem;
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .step-icon {
-      font-size: 2.2rem;
-      margin-bottom: 14px;
-    }
-    .step-card h4 {
-      font-family: 'Baloo 2', sans-serif;
-      font-weight: 700;
-      font-size: 0.98rem;
-      color: var(--dark);
-      margin-bottom: 8px;
-    }
-    .step-card p { font-size: 0.82rem; color: #666; line-height: 1.6; }
+.panel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(78,203,110,.12);
+  border: 1px solid rgba(78,203,110,.28);
+  color: var(--g4);
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 30px;
+  margin-bottom: 28px;
+  width: fit-content;
+}
+.panel-badge::before { content:'●';font-size:.5rem;animation:blink 1.5s infinite; }
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
-    /* ---- SERVICES SECTION ---- */
-    .services-bg {
-      background: linear-gradient(180deg, var(--cream) 0%, #e8f5ec 100%);
-      padding: 20px 0 60px;
-    }
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 22px;
-    }
-    .service-card {
-      background: white;
-      border-radius: 18px;
-      padding: 30px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      transition: all 0.25s;
-      cursor: pointer;
-    }
-    .service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-    .service-card.featured {
-      background: linear-gradient(135deg, var(--green) 0%, #0f3d1e 100%);
-      color: white;
-    }
-    .service-icon {
-      width: 52px; height: 52px;
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem;
-      background: #e8f5ec;
-    }
-    .service-card.featured .service-icon { background: rgba(255,255,255,0.15); }
-    .service-card h3 {
-      font-family: 'Baloo 2', sans-serif;
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: var(--dark);
-    }
-    .service-card.featured h3 { color: white; }
-    .service-card p { font-size: 0.82rem; color: #666; line-height: 1.6; }
-    .service-card.featured p { color: rgba(255,255,255,0.8); }
-    .service-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--green);
-      font-weight: 600;
-      font-size: 0.82rem;
-      text-decoration: none;
-      margin-top: auto;
-    }
-    .service-card.featured .service-link { color: var(--gold-light); }
-    .service-link::after { content: '→'; transition: transform 0.2s; }
-    .service-card:hover .service-link::after { transform: translateX(4px); }
+.panel-title {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.panel-title .gold { color: var(--gold2); }
+.panel-title .green { color: var(--g4); }
 
-    /* ---- FORM SECTION ---- */
-    .form-section {
-      background: white;
-      padding: 60px 0;
-    }
-    .form-container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-    .form-card {
-      background: var(--cream);
-      border-radius: 20px;
-      padding: 40px;
-      border: 1px solid #e0ead4;
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-    .form-group { display: flex; flex-direction: column; gap: 6px; }
-    .form-group.full { grid-column: 1 / -1; }
-    label {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--dark);
-    }
-    input, select, textarea {
-      padding: 11px 14px;
-      border: 2px solid #d0e4d4;
-      border-radius: 10px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.88rem;
-      background: white;
-      color: var(--dark);
-      transition: border-color 0.2s;
-      outline: none;
-    }
-    input:focus, select:focus, textarea:focus { border-color: var(--green-mid); }
-    textarea { resize: vertical; min-height: 90px; }
-    .submit-btn {
-      background: linear-gradient(135deg, var(--green), var(--green-mid));
-      color: white;
-      font-family: 'Baloo 2', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      padding: 14px 40px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: all 0.2s;
-      box-shadow: 0 4px 16px rgba(26,107,47,0.3);
-    }
-    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,107,47,0.4); }
+.panel-desc {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: .92rem;
+  color: rgba(255,255,255,.6);
+  line-height: 1.85;
+  margin-bottom: 40px;
+  max-width: 400px;
+}
 
-    /* ---- FOOTER ---- */
-    footer {
-      background: var(--dark);
-      color: rgba(255,255,255,0.7);
-      padding: 50px 2rem 24px;
-    }
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-    .footer-col h4 {
-      color: white;
-      font-family: 'Baloo 2', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      margin-bottom: 16px;
-      position: relative;
-      padding-bottom: 10px;
-    }
-    .footer-col h4::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 30px; height: 2px;
-      background: var(--gold);
-      border-radius: 2px;
-    }
-    .footer-col p { font-size: 0.82rem; line-height: 1.7; }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-    .footer-col ul a {
-      color: rgba(255,255,255,0.65);
-      text-decoration: none;
-      font-size: 0.82rem;
-      transition: color 0.2s;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .footer-col ul a:hover { color: var(--gold-light); }
-    .footer-col ul a::before { content: '›'; color: var(--green-light); }
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.78rem;
-    }
-    .footer-bottom a { color: var(--gold-light); text-decoration: none; }
-    .govt-logos {
-      display: flex; gap: 14px; align-items: center; margin-top: 20px;
-    }
-    .govt-badge {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 8px;
-      padding: 6px 12px;
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.8);
-      font-weight: 600;
-    }
+/* FEATURE LIST */
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px;
+  padding: 14px 18px;
+  transition: all .2s;
+}
+.feature-item:hover {
+  background: rgba(78,203,110,.08);
+  border-color: rgba(78,203,110,.2);
+  transform: translateX(4px);
+}
+.fi-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(37,168,74,.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.fi-text h4 { font-size: .88rem; font-weight: 600; margin-bottom: 2px; }
+.fi-text p { font-size: .76rem; color: rgba(255,255,255,.5); line-height: 1.4; }
 
-    /* ---- RESPONSIVE ---- */
-    @media (max-width: 768px) {
-      .hero-inner { flex-direction: column; }
-      .hero-right { grid-template-columns: repeat(2, 1fr); width: 100%; }
-      nav { display: none; }
-      .form-grid { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
-    }
-    @media (max-width: 480px) {
-      .footer-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+/* STAT PILLS */
+.stat-pills {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.stat-pill {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px;
+  padding: 10px 18px;
+  text-align: center;
+}
+.stat-pill strong {
+  display: block;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--gold2);
+  line-height: 1;
+}
+.stat-pill span { font-size: .72rem; color: rgba(255,255,255,.5); }
+
+/* ═══════════ RIGHT PANEL (AUTH CARD) ═══════════ */
+.right-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 60px 40px 40px;
+}
+
+.auth-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 28px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 440px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 24px 70px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
+  animation: slideUp .5s ease both;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* TABS */
+.auth-tabs {
+  display: flex;
+  background: rgba(255,255,255,.06);
+  border-radius: 14px;
+  padding: 4px;
+  margin-bottom: 30px;
+  gap: 4px;
+}
+.auth-tab {
+  flex: 1;
+  text-align: center;
+  padding: 11px;
+  border-radius: 11px;
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .25s;
+  color: rgba(255,255,255,.5);
+  user-select: none;
+}
+.auth-tab.active {
+  background: linear-gradient(135deg, var(--g2), var(--g3));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(37,168,74,.4);
+}
+
+.auth-title {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1.55rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.auth-sub { color: rgba(255,255,255,.5); font-size: .83rem; margin-bottom: 24px; }
+
+/* FORM */
+.form-group { margin-bottom: 16px; }
+.form-label {
+  display: block;
+  font-size: .78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.7);
+  margin-bottom: 8px;
+  letter-spacing: .04em;
+}
+.input-wrap { position: relative; }
+.input-icon {
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  pointer-events: none;
+}
+.form-input {
+  width: 100%;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  padding: 13px 14px 13px 42px;
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .9rem;
+  transition: border-color .2s, background .2s;
+  outline: none;
+}
+.form-input::placeholder { color: rgba(255,255,255,.27); }
+.form-input:focus {
+  border-color: var(--g3);
+  background: rgba(37,168,74,.08);
+  box-shadow: 0 0 0 3px rgba(37,168,74,.12);
+}
+.form-input.has-error { border-color: var(--error); }
+.toggle-pw {
+  position: absolute;
+  right: 13px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  color: rgba(255,255,255,.4);
+  cursor: pointer; font-size: 15px; padding: 0;
+  transition: color .2s;
+}
+.toggle-pw:hover { color: #fff; }
+
+/* PASSWORD STRENGTH */
+.pw-bars { display: flex; gap: 4px; margin-top: 8px; height: 4px; }
+.pw-bar { flex:1; border-radius:3px; background:rgba(255,255,255,.1); transition:background .3s; }
+.pw-bar.weak   { background: var(--error); }
+.pw-bar.medium { background: var(--gold); }
+.pw-bar.strong { background: var(--g4); }
+.pw-lbl { font-size:.7rem; margin-top:4px; }
+.pw-lbl.weak   { color: var(--error); }
+.pw-lbl.medium { color: var(--gold); }
+.pw-lbl.strong { color: var(--g4); }
+
+/* ERROR MSG */
+.err-msg { color: var(--error); font-size: .73rem; margin-top: 5px; display: none; }
+.err-msg.show { display: block; }
+
+/* FORGOT */
+.forgot-row {
+  text-align: right;
+  margin: -8px 0 16px;
+}
+.forgot-row a { color: var(--gold2); font-size: .77rem; text-decoration: none; }
+.forgot-row a:hover { text-decoration: underline; }
+
+/* TERMS */
+.terms-row { display:flex; align-items:flex-start; gap:10px; margin-bottom:16px; }
+.terms-row input[type="checkbox"] { width:16px;height:16px;accent-color:var(--g3);margin-top:2px;cursor:pointer;flex-shrink:0; }
+.terms-row label { font-size:.77rem; color:rgba(255,255,255,.55); line-height:1.5; cursor:pointer; }
+.terms-row label a { color:var(--gold2); text-decoration:none; }
+
+/* BTN */
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--g2), var(--g3));
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .94rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .25s;
+  box-shadow: 0 6px 22px rgba(37,168,74,.35);
+  letter-spacing: .04em;
+  margin-top: 4px;
+  position: relative;
+  overflow: hidden;
+}
+.btn-submit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--g3), var(--g4));
+  opacity: 0;
+  transition: opacity .25s;
+}
+.btn-submit:hover::before { opacity: 1; }
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(37,168,74,.5); }
+.btn-submit span { position: relative; z-index: 1; }
+
+/* DIVIDER */
+.divider { display:flex;align-items:center;gap:12px;margin:18px 0;color:rgba(255,255,255,.35);font-size:.76rem; }
+.divider::before,.divider::after { content:'';flex:1;height:1px;background:rgba(255,255,255,.1); }
+
+/* DEMO BOX */
+.demo-box {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: rgba(240,165,0,.08);
+  border: 1px solid rgba(240,165,0,.2);
+  border-radius: 10px;
+  font-size: .74rem;
+  color: rgba(255,255,255,.6);
+  line-height: 1.6;
+}
+.demo-box strong { color: var(--gold2); }
+.demo-box code { background:rgba(255,255,255,.1); padding:1px 6px; border-radius:4px; color:var(--gold2); }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--g1);
+  border: 1px solid rgba(78,203,110,.3);
+  border-radius: 12px;
+  padding: 13px 22px;
+  font-size: .84rem;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 9999;
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+  box-shadow: 0 8px 30px rgba(0,0,0,.4);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.ok { border-color: rgba(78,203,110,.4); color: var(--g4); }
+.toast.fail { border-color: rgba(229,62,62,.4); color: #fc8181; }
+
+/* ═══════════ APP PAGE (after login) ═══════════ */
+#app-page { display:none; }
+
+/* USER MENU */
+.user-menu { position: relative; }
+.user-btn {
+  display: flex; align-items: center; gap: 9px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 30px;
+  padding: 7px 16px 7px 8px;
+  cursor: pointer;
+  transition: all .2s;
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .82rem;
+  font-weight: 500;
+}
+.user-btn:hover { background: rgba(255,255,255,.1); border-color: rgba(78,203,110,.35); }
+.user-avatar {
+  width: 30px; height: 30px;
+  background: linear-gradient(135deg, var(--g2), var(--g4));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: white;
+}
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 10px); right: 0;
+  background: #0d2e15;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px;
+  padding: 8px;
+  min-width: 210px;
+  box-shadow: 0 16px 44px rgba(0,0,0,.5);
+  opacity: 0;
+  transform: translateY(-10px) scale(.96);
+  pointer-events: none;
+  transition: all .2s;
+  z-index: 200;
+}
+.user-dropdown.open { opacity:1; transform:translateY(0) scale(1); pointer-events:all; }
+.dd-info { padding:10px 12px 14px; border-bottom:1px solid rgba(255,255,255,.08); margin-bottom:6px; }
+.dd-name { font-weight:700; font-size:.9rem; }
+.dd-contact { color:rgba(255,255,255,.45); font-size:.74rem; margin-top:2px; }
+.dd-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 10px;
+  font-size: .82rem; color: rgba(255,255,255,.65);
+  cursor: pointer; transition: all .15s;
+  border: none; background: none;
+  width: 100%; font-family: 'Space Grotesk', sans-serif; text-align: left;
+}
+.dd-item:hover { background: rgba(255,255,255,.07); color: #fff; }
+.dd-item.logout { color: #fc8181; }
+.dd-item.logout:hover { background: rgba(229,62,62,.1); }
+
+/* FOOTER */
+footer {
+  position: relative; z-index: 1;
+  background: linear-gradient(180deg, var(--g1) 0%, #071510 100%);
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 48px 2rem 28px;
+}
+.footer-inner { max-width: 1280px; margin: 0 auto; }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  font-size: .76rem;
+  color: rgba(255,255,255,.35);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media(max-width:900px){
+  .page-wrap { grid-template-columns:1fr; }
+  .left-panel { padding:40px 28px 20px; }
+  .right-panel { padding:20px 28px 50px; }
+  .auth-card { max-width:100%; }
+  nav>a:not(.cta):not(.active) { display:none; }
+}
+</style>
 </head>
 <body>
 
 <!-- TICKER -->
-<div class="ticker-bar">
-  <span class="ticker-inner">
-    🌾 PM KISAN 19वीं किस्त 24 फरवरी 2025 को जारी की गई &nbsp;&nbsp;|&nbsp;&nbsp; 📢 eKYC अनिवार्य है — नजदीकी CSC केंद्र पर जाएं &nbsp;&nbsp;|&nbsp;&nbsp; 🔗 Land Seeding के लिए अभी आवेदन करें &nbsp;&nbsp;|&nbsp;&nbsp; ✅ PM KISAN पोर्टल पर OTP आधारित eKYC उपलब्ध है &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  </span>
-</div>
-
-<!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <a href="#" class="logo">
-      <div class="logo-icon">🌿</div>
-      <div class="logo-text">
-        All Work Online
-        <span>CSC Service Center</span>
-      </div>
-    </a>
-    <nav>
-      <a href="#">होम</a>
-      <a href="#services">सर्विसेज</a>
-      <a href="#steps">प्रक्रिया</a>
-      <a href="#apply" class="active">Land Seeding</a>
-      <a href="#">संपर्क</a>
-      <a href="#" style="background:var(--gold);color:var(--dark);font-weight:700;">CSC Login</a>
-    </nav>
-  </div>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-content">
-      <div class="hero-badge">🏛️ भारत सरकार योजना</div>
-      <h1>PM KISAN<br/><span>Land Seeding</span><br/>सेवा</h1>
-      <p>अपनी जमीन के रिकॉर्ड को PM KISAN अकाउंट से लिंक करें और किसान सम्मान निधि का पूरा लाभ उठाएं। तेज़, सरल और भरोसेमंद सेवा।</p>
-      <div class="hero-cta">
-        <a href="#apply" class="btn-gold">🔗 अभी Apply करें</a>
-        <a href="#steps" class="btn-outline">📋 प्रक्रिया जानें</a>
-      </div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-stat">
-        <div class="num">19वीं</div>
-        <div class="label">किस्त जारी</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">₹2000</div>
-        <div class="label">प्रति किस्त</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">₹6000</div>
-        <div class="label">प्रति वर्ष</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">12Cr+</div>
-        <div class="label">किसान लाभार्थी</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ALERT -->
-<div class="alert-section">
-  <div class="alert-card">
-    <div class="alert-icon">⚠️</div>
-    <div>
-      <h3>eKYC अनिवार्य सूचना</h3>
-      <p>PM KISAN में पंजीकृत सभी किसानों के लिए <strong>eKYC अनिवार्य</strong> है। OTP आधारित eKYC <strong>PM KISAN पोर्टल</strong> पर उपलब्ध है या नजदीकी <strong>CSC केंद्र</strong> पर बायोमेट्रिक eKYC कराएं।</p>
-    </div>
+<div class="ticker">
+  <div class="ticker-track">
+    <span>🌾 PM KISAN 19वीं किस्त जारी हो चुकी है</span><span class="dot">●</span>
+    <span>Land Seeding अभी करें — बिना देरी के किस्त पाएं</span><span class="dot">●</span>
+    <span>eKYC अनिवार्य है — अभी पूरी करें</span><span class="dot">●</span>
+    <span>CSC Authorized Center — विश्वसनीय सेवा</span><span class="dot">●</span>
+    <span>🌾 PM KISAN 19वीं किस्त जारी हो चुकी है</span><span class="dot">●</span>
+    <span>Land Seeding अभी करें — बिना देरी के किस्त पाएं</span><span class="dot">●</span>
+    <span>eKYC अनिवार्य है — अभी पूरी करें</span><span class="dot">●</span>
+    <span>CSC Authorized Center — विश्वसनीय सेवा</span><span class="dot">●</span>
   </div>
 </div>
 
-<!-- STEPS -->
-<section class="section" id="steps">
-  <div>
-    <span class="section-tag">📋 Step-by-Step</span>
-    <h2 class="section-title">Land Seeding की प्रक्रिया</h2>
-    <p class="section-sub">केवल कुछ आसान चरणों में अपनी ज़मीन PM KISAN से जोड़ें</p>
-  </div>
-  <div class="steps-grid">
-    <div class="step-card">
-      <span class="step-num">1</span>
-      <div class="step-icon">📄</div>
-      <h4>दस्तावेज़ तैयार करें</h4>
-      <p>आधार कार्ड, खसरा/खतौनी, बैंक पासबुक और PM KISAN रजिस्ट्रेशन नंबर तैयार रखें।</p>
-    </div>
-    <div class="step-card">
-      <span class="step-num">2</span>
-      <div class="step-icon">🌐</div>
-      <h4>CSC/पोर्टल पर जाएं</h4>
-      <p>नजदीकी CSC केंद्र पर जाएं या PM KISAN आधिकारिक पोर्टल पर लॉगिन करें।</p>
-    </div>
-    <div class="step-card">
-      <span class="step-num">3</span>
-      <div class="step-icon">🔗</div>
-      <h4>Land Seeding आवेदन</h4>
-      <p>Land Seeding विकल्प चुनें, जमीन की जानकारी और खाता विवरण भरें।</p>
-    </div>
-    <div class="step-card">
-      <span class="step-num">4</span>
-      <div class="step-icon">✅</div>
-      <h4>सत्यापन एवं स्वीकृति</h4>
-      <p>Sub-District अधिकारी द्वारा जमीन रिकॉर्ड का सत्यापन होगा।</p>
-    </div>
-    <div class="step-card">
-      <span class="step-num">5</span>
-      <div class="step-icon">💰</div>
-      <h4>किस्त प्राप्त करें</h4>
-      <p>Seeding पूर्ण होने के बाद किस्त सीधे आपके बैंक खाते में आएगी।</p>
-    </div>
-  </div>
-</section>
+<!-- ══ AUTH PAGE ══ -->
+<div id="auth-page">
 
-<!-- SERVICES -->
-<div class="services-bg" id="services">
-  <section class="section" style="padding-top:30px;">
-    <span class="section-tag">🛠️ हमारी सेवाएं</span>
-    <h2 class="section-title">सभी PM KISAN सेवाएं</h2>
-    <p class="section-sub">एक ही जगह सभी सुविधाएं — तेज़ और विश्वसनीय</p>
-    <div class="services-grid">
-      <div class="service-card featured">
-        <div class="service-icon">🔗</div>
-        <h3>Land Seeding</h3>
-        <p>अपनी कृषि भूमि को PM KISAN अकाउंट से लिंक करें। जमीन सीडिंग के बिना किस्त रुक सकती है।</p>
-        <a href="#apply" class="service-link">Apply करें</a>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">🏢</div>
-        <h3>Sub District Approval</h3>
-        <p>जमीन रिकॉर्ड के सत्यापन के लिए Sub-District स्तर पर अनुमोदन सेवा।</p>
-        <a href="#" class="service-link">जानें</a>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">📝</div>
-        <h3>New Registration</h3>
-        <p>PM KISAN योजना में नए किसानों का पंजीकरण — आसान और डिजिटल प्रक्रिया।</p>
-        <a href="#" class="service-link">Register करें</a>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">🪪</div>
-        <h3>eKYC सेवा</h3>
-        <p>OTP या बायोमेट्रिक के माध्यम से eKYC पूर्ण कराएं। किस्त के लिए अनिवार्य।</p>
-        <a href="#" class="service-link">eKYC करें</a>
-      </div>
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <a href="https://allworkonline.github.io/" class="logo">
+        <div class="logo-mark">🌿</div>
+        <div class="logo-name">All Work Online<small>CSC Service Center</small></div>
+      </a>
+      <nav>
+        <a href="https://allworkonline.github.io/home/">Home</a>
+        <a href="https://allworkonline.github.io/services/">Services</a>
+        <a href="https://allworkonline.github.io/landseeding/" class="active">PM Kisan</a>
+        <a href="https://allworkonline.github.io/STATUS/">Status</a>
+        <a href="https://allworkonline.github.io/contact/" class="cta">संपर्क करें</a>
+      </nav>
     </div>
-  </section>
-</div>
+  </header>
 
-<!-- APPLY FORM -->
-<section class="form-section" id="apply">
-  <div class="form-container">
-    <div style="text-align:center;margin-bottom:32px;">
-      <span class="section-tag">📋 ऑनलाइन आवेदन</span>
-      <h2 class="section-title">Land Seeding फॉर्म</h2>
-      <p class="section-sub">नीचे जानकारी भरें, हमारी टीम आपसे संपर्क करेगी</p>
-    </div>
-    <div class="form-card">
-      <div class="form-grid">
-        <div class="form-group">
-          <label>👤 किसान का नाम</label>
-          <input type="text" placeholder="पूरा नाम दर्ज करें"/>
+  <!-- BG CIRCLES -->
+  <div class="bg-circle bc1"></div>
+  <div class="bg-circle bc2"></div>
+  <div class="bg-circle bc3"></div>
+
+  <!-- TWO COLUMN LAYOUT -->
+  <div class="page-wrap">
+
+    <!-- LEFT: INFO PANEL -->
+    <div class="left-panel">
+      <div class="panel-badge">🔐 Secure Login Portal</div>
+      <h1 class="panel-title">
+        PM KISAN<br/>
+        <span class="gold">Land Seeding</span><br/>
+        <span class="green">पोर्टल में आपका स्वागत है</span>
+      </h1>
+      <p class="panel-desc">
+        Login करें और अपनी भूमि को PM KISAN से जोड़ें। 
+        ₹6000 वार्षिक लाभ सीधे आपके बैंक खाते में।
+      </p>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="fi-icon">🌾</div>
+          <div class="fi-text">
+            <h4>Land Seeding सेवा</h4>
+            <p>खसरा/खतौनी PM KISAN से जोड़ें — तुरंत</p>
+          </div>
         </div>
-        <div class="form-group">
-          <label>📱 मोबाइल नंबर</label>
-          <input type="tel" placeholder="10 अंकों का मोबाइल नंबर"/>
+        <div class="feature-item">
+          <div class="fi-icon">✅</div>
+          <div class="fi-text">
+            <h4>eKYC & Registration</h4>
+            <p>OTP या Biometric से आसान KYC प्रक्रिया</p>
+          </div>
         </div>
-        <div class="form-group">
-          <label>🪪 आधार नंबर</label>
-          <input type="text" placeholder="12 अंकों का आधार नंबर"/>
+        <div class="feature-item">
+          <div class="fi-icon">🔍</div>
+          <div class="fi-text">
+            <h4>Status Track करें</h4>
+            <p>Application और Payment status realtime देखें</p>
+          </div>
         </div>
-        <div class="form-group">
-          <label>🌾 PM KISAN रजिस्ट्रेशन नं.</label>
-          <input type="text" placeholder="PM KISAN रजिस्ट्रेशन नंबर"/>
-        </div>
-        <div class="form-group">
-          <label>🗺️ राज्य</label>
-          <select>
-            <option value="">राज्य चुनें</option>
-            <option>उत्तर प्रदेश</option>
-            <option>मध्य प्रदेश</option>
-            <option>राजस्थान</option>
-            <option>बिहार</option>
-            <option>महाराष्ट्र</option>
-            <option>गुजरात</option>
-            <option>हरियाणा</option>
-            <option>पंजाब</option>
-            <option>अन्य</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>🏘️ जिला</label>
-          <input type="text" placeholder="जिले का नाम"/>
-        </div>
-        <div class="form-group">
-          <label>📜 खसरा/खाता नंबर</label>
-          <input type="text" placeholder="जमीन का खसरा नंबर"/>
-        </div>
-        <div class="form-group">
-          <label>📐 भूमि क्षेत्रफल (हेक्टेयर)</label>
-          <input type="number" placeholder="जैसे: 1.5"/>
-        </div>
-        <div class="form-group full">
-          <label>📝 अतिरिक्त जानकारी (वैकल्पिक)</label>
-          <textarea placeholder="कोई अन्य जानकारी या समस्या यहाँ लिखें..."></textarea>
+        <div class="feature-item">
+          <div class="fi-icon">🛡️</div>
+          <div class="fi-text">
+            <h4>100% Secure & CSC Certified</h4>
+            <p>Government authorized portal — पूरी तरह सुरक्षित</p>
+          </div>
         </div>
       </div>
-      <button class="submit-btn">🔗 Land Seeding के लिए Submit करें</button>
+
+      <div class="stat-pills">
+        <div class="stat-pill"><strong>19वीं</strong><span>किस्त जारी</span></div>
+        <div class="stat-pill"><strong>₹6000</strong><span>वार्षिक लाभ</span></div>
+        <div class="stat-pill"><strong>CSC</strong><span>Certified</span></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: AUTH CARD -->
+    <div class="right-panel">
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">🔐 Login</div>
+          <div class="auth-tab" id="tab-register" onclick="switchTab('register')">📝 Register</div>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="login-form">
+          <div class="auth-title">नमस्कार! 🙏</div>
+          <div class="auth-sub">अपने account में login करें</div>
+
+          <div class="form-group">
+            <label class="form-label">📱 Mobile Number / Email</label>
+            <div class="input-wrap">
+              <span class="input-icon">👤</span>
+              <input class="form-input" id="l-user" type="text" placeholder="Mobile ya Email daalen"/>
+            </div>
+            <div class="err-msg" id="e-lu">Mobile ya email daalna zaroori hai</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">🔑 Password</label>
+            <div class="input-wrap">
+              <span class="input-icon">🔒</span>
+              <input class="form-input" id="l-pass" type="password" placeholder="Password daalen"/>
+              <button class="toggle-pw" onclick="togglePw('l-pass',this)">👁️</button>
+            </div>
+            <div class="err-msg" id="e-lp">Password daalna zaroori hai</div>
+          </div>
+
+          <div class="forgot-row">
+            <a href="#" onclick="showForgot()">Password bhool gaye? 🤔</a>
+          </div>
+
+          <button class="btn-submit" onclick="doLogin()">
+            <span>Login Karein →</span>
+          </button>
+
+          <div class="divider">ya</div>
+          <div style="text-align:center;font-size:.82rem;color:rgba(255,255,255,.5)">
+            Account nahi hai? <a href="#" onclick="switchTab('register')" style="color:var(--gold2);font-weight:600">Register karein</a>
+          </div>
+
+
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="register-form" style="display:none">
+          <div class="auth-title">New Account 🆕</div>
+          <div class="auth-sub">Register karein — bilkul free!</div>
+
+          <div class="form-group">
+            <label class="form-label">👤 Poora Naam (पूरा नाम)</label>
+            <div class="input-wrap">
+              <span class="input-icon">😊</span>
+              <input class="form-input" id="r-name" type="text" placeholder="Apna poora naam likhein"/>
+            </div>
+            <div class="err-msg" id="e-rn">Naam daalna zaroori hai</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">📱 Mobile Number</label>
+            <div class="input-wrap">
+              <span class="input-icon">📞</span>
+              <input class="form-input" id="r-mob" type="tel" placeholder="10 digit mobile number" maxlength="10"/>
+            </div>
+            <div class="err-msg" id="e-rm">Sahi 10 digit mobile number daalen</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">📧 Email <span style="color:rgba(255,255,255,.35);font-weight:400">(Optional)</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">✉️</span>
+              <input class="form-input" id="r-email" type="email" placeholder="Email address (optional)"/>
+            </div>
+            <div class="err-msg" id="e-re">Sahi email format daalen</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">🔑 Password Banayein</label>
+            <div class="input-wrap">
+              <span class="input-icon">🔒</span>
+              <input class="form-input" id="r-pass" type="password" placeholder="Minimum 6 characters" oninput="checkPw(this.value)"/>
+              <button class="toggle-pw" onclick="togglePw('r-pass',this)">👁️</button>
+            </div>
+            <div class="pw-bars"><div class="pw-bar" id="pb1"></div><div class="pw-bar" id="pb2"></div><div class="pw-bar" id="pb3"></div></div>
+            <div class="pw-lbl" id="pw-lbl" style="display:none"></div>
+            <div class="err-msg" id="e-rp">Minimum 6 characters ka password daalen</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">🔑 Password Confirm</label>
+            <div class="input-wrap">
+              <span class="input-icon">🔒</span>
+              <input class="form-input" id="r-pass2" type="password" placeholder="Password dobara likhein"/>
+              <button class="toggle-pw" onclick="togglePw('r-pass2',this)">👁️</button>
+            </div>
+            <div class="err-msg" id="e-rp2">Dono passwords match nahi kar rahe</div>
+          </div>
+
+          <div class="terms-row">
+            <input type="checkbox" id="terms-cb"/>
+            <label for="terms-cb">Mujhe <a href="#">Terms & Conditions</a> aur <a href="#">Privacy Policy</a> manzoor hain</label>
+          </div>
+          <div class="err-msg" id="e-terms">Terms accept karna zaroori hai</div>
+
+          <button class="btn-submit" onclick="doRegister()">
+            <span>Account Banayein 🎉</span>
+          </button>
+
+          <div style="text-align:center;font-size:.82rem;color:rgba(255,255,255,.5);margin-top:16px">
+            Pehle se account hai? <a href="#" onclick="switchTab('login')" style="color:var(--gold2);font-weight:600">Login karein</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end page-wrap -->
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span>© 2025 All Work Online. सर्वाधिकार सुरक्षित।</span>
+        <span>🔒 Secure Portal | CSC Authorized | Website: <a href="https://allworkonline.xyz" style="color:var(--gold2);text-decoration:none">allworkonline.xyz</a></span>
+      </div>
+    </div>
+  </footer>
+</div><!-- end auth-page -->
+
+<!-- ══ APP PAGE (after login) ══ -->
+<div id="app-page">
+  <header>
+    <div class="header-inner">
+      <a href="https://allworkonline.github.io/" class="logo">
+        <div class="logo-mark">🌿</div>
+        <div class="logo-name">All Work Online<small>CSC Service Center</small></div>
+      </a>
+      <nav>
+        <a href="https://allworkonline.github.io/home/">Home</a>
+        <a href="https://allworkonline.github.io/services/">Services</a>
+        <a href="https://allworkonline.github.io/landseeding/" class="active">PM Kisan</a>
+        <a href="https://allworkonline.github.io/STATUS/">Status</a>
+        <div class="user-menu">
+          <button class="user-btn" onclick="toggleDd()">
+            <div class="user-avatar" id="hdr-av">U</div>
+            <span id="hdr-nm">User</span>
+            <span style="font-size:.7rem;margin-left:2px">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dd">
+            <div class="dd-info">
+              <div class="dd-name" id="dd-name">—</div>
+              <div class="dd-contact" id="dd-contact">—</div>
+            </div>
+            <button class="dd-item">👤 Mera Profile</button>
+            <button class="dd-item">📋 Meri Applications</button>
+            <button class="dd-item">🔍 Status Check</button>
+            <button class="dd-item">⚙️ Settings</button>
+            <button class="dd-item logout" onclick="doLogout()">🚪 Logout</button>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Inject original landseeding page content here -->
+  <div id="app-content" style="position:relative;z-index:1;">
+    <!-- Welcome Banner -->
+    <div style="background:linear-gradient(135deg,#0d4a1f,#1a7a35);border-bottom:1px solid rgba(255,255,255,.08);padding:18px 2rem;">
+      <div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:42px;height:42px;background:rgba(78,203,110,.2);border:1px solid rgba(78,203,110,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🌾</div>
+          <div>
+            <div style="font-weight:700;font-size:.95rem;">नमस्कार, <span id="welcome-name" style="color:var(--gold2)">User</span> जी! 🙏</div>
+            <div style="font-size:.75rem;color:rgba(255,255,255,.5)">PM KISAN Land Seeding Portal में आपका स्वागत है</div>
+          </div>
+        </div>
+        <a href="https://allworkonline.github.io/landseeding/" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--dark);font-weight:700;font-size:.84rem;padding:9px 20px;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(240,165,0,.35);">
+          🌾 Land Seeding करें →
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Access Cards -->
+    <div style="background:linear-gradient(135deg,#071510 0%,#0d3319 40%,#0f4a22 70%,#0d3a1c 100%);padding:60px 2rem 80px;position:relative;overflow:hidden;">
+      <div class="bg-circle bc1"></div>
+      <div class="bg-circle bc2"></div>
+
+      <div style="max-width:1280px;margin:0 auto;position:relative;z-index:2;">
+        <div style="text-align:center;margin-bottom:48px;">
+          <span style="display:inline-flex;align-items:center;gap:8px;background:rgba(78,203,110,.12);border:1px solid rgba(78,203,110,.28);color:var(--g4);font-size:.7rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:30px;margin-bottom:18px;">
+            Quick Access
+          </span>
+          <h2 style="font-family:'Baloo 2',sans-serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;line-height:1.15;margin-bottom:12px;">
+            आपकी सेवाएं<br/><span style="color:var(--gold2)">एक क्लिक में</span>
+          </h2>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;">
+          <a href="https://allworkonline.github.io/landseeding/" style="background:rgba(255,255,255,.05);border:1px solid rgba(78,203,110,.2);border-radius:18px;padding:26px 22px;text-decoration:none;color:inherit;transition:all .2s;display:block;" onmouseover="this.style.transform='translateY(-4px)';this.style.background='rgba(78,203,110,.1)'" onmouseout="this.style.transform='';this.style.background='rgba(255,255,255,.05)'">
+            <div style="font-size:2rem;margin-bottom:12px;">🌾</div>
+            <h3 style="font-weight:700;font-size:.95rem;margin-bottom:6px;color:#fff;">Land Seeding</h3>
+            <p style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.5;">भूमि रिकॉर्ड PM KISAN से जोड़ें</p>
+            <div style="margin-top:14px;font-size:.75rem;font-weight:600;color:var(--g4);">Apply करें →</div>
+          </a>
+          <a href="https://pmkisan.gov.in/aadharekyc.aspx" target="_blank" style="background:rgba(255,255,255,.05);border:1px solid rgba(240,165,0,.18);border-radius:18px;padding:26px 22px;text-decoration:none;color:inherit;transition:all .2s;display:block;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
+            <div style="font-size:2rem;margin-bottom:12px;">✅</div>
+            <h3 style="font-weight:700;font-size:.95rem;margin-bottom:6px;color:#fff;">eKYC सेवा</h3>
+            <p style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.5;">OTP या Biometric से eKYC पूरी करें</p>
+            <div style="margin-top:14px;font-size:.75rem;font-weight:600;color:var(--gold2);">eKYC करें →</div>
+          </a>
+          <a href="https://pmkisan.gov.in/RegistrationFormupdated.aspx" target="_blank" style="background:rgba(255,255,255,.05);border:1px solid rgba(56,139,253,.18);border-radius:18px;padding:26px 22px;text-decoration:none;color:inherit;transition:all .2s;display:block;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
+            <div style="font-size:2rem;margin-bottom:12px;">📝</div>
+            <h3 style="font-weight:700;font-size:.95rem;margin-bottom:6px;color:#fff;">New Registration</h3>
+            <p style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.5;">PM KISAN में नया पंजीकरण करें</p>
+            <div style="margin-top:14px;font-size:.75rem;font-weight:600;color:#79B8FF;">Register करें →</div>
+          </a>
+          <a href="https://allworkonline.github.io/STATUS/" style="background:rgba(255,255,255,.05);border:1px solid rgba(163,113,247,.18);border-radius:18px;padding:26px 22px;text-decoration:none;color:inherit;transition:all .2s;display:block;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
+            <div style="font-size:2rem;margin-bottom:12px;">🔍</div>
+            <h3 style="font-weight:700;font-size:.95rem;margin-bottom:6px;color:#fff;">Status Check</h3>
+            <p style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.5;">Application और Payment status देखें</p>
+            <div style="margin-top:14px;font-size:.75rem;font-weight:600;color:#C9A0FF;">Status देखें →</div>
+          </a>
+        </div>
+
+        <!-- Helpline -->
+        <div style="margin-top:48px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:32px;text-align:center;">
+          <h3 style="font-family:'Baloo 2',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:8px;">📞 तुरंत सहायता चाहिए?</h3>
+          <p style="color:rgba(255,255,255,.5);font-size:.85rem;margin-bottom:20px;">सोमवार – शनिवार, सुबह 10 बजे से शाम 5 बजे तक</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+            <a href="tel:7668039141" style="display:inline-flex;align-items:center;gap:6px;background:rgba(37,168,74,.12);border:1px solid rgba(37,168,74,.25);color:var(--g4);padding:9px 18px;border-radius:25px;text-decoration:none;font-size:.83rem;font-weight:600;transition:all .2s;" onmouseover="this.style.background='rgba(37,168,74,.22)'" onmouseout="this.style.background='rgba(37,168,74,.12)'">📞 7668039141</a>
+            <a href="tel:9368372889" style="display:inline-flex;align-items:center;gap:6px;background:rgba(37,168,74,.12);border:1px solid rgba(37,168,74,.25);color:var(--g4);padding:9px 18px;border-radius:25px;text-decoration:none;font-size:.83rem;font-weight:600;transition:all .2s;" onmouseover="this.style.background='rgba(37,168,74,.22)'" onmouseout="this.style.background='rgba(37,168,74,.12)'">📞 9368372889</a>
+            <a href="tel:9368546898" style="display:inline-flex;align-items:center;gap:6px;background:rgba(37,168,74,.12);border:1px solid rgba(37,168,74,.25);color:var(--g4);padding:9px 18px;border-radius:25px;text-decoration:none;font-size:.83rem;font-weight:600;transition:all .2s;" onmouseover="this.style.background='rgba(37,168,74,.22)'" onmouseout="this.style.background='rgba(37,168,74,.12)'">📞 9368546898</a>
+            <a href="tel:9149132382" style="display:inline-flex;align-items:center;gap:6px;background:rgba(37,168,74,.12);border:1px solid rgba(37,168,74,.25);color:var(--g4);padding:9px 18px;border-radius:25px;text-decoration:none;font-size:.83rem;font-weight:600;transition:all .2s;" onmouseover="this.style.background='rgba(37,168,74,.22)'" onmouseout="this.style.background='rgba(37,168,74,.12)'">📞 9149132382</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h4>All Work Online</h4>
-        <p>PM KISAN और अन्य सरकारी योजनाओं के लिए विश्वसनीय CSC सेवा केंद्र। किसानों की डिजिटल सेवा में हमेशा अग्रणी।</p>
-        <div class="govt-logos">
-          <span class="govt-badge">🏛️ CSC Certified</span>
-          <span class="govt-badge">🇮🇳 Govt. Partner</span>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>हमारी सेवाएं</h4>
-        <ul>
-          <li><a href="#">Land Seeding</a></li>
-          <li><a href="#">Sub District Approval</a></li>
-          <li><a href="#">New Registration</a></li>
-          <li><a href="#">eKYC सेवा</a></li>
-          <li><a href="#">Status Check</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>महत्वपूर्ण लिंक</h4>
-        <ul>
-          <li><a href="#">PM KISAN पोर्टल</a></li>
-          <li><a href="#">CSC Login</a></li>
-          <li><a href="#">Admin Login</a></li>
-          <li><a href="#">eKYC Portal</a></li>
-          <li><a href="#">Beneficiary Status</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>संपर्क करें</h4>
-        <ul>
-          <li><a href="#">📍 नजदीकी CSC केंद्र</a></li>
-          <li><a href="#">📞 हेल्पलाइन नंबर</a></li>
-          <li><a href="#">✉️ ईमेल सपोर्ट</a></li>
-          <li><a href="#">💬 WhatsApp</a></li>
-        </ul>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span>© 2025 All Work Online. सर्वाधिकार सुरक्षित।</span>
+        <span>Website: <a href="https://allworkonline.xyz" style="color:var(--gold2);text-decoration:none">allworkonline.xyz</a></span>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2025 All Work Online | PM KISAN Land Seeding Service</p>
-      <p>Powered by <a href="#">CSC Digital Seva</a> | <a href="#">Privacy Policy</a></p>
-    </div>
-  </div>
-</footer>
+  </footer>
+</div><!-- end app-page -->
 
+<div class="toast" id="toast"></div>
+
+<script>
+  function getUsers(){try{return JSON.parse(localStorage.getItem('awo_kisan_users')||'[]')}catch{return[]}}
+  function saveUsers(u){localStorage.setItem('awo_kisan_users',JSON.stringify(u))}
+  function getSession(){try{return JSON.parse(localStorage.getItem('awo_kisan_sess')||'null')}catch{return null}}
+  function saveSession(u){localStorage.setItem('awo_kisan_sess',JSON.stringify(u))}
+  function clearSession(){localStorage.removeItem('awo_kisan_sess')}
+
+  window.onload=function(){const s=getSession();if(s)showApp(s);}
+
+  function switchTab(t){
+    document.getElementById('tab-login').classList.toggle('active',t==='login');
+    document.getElementById('tab-register').classList.toggle('active',t==='register');
+    document.getElementById('login-form').style.display=t==='login'?'':'none';
+    document.getElementById('register-form').style.display=t==='register'?'':'none';
+    clearErrs();
+  }
+
+  function togglePw(id,btn){
+    const i=document.getElementById(id);
+    i.type=i.type==='password'?'text':'password';
+    btn.textContent=i.type==='text'?'🙈':'👁️';
+  }
+
+  function checkPw(pw){
+    ['pb1','pb2','pb3'].forEach(b=>document.getElementById(b).className='pw-bar');
+    const lbl=document.getElementById('pw-lbl');
+    if(!pw){lbl.style.display='none';return;}
+    lbl.style.display='block';
+    let s=0;
+    if(pw.length>=6)s++;
+    if(pw.length>=10)s++;
+    if(/[A-Z]/.test(pw)&&/[0-9]/.test(pw))s++;
+    const lvls=[{c:'weak',t:'⚠️ Kamzor password'},{c:'medium',t:'👍 Theek-thaak'},{c:'strong',t:'✅ Mazboot!'}];
+    const l=lvls[Math.min(s,2)];
+    for(let i=0;i<=Math.min(s,2);i++)document.getElementById(['pb1','pb2','pb3'][i]).classList.add(l.c);
+    lbl.className='pw-lbl '+l.c;lbl.textContent=l.t;
+  }
+
+  function clearErrs(){
+    document.querySelectorAll('.err-msg').forEach(e=>e.classList.remove('show'));
+    document.querySelectorAll('.form-input').forEach(i=>i.classList.remove('has-error'));
+  }
+
+  function markErr(iid,eid){
+    const el=document.getElementById(iid);if(el)el.classList.add('has-error');
+    document.getElementById(eid).classList.add('show');
+  }
+
+  function showToast(msg,type='ok'){
+    const t=document.getElementById('toast');
+    t.textContent=msg;t.className='toast '+type;
+    t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);
+  }
+
+  function doLogin(){
+    clearErrs();
+    const u=document.getElementById('l-user').value.trim();
+    const p=document.getElementById('l-pass').value;
+    let ok=true;
+    if(!u){markErr('l-user','e-lu');ok=false;}
+    if(!p){markErr('l-pass','e-lp');ok=false;}
+    if(!ok)return;
+    if((u==='admin'||u==='9999999999')&&p==='admin123'){
+      const usr={name:'Admin Ji',mobile:'9999999999',email:'admin@allworkonline.in'};
+      saveSession(usr);showToast('✅ Login safal! Swagat hai Admin Ji');
+      setTimeout(()=>showApp(usr),700);return;
+    }
+    const users=getUsers();
+    const found=users.find(x=>(x.mobile===u||x.email===u)&&x.password===p);
+    if(found){
+      saveSession({name:found.name,mobile:found.mobile,email:found.email});
+      showToast('✅ Swagat hai '+found.name+' ji!');
+      setTimeout(()=>showApp(found),700);
+    }else{
+      markErr('l-user','e-lu');markErr('l-pass','e-lp');
+      document.getElementById('e-lu').textContent='Mobile/Email ya password galat hai';
+      document.getElementById('e-lp').textContent='Mobile/Email ya password galat hai';
+      showToast('❌ Login nahi hua. Dobara try karein','fail');
+    }
+  }
+
+  function doRegister(){
+    clearErrs();
+    const name=document.getElementById('r-name').value.trim();
+    const mob=document.getElementById('r-mob').value.trim();
+    const email=document.getElementById('r-email').value.trim();
+    const pass=document.getElementById('r-pass').value;
+    const pass2=document.getElementById('r-pass2').value;
+    const terms=document.getElementById('terms-cb').checked;
+    let ok=true;
+    if(!name){markErr('r-name','e-rn');ok=false;}
+    if(!/^\d{10}$/.test(mob)){markErr('r-mob','e-rm');ok=false;}
+    if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){markErr('r-email','e-re');ok=false;}
+    if(pass.length<6){markErr('r-pass','e-rp');ok=false;}
+    if(pass!==pass2){markErr('r-pass2','e-rp2');ok=false;}
+    if(!terms){document.getElementById('e-terms').classList.add('show');ok=false;}
+    if(!ok)return;
+    const users=getUsers();
+    if(users.find(u=>u.mobile===mob)){
+      markErr('r-mob','e-rm');
+      document.getElementById('e-rm').textContent='Yeh mobile pehle se registered hai';
+      showToast('❌ Mobile pehle se registered hai','fail');return;
+    }
+    users.push({name,mobile:mob,email,password:pass});
+    saveUsers(users);saveSession({name,mobile:mob,email});
+    showToast('🎉 Account ban gaya! Swagat hai '+name+' ji');
+    setTimeout(()=>showApp({name,mobile:mob,email}),700);
+  }
+
+  function showApp(user){
+    document.getElementById('auth-page').style.display='none';
+    document.getElementById('app-page').style.display='block';
+    const ini=(user.name||'U').charAt(0).toUpperCase();
+    document.getElementById('hdr-av').textContent=ini;
+    document.getElementById('hdr-nm').textContent=user.name.split(' ')[0];
+    document.getElementById('dd-name').textContent=user.name;
+    document.getElementById('dd-contact').textContent=user.mobile||user.email||'';
+    document.getElementById('welcome-name').textContent=user.name.split(' ')[0];
+  }
+
+  function toggleDd(){document.getElementById('user-dd').classList.toggle('open');}
+  document.addEventListener('click',function(e){
+    const m=document.querySelector('.user-menu');
+    if(m&&!m.contains(e.target))document.getElementById('user-dd')?.classList.remove('open');
+  });
+
+  function doLogout(){
+    clearSession();
+    document.getElementById('app-page').style.display='none';
+    document.getElementById('auth-page').style.display='block';
+    document.getElementById('l-user').value='';
+    document.getElementById('l-pass').value='';
+    switchTab('login');
+    showToast('👋 Aap logout ho gaye. Phir milenge!');
+  }
+
+  function showForgot(){showToast('📱 Admin se sampark karein: 7668039141');}
+
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Enter')return;
+    const lf=document.getElementById('login-form');
+    const rf=document.getElementById('register-form');
+    if(lf&&lf.style.display!=='none')doLogin();
+    else if(rf&&rf.style.display!=='none')doRegister();
+  });
+</script>
 </body>
 </html>
