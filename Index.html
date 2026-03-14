@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PM KISAN Land Seeding | All Work Online</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Baloo+2:wght@400;600;800&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green: #1a6b2f;
+      --green-mid: #2d9c4a;
+      --green-light: #4ec96e;
+      --gold: #e8a500;
+      --gold-light: #ffd24c;
+      --cream: #fdf8ef;
+      --dark: #0f2518;
+      --white: #ffffff;
+      --shadow: 0 8px 32px rgba(26,107,47,0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ---- TOP TICKER ---- */
+    .ticker-bar {
+      background: var(--dark);
+      color: var(--gold-light);
+      font-size: 0.78rem;
+      padding: 7px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 28s linear infinite;
+      font-family: 'Baloo 2', sans-serif;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ---- HEADER ---- */
+    header {
+      background: linear-gradient(135deg, var(--green) 0%, #0f3d1e 100%);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 44px; height: 44px;
+      background: var(--gold);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .logo-text {
+      color: white;
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      line-height: 1.1;
+    }
+    .logo-text span { color: var(--gold-light); display: block; font-size: 0.7rem; font-weight: 400; letter-spacing: 1px; }
+
+    nav { display: flex; gap: 4px; }
+    nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+    nav a:hover, nav a.active {
+      background: rgba(255,255,255,0.15);
+      color: var(--gold-light);
+    }
+    nav a.active {
+      background: var(--gold);
+      color: var(--dark);
+      font-weight: 700;
+    }
+
+    /* ---- HERO SECTION ---- */
+    .hero {
+      background: linear-gradient(160deg, #0f3d1e 0%, var(--green) 50%, #1e7a38 100%);
+      padding: 60px 2rem 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(232,165,0,0.18) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '🌾';
+      position: absolute;
+      bottom: -20px; left: 5%;
+      font-size: 160px;
+      opacity: 0.07;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(232,165,0,0.2);
+      border: 1px solid rgba(232,165,0,0.4);
+      color: var(--gold-light);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-family: 'Baloo 2', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: var(--gold-light); }
+    .hero p {
+      color: rgba(255,255,255,0.8);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 500px;
+      margin-bottom: 28px;
+    }
+    .hero-cta {
+      display: flex; gap: 14px; flex-wrap: wrap;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--dark);
+      font-weight: 700;
+      padding: 13px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(232,165,0,0.4);
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,165,0,0.5); }
+    .btn-outline {
+      background: transparent;
+      color: white;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      border: 2px solid rgba(255,255,255,0.4);
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+    .hero-right {
+      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .hero-stat {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      min-width: 120px;
+    }
+    .hero-stat .num {
+      font-family: 'Baloo 2', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .hero-stat .label {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+    }
+
+    /* ---- ALERT BANNER ---- */
+    .alert-section {
+      max-width: 1200px;
+      margin: -30px auto 0;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 10;
+    }
+    .alert-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-left: 5px solid var(--gold);
+    }
+    .alert-icon { font-size: 2rem; flex-shrink: 0; }
+    .alert-card h3 {
+      font-family: 'Baloo 2', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 3px;
+    }
+    .alert-card p { font-size: 0.83rem; color: #555; line-height: 1.5; }
+    .alert-card p strong { color: var(--green); }
+
+    /* ---- STEPS SECTION ---- */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 2rem;
+    }
+    .section-tag {
+      display: inline-block;
+      background: #e8f5ec;
+      color: var(--green);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Baloo 2', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      color: #666;
+      font-size: 0.92rem;
+      margin-bottom: 40px;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .step-card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px 22px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border-top: 4px solid var(--green-light);
+      position: relative;
+      transition: all 0.25s;
+    }
+    .step-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .step-num {
+      position: absolute;
+      top: -14px; right: 20px;
+      background: var(--green);
+      color: white;
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-icon {
+      font-size: 2.2rem;
+      margin-bottom: 14px;
+    }
+    .step-card h4 {
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .step-card p { font-size: 0.82rem; color: #666; line-height: 1.6; }
+
+    /* ---- SERVICES SECTION ---- */
+    .services-bg {
+      background: linear-gradient(180deg, var(--cream) 0%, #e8f5ec 100%);
+      padding: 20px 0 60px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+    }
+    .service-card {
+      background: white;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .service-card.featured {
+      background: linear-gradient(135deg, var(--green) 0%, #0f3d1e 100%);
+      color: white;
+    }
+    .service-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      background: #e8f5ec;
+    }
+    .service-card.featured .service-icon { background: rgba(255,255,255,0.15); }
+    .service-card h3 {
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--dark);
+    }
+    .service-card.featured h3 { color: white; }
+    .service-card p { font-size: 0.82rem; color: #666; line-height: 1.6; }
+    .service-card.featured p { color: rgba(255,255,255,0.8); }
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--green);
+      font-weight: 600;
+      font-size: 0.82rem;
+      text-decoration: none;
+      margin-top: auto;
+    }
+    .service-card.featured .service-link { color: var(--gold-light); }
+    .service-link::after { content: '→'; transition: transform 0.2s; }
+    .service-card:hover .service-link::after { transform: translateX(4px); }
+
+    /* ---- FORM SECTION ---- */
+    .form-section {
+      background: white;
+      padding: 60px 0;
+    }
+    .form-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .form-card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 40px;
+      border: 1px solid #e0ead4;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    input, select, textarea {
+      padding: 11px 14px;
+      border: 2px solid #d0e4d4;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.88rem;
+      background: white;
+      color: var(--dark);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--green-mid); }
+    textarea { resize: vertical; min-height: 90px; }
+    .submit-btn {
+      background: linear-gradient(135deg, var(--green), var(--green-mid));
+      color: white;
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 14px 40px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(26,107,47,0.3);
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,107,47,0.4); }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.7);
+      padding: 50px 2rem 24px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-col h4 {
+      color: white;
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 30px; height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+    .footer-col p { font-size: 0.82rem; line-height: 1.7; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: color 0.2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .footer-col ul a:hover { color: var(--gold-light); }
+    .footer-col ul a::before { content: '›'; color: var(--green-light); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+    }
+    .footer-bottom a { color: var(--gold-light); text-decoration: none; }
+    .govt-logos {
+      display: flex; gap: 14px; align-items: center; margin-top: 20px;
+    }
+    .govt-badge {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.8);
+      font-weight: 600;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .hero-inner { flex-direction: column; }
+      .hero-right { grid-template-columns: repeat(2, 1fr); width: 100%; }
+      nav { display: none; }
+      .form-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <span class="ticker-inner">
+    🌾 PM KISAN 19वीं किस्त 24 फरवरी 2025 को जारी की गई &nbsp;&nbsp;|&nbsp;&nbsp; 📢 eKYC अनिवार्य है — नजदीकी CSC केंद्र पर जाएं &nbsp;&nbsp;|&nbsp;&nbsp; 🔗 Land Seeding के लिए अभी आवेदन करें &nbsp;&nbsp;|&nbsp;&nbsp; ✅ PM KISAN पोर्टल पर OTP आधारित eKYC उपलब्ध है &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </span>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">🌿</div>
+      <div class="logo-text">
+        All Work Online
+        <span>CSC Service Center</span>
+      </div>
+    </a>
+    <nav>
+      <a href="#">होम</a>
+      <a href="#services">सर्विसेज</a>
+      <a href="#steps">प्रक्रिया</a>
+      <a href="#apply" class="active">Land Seeding</a>
+      <a href="#">संपर्क</a>
+      <a href="#" style="background:var(--gold);color:var(--dark);font-weight:700;">CSC Login</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">🏛️ भारत सरकार योजना</div>
+      <h1>PM KISAN<br/><span>Land Seeding</span><br/>सेवा</h1>
+      <p>अपनी जमीन के रिकॉर्ड को PM KISAN अकाउंट से लिंक करें और किसान सम्मान निधि का पूरा लाभ उठाएं। तेज़, सरल और भरोसेमंद सेवा।</p>
+      <div class="hero-cta">
+        <a href="#apply" class="btn-gold">🔗 अभी Apply करें</a>
+        <a href="#steps" class="btn-outline">📋 प्रक्रिया जानें</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat">
+        <div class="num">19वीं</div>
+        <div class="label">किस्त जारी</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">₹2000</div>
+        <div class="label">प्रति किस्त</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">₹6000</div>
+        <div class="label">प्रति वर्ष</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">12Cr+</div>
+        <div class="label">किसान लाभार्थी</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALERT -->
+<div class="alert-section">
+  <div class="alert-card">
+    <div class="alert-icon">⚠️</div>
+    <div>
+      <h3>eKYC अनिवार्य सूचना</h3>
+      <p>PM KISAN में पंजीकृत सभी किसानों के लिए <strong>eKYC अनिवार्य</strong> है। OTP आधारित eKYC <strong>PM KISAN पोर्टल</strong> पर उपलब्ध है या नजदीकी <strong>CSC केंद्र</strong> पर बायोमेट्रिक eKYC कराएं।</p>
+    </div>
+  </div>
+</div>
+
+<!-- STEPS -->
+<section class="section" id="steps">
+  <div>
+    <span class="section-tag">📋 Step-by-Step</span>
+    <h2 class="section-title">Land Seeding की प्रक्रिया</h2>
+    <p class="section-sub">केवल कुछ आसान चरणों में अपनी ज़मीन PM KISAN से जोड़ें</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <span class="step-num">1</span>
+      <div class="step-icon">📄</div>
+      <h4>दस्तावेज़ तैयार करें</h4>
+      <p>आधार कार्ड, खसरा/खतौनी, बैंक पासबुक और PM KISAN रजिस्ट्रेशन नंबर तैयार रखें।</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">2</span>
+      <div class="step-icon">🌐</div>
+      <h4>CSC/पोर्टल पर जाएं</h4>
+      <p>नजदीकी CSC केंद्र पर जाएं या PM KISAN आधिकारिक पोर्टल पर लॉगिन करें।</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">3</span>
+      <div class="step-icon">🔗</div>
+      <h4>Land Seeding आवेदन</h4>
+      <p>Land Seeding विकल्प चुनें, जमीन की जानकारी और खाता विवरण भरें।</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">4</span>
+      <div class="step-icon">✅</div>
+      <h4>सत्यापन एवं स्वीकृति</h4>
+      <p>Sub-District अधिकारी द्वारा जमीन रिकॉर्ड का सत्यापन होगा।</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">5</span>
+      <div class="step-icon">💰</div>
+      <h4>किस्त प्राप्त करें</h4>
+      <p>Seeding पूर्ण होने के बाद किस्त सीधे आपके बैंक खाते में आएगी।</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<div class="services-bg" id="services">
+  <section class="section" style="padding-top:30px;">
+    <span class="section-tag">🛠️ हमारी सेवाएं</span>
+    <h2 class="section-title">सभी PM KISAN सेवाएं</h2>
+    <p class="section-sub">एक ही जगह सभी सुविधाएं — तेज़ और विश्वसनीय</p>
+    <div class="services-grid">
+      <div class="service-card featured">
+        <div class="service-icon">🔗</div>
+        <h3>Land Seeding</h3>
+        <p>अपनी कृषि भूमि को PM KISAN अकाउंट से लिंक करें। जमीन सीडिंग के बिना किस्त रुक सकती है।</p>
+        <a href="#apply" class="service-link">Apply करें</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏢</div>
+        <h3>Sub District Approval</h3>
+        <p>जमीन रिकॉर्ड के सत्यापन के लिए Sub-District स्तर पर अनुमोदन सेवा।</p>
+        <a href="#" class="service-link">जानें</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📝</div>
+        <h3>New Registration</h3>
+        <p>PM KISAN योजना में नए किसानों का पंजीकरण — आसान और डिजिटल प्रक्रिया।</p>
+        <a href="#" class="service-link">Register करें</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🪪</div>
+        <h3>eKYC सेवा</h3>
+        <p>OTP या बायोमेट्रिक के माध्यम से eKYC पूर्ण कराएं। किस्त के लिए अनिवार्य।</p>
+        <a href="#" class="service-link">eKYC करें</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- APPLY FORM -->
+<section class="form-section" id="apply">
+  <div class="form-container">
+    <div style="text-align:center;margin-bottom:32px;">
+      <span class="section-tag">📋 ऑनलाइन आवेदन</span>
+      <h2 class="section-title">Land Seeding फॉर्म</h2>
+      <p class="section-sub">नीचे जानकारी भरें, हमारी टीम आपसे संपर्क करेगी</p>
+    </div>
+    <div class="form-card">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>👤 किसान का नाम</label>
+          <input type="text" placeholder="पूरा नाम दर्ज करें"/>
+        </div>
+        <div class="form-group">
+          <label>📱 मोबाइल नंबर</label>
+          <input type="tel" placeholder="10 अंकों का मोबाइल नंबर"/>
+        </div>
+        <div class="form-group">
+          <label>🪪 आधार नंबर</label>
+          <input type="text" placeholder="12 अंकों का आधार नंबर"/>
+        </div>
+        <div class="form-group">
+          <label>🌾 PM KISAN रजिस्ट्रेशन नं.</label>
+          <input type="text" placeholder="PM KISAN रजिस्ट्रेशन नंबर"/>
+        </div>
+        <div class="form-group">
+          <label>🗺️ राज्य</label>
+          <select>
+            <option value="">राज्य चुनें</option>
+            <option>उत्तर प्रदेश</option>
+            <option>मध्य प्रदेश</option>
+            <option>राजस्थान</option>
+            <option>बिहार</option>
+            <option>महाराष्ट्र</option>
+            <option>गुजरात</option>
+            <option>हरियाणा</option>
+            <option>पंजाब</option>
+            <option>अन्य</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>🏘️ जिला</label>
+          <input type="text" placeholder="जिले का नाम"/>
+        </div>
+        <div class="form-group">
+          <label>📜 खसरा/खाता नंबर</label>
+          <input type="text" placeholder="जमीन का खसरा नंबर"/>
+        </div>
+        <div class="form-group">
+          <label>📐 भूमि क्षेत्रफल (हेक्टेयर)</label>
+          <input type="number" placeholder="जैसे: 1.5"/>
+        </div>
+        <div class="form-group full">
+          <label>📝 अतिरिक्त जानकारी (वैकल्पिक)</label>
+          <textarea placeholder="कोई अन्य जानकारी या समस्या यहाँ लिखें..."></textarea>
+        </div>
+      </div>
+      <button class="submit-btn">🔗 Land Seeding के लिए Submit करें</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>All Work Online</h4>
+        <p>PM KISAN और अन्य सरकारी योजनाओं के लिए विश्वसनीय CSC सेवा केंद्र। किसानों की डिजिटल सेवा में हमेशा अग्रणी।</p>
+        <div class="govt-logos">
+          <span class="govt-badge">🏛️ CSC Certified</span>
+          <span class="govt-badge">🇮🇳 Govt. Partner</span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>हमारी सेवाएं</h4>
+        <ul>
+          <li><a href="#">Land Seeding</a></li>
+          <li><a href="#">Sub District Approval</a></li>
+          <li><a href="#">New Registration</a></li>
+          <li><a href="#">eKYC सेवा</a></li>
+          <li><a href="#">Status Check</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>महत्वपूर्ण लिंक</h4>
+        <ul>
+          <li><a href="#">PM KISAN पोर्टल</a></li>
+          <li><a href="#">CSC Login</a></li>
+          <li><a href="#">Admin Login</a></li>
+          <li><a href="#">eKYC Portal</a></li>
+          <li><a href="#">Beneficiary Status</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>संपर्क करें</h4>
+        <ul>
+          <li><a href="#">📍 नजदीकी CSC केंद्र</a></li>
+          <li><a href="#">📞 हेल्पलाइन नंबर</a></li>
+          <li><a href="#">✉️ ईमेल सपोर्ट</a></li>
+          <li><a href="#">💬 WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 All Work Online | PM KISAN Land Seeding Service</p>
+      <p>Powered by <a href="#">CSC Digital Seva</a> | <a href="#">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
