@@ -9,6 +9,7 @@
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<!-- reCAPTCHA removed - using custom captcha -->
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -284,6 +285,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="errmsg" id="e-lp">Password daalna zaroori hai</div>
       </div>
       <div class="frgt"><a href="#">Password bhool gaye?</a></div>
+      <!-- Custom Captcha Login -->
+      <div style="margin-bottom:14px;">
+        <label class="flabel">🔐 Captcha Verify Karein</label>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <canvas id="captcha-canvas-login" width="160" height="48" style="border-radius:8px;cursor:pointer;" title="Click to refresh"></canvas>
+          <button type="button" onclick="generateCaptcha('login')" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:1rem;" title="Naya captcha">🔄</button>
+        </div>
+        <div class="iw"><span class="ii">🔤</span><input class="fi" id="captcha-input-login" type="text" placeholder="Upar dikhaa code yahan likhein" maxlength="6" autocomplete="off"/></div>
+        <div class="errmsg" id="e-captcha-login">⚠️ Captcha galat hai, dobara try karein</div>
+      </div>
       <button class="btn-main" onclick="doLogin()">Login Karein →</button>
       <div class="divdr">ya</div>
       <div class="switch-txt">Account nahi hai? <a onclick="switchAuthTab('reg')">Register karein</a></div>
@@ -314,6 +325,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <label class="flabel">🔑 Confirm Password</label>
         <div class="iw"><span class="ii">🔒</span><input class="fi" id="r-pass2" type="password" placeholder="Password dobara likhein"/><button class="tpw" onclick="tpw('r-pass2',this)">👁️</button></div>
         <div class="errmsg" id="e-rp2">Dono passwords match nahi kar rahe</div>
+      </div>
+      <!-- Custom Captcha Register -->
+      <div style="margin-bottom:14px;">
+        <label class="flabel">🔐 Captcha Verify Karein</label>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <canvas id="captcha-canvas-reg" width="160" height="48" style="border-radius:8px;cursor:pointer;" title="Click to refresh"></canvas>
+          <button type="button" onclick="generateCaptcha('reg')" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:1rem;" title="Naya captcha">🔄</button>
+        </div>
+        <div class="iw"><span class="ii">🔤</span><input class="fi" id="captcha-input-reg" type="text" placeholder="Upar dikhaa code yahan likhein" maxlength="6" autocomplete="off"/></div>
+        <div class="errmsg" id="e-captcha-reg">⚠️ Captcha galat hai, dobara try karein</div>
       </div>
       <button class="btn-main" onclick="doRegister()">Account Banayein 🎉</button>
       <div class="divdr">ya</div>
@@ -924,12 +945,109 @@ function toast(msg,type='ok'){
   t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);
 }
 
+// ── CUSTOM CAPTCHA ──
+const _captchaCodes = {login:'', reg:''};
+
+function generateCaptcha(type){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+  let code = '';
+  for(let i=0;i<6;i++) code += chars[Math.floor(Math.random()*chars.length)];
+  _captchaCodes[type] = code;
+
+  const canvasId = type==='login' ? 'captcha-canvas-login' : 'captcha-canvas-reg';
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+
+  // Background gradient
+  const grad = ctx.createLinearGradient(0,0,w,h);
+  grad.addColorStop(0,'#0d2e15');
+  grad.addColorStop(1,'#1a4a25');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,w,h);
+
+  // Noise dots
+  for(let i=0;i<40;i++){
+    ctx.fillStyle = `rgba(255,255,255,${Math.random()*0.15})`;
+    ctx.beginPath();
+    ctx.arc(Math.random()*w, Math.random()*h, Math.random()*2, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // Noise lines
+  for(let i=0;i<4;i++){
+    ctx.strokeStyle = `rgba(78,203,110,${Math.random()*0.3+0.1})`;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(Math.random()*w, Math.random()*h);
+    ctx.lineTo(Math.random()*w, Math.random()*h);
+    ctx.stroke();
+  }
+
+  // Draw each character with random style
+  const colors = ['#4ecb6e','#ffd056','#79b8ff','#ff8c42','#fff'];
+  const fonts = ['bold','italic','bold italic'];
+  for(let i=0;i<code.length;i++){
+    ctx.save();
+    ctx.font = `${fonts[Math.floor(Math.random()*fonts.length)]} ${22+Math.floor(Math.random()*8)}px Arial`;
+    ctx.fillStyle = colors[Math.floor(Math.random()*colors.length)];
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur = 3;
+    const x = 12 + i * 24;
+    const y = 30 + Math.floor(Math.random()*10) - 5;
+    ctx.translate(x, y);
+    ctx.rotate((Math.random()-0.5)*0.4);
+    ctx.fillText(code[i], 0, 0);
+    ctx.restore();
+  }
+
+  // Border
+  ctx.strokeStyle = 'rgba(78,203,110,0.3)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(0,0,w,h);
+
+  // Clear input
+  const inputId = type==='login' ? 'captcha-input-login' : 'captcha-input-reg';
+  const inp = document.getElementById(inputId);
+  if(inp) inp.value='';
+}
+
+function verifyCaptcha(type){
+  const inputId = type==='login' ? 'captcha-input-login' : 'captcha-input-reg';
+  const errId   = type==='login' ? 'e-captcha-login' : 'e-captcha-reg';
+  const userVal = (document.getElementById(inputId)||{}).value||'';
+  if(userVal.toLowerCase() === _captchaCodes[type].toLowerCase()){
+    document.getElementById(errId).classList.remove('show');
+    return true;
+  }
+  document.getElementById(errId).classList.add('show');
+  generateCaptcha(type); // refresh on wrong
+  return false;
+}
+
+// Init captchas when page loads
+window.addEventListener('load', ()=>{
+  generateCaptcha('login');
+  generateCaptcha('reg');
+});
+
+// Click canvas to refresh
+document.addEventListener('DOMContentLoaded', ()=>{
+  const cl = document.getElementById('captcha-canvas-login');
+  const cr = document.getElementById('captcha-canvas-reg');
+  if(cl) cl.onclick = ()=>generateCaptcha('login');
+  if(cr) cr.onclick = ()=>generateCaptcha('reg');
+});
+
 // ── AUTH TABS ──
 function switchAuthTab(t){
   document.getElementById('tab-login').classList.toggle('active',t==='login');
   document.getElementById('tab-reg').classList.toggle('active',t==='reg');
   document.getElementById('login-form').style.display=t==='login'?'block':'none';
   document.getElementById('reg-form').style.display=t==='reg'?'block':'none';
+  // Refresh captcha on tab switch
+  setTimeout(()=>generateCaptcha(t), 100);
 }
 
 function tpw(id,btn){
@@ -1123,6 +1241,12 @@ async function doLogin(){
   } else { document.getElementById('l-pass').classList.remove('err'); document.getElementById('e-lp').classList.remove('show'); }
   if(!ok) return;
 
+  // Captcha check
+  if(!verifyCaptcha('login')){
+    toast('⚠️ Captcha galat hai','fail');
+    return;
+  }
+
   if(mob===ADMIN_MOB && pass===getAdminPass()){
     saveSession({isAdmin:true,name:'Admin (Shivam)',mobile:mob});
     showLoginSuccess('Shivam',true,()=>showAdminDash());
@@ -1141,6 +1265,7 @@ async function doLogin(){
       document.getElementById('e-lm').textContent='Mobile ya password galat hai';
       document.getElementById('e-lm').classList.add('show');
       toast('❌ Login nahi hua','fail');
+      generateCaptcha('login');
     }
   }catch(e){ hideLoading(); toast('❌ Network error. Internet check karein','fail'); }
 }
@@ -1161,6 +1286,12 @@ async function doRegister(){
   if(pass!==pass2){ document.getElementById('r-pass2').classList.add('err'); document.getElementById('e-rp2').classList.add('show'); ok=false; }
   else { document.getElementById('r-pass2').classList.remove('err'); document.getElementById('e-rp2').classList.remove('show'); }
   if(!ok) return;
+
+  // Captcha check
+  if(!verifyCaptcha('reg')){
+    toast('⚠️ Captcha galat hai','fail');
+    return;
+  }
 
   showLoading('Account ban raha hai...');
   try{
