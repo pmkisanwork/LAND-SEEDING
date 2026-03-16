@@ -6,6 +6,9 @@
 <title>Farmer Registration | All Work Online</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -815,19 +818,85 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 
 <script>
+// ── FIREBASE CONFIG ──
+const firebaseConfig = {
+  apiKey: "AIzaSyAiECbcapmMwA3caAExg-VrStRM-8kIYI8",
+  authDomain: "allworkonline-6cbca.firebaseapp.com",
+  projectId: "allworkonline-6cbca",
+  storageBucket: "allworkonline-6cbca.firebasestorage.app",
+  messagingSenderId: "732734632564",
+  appId: "1:732734632564:web:01f5d196e0114617b35721",
+  databaseURL: "https://allworkonline-6cbca-default-rtdb.asia-southeast1.firebasedatabase.app"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
 // ── CONSTANTS ──
 const ADMIN_MOB = '8960947991';
 function getAdminPass(){ return localStorage.getItem('awo_admin_pass') || 'Shivam@264491'; }
 function saveAdminPass(p){ localStorage.setItem('awo_admin_pass', p); }
 
-// ── STORAGE ──
-function getUsers(){try{return JSON.parse(localStorage.getItem('awo_users')||'[]')}catch{return[]}}
-function saveUsers(u){localStorage.setItem('awo_users',JSON.stringify(u))}
-function getSubs(){try{return JSON.parse(localStorage.getItem('awo_subs')||'[]')}catch{return[]}}
-function saveSubs(s){localStorage.setItem('awo_subs',JSON.stringify(s))}
+// ── SESSION (still localStorage - device specific login) ──
 function getSession(){try{return JSON.parse(localStorage.getItem('awo_sess')||'null')}catch{return null}}
 function saveSession(s){localStorage.setItem('awo_sess',JSON.stringify(s))}
 function clearSession(){localStorage.removeItem('awo_sess')}
+
+// ── FIREBASE: USERS ──
+function getUsers(){
+  return new Promise(resolve=>{
+    db.ref('users').once('value').then(snap=>{
+      const data = snap.val();
+      resolve(data ? Object.values(data) : []);
+    }).catch(()=>resolve([]));
+  });
+}
+function saveUser(user){
+  return db.ref('users/'+user.mobile).set(user);
+}
+function getUserByMobile(mobile){
+  return db.ref('users/'+mobile).once('value').then(snap=>snap.val());
+}
+
+// ── FIREBASE: SUBMISSIONS ──
+function getSubs(){
+  return new Promise(resolve=>{
+    db.ref('submissions').once('value').then(snap=>{
+      const data = snap.val();
+      if(!data) return resolve([]);
+      resolve(Object.values(data));
+    }).catch(()=>resolve([]));
+  });
+}
+function saveSub(sub){
+  return db.ref('submissions/'+sub.appNo).set(sub);
+}
+function updateSubStatus(appNo, status){
+  return db.ref('submissions/'+appNo+'/status').set(status);
+}
+function deleteSub(appNo){
+  return db.ref('submissions/'+appNo).remove();
+}
+function clearAllSubs(){
+  return db.ref('submissions').remove();
+}
+
+// ── LOADING UI ──
+function showLoading(msg='Loading...'){
+  let el = document.getElementById('fb-loading');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'fb-loading';
+    el.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;backdrop-filter:blur(4px)';
+    el.innerHTML='<div style="width:44px;height:44px;border:4px solid rgba(255,255,255,.2);border-top-color:#4ecb6e;border-radius:50%;animation:spin .7s linear infinite"></div><div style="color:#fff;margin-top:14px;font-size:.85rem;font-family:Poppins,sans-serif">'+msg+'</div>';
+    document.body.appendChild(el);
+  } else { el.style.display='flex'; el.querySelector('div+div').textContent=msg; }
+}
+function hideLoading(){ const el=document.getElementById('fb-loading'); if(el) el.style.display='none'; }
+
+// Add spin animation
+const spinStyle = document.createElement('style');
+spinStyle.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+document.head.appendChild(spinStyle);
 
 // ── INIT ──
 window.onload=function(){
@@ -1039,107 +1108,69 @@ function showLoginSuccess(name, isAdmin, callback){
   }, 2000);
 }
 // ── LOGIN ──
-function doLogin(){
+async function doLogin(){
   const mob = document.getElementById('l-mob').value.trim();
   const pass = document.getElementById('l-pass').value.trim();
   let ok = true;
-
-  // Validate mobile
   if(!/^\d{10}$/.test(mob)){
     document.getElementById('l-mob').classList.add('err');
-    document.getElementById('e-lm').textContent = 'Sahi 10 digit mobile daalen';
-    document.getElementById('e-lm').classList.add('show');
-    ok = false;
-  } else {
-    document.getElementById('l-mob').classList.remove('err');
-    document.getElementById('e-lm').classList.remove('show');
-  }
-
-  // Validate password
+    document.getElementById('e-lm').textContent='Sahi 10 digit mobile daalen';
+    document.getElementById('e-lm').classList.add('show'); ok=false;
+  } else { document.getElementById('l-mob').classList.remove('err'); document.getElementById('e-lm').classList.remove('show'); }
   if(!pass){
     document.getElementById('l-pass').classList.add('err');
-    document.getElementById('e-lp').classList.add('show');
-    ok = false;
-  } else {
-    document.getElementById('l-pass').classList.remove('err');
-    document.getElementById('e-lp').classList.remove('show');
-  }
-
+    document.getElementById('e-lp').classList.add('show'); ok=false;
+  } else { document.getElementById('l-pass').classList.remove('err'); document.getElementById('e-lp').classList.remove('show'); }
   if(!ok) return;
 
-  // Admin check
-  if(mob === ADMIN_MOB && pass === getAdminPass()){
-    saveSession({isAdmin:true, name:'Admin (Shivam)', mobile:mob});
-    showLoginSuccess('Shivam', true, ()=>showAdminDash());
+  if(mob===ADMIN_MOB && pass===getAdminPass()){
+    saveSession({isAdmin:true,name:'Admin (Shivam)',mobile:mob});
+    showLoginSuccess('Shivam',true,()=>showAdminDash());
     return;
   }
-
-  // User check
-  const users = getUsers();
-  const user = users.find(u => u.mobile === mob && u.password === pass);
-  if(user){
-    saveSession({name:user.name, mobile:user.mobile, isAdmin:false});
-    showLoginSuccess(user.name, false, ()=>showUserApp(user));
-  } else {
-    document.getElementById('l-mob').classList.add('err');
-    document.getElementById('l-pass').classList.add('err');
-    document.getElementById('e-lm').textContent = 'Mobile ya password galat hai';
-    document.getElementById('e-lm').classList.add('show');
-    toast('❌ Login nahi hua. Details check karein','fail');
-  }
+  showLoading('Login ho raha hai...');
+  try{
+    const user = await getUserByMobile(mob);
+    hideLoading();
+    if(user && user.password===pass){
+      saveSession({name:user.name,mobile:user.mobile,isAdmin:false});
+      showLoginSuccess(user.name,false,()=>showUserApp(user));
+    } else {
+      document.getElementById('l-mob').classList.add('err');
+      document.getElementById('l-pass').classList.add('err');
+      document.getElementById('e-lm').textContent='Mobile ya password galat hai';
+      document.getElementById('e-lm').classList.add('show');
+      toast('❌ Login nahi hua','fail');
+    }
+  }catch(e){ hideLoading(); toast('❌ Network error. Internet check karein','fail'); }
 }
 
 // ── REGISTER ──
-function doRegister(){
+async function doRegister(){
   const name = document.getElementById('r-name').value.trim();
   const mob  = document.getElementById('r-mob').value.trim();
   const pass = document.getElementById('r-pass').value;
   const pass2= document.getElementById('r-pass2').value;
   let ok = true;
-
-  if(!name){
-    document.getElementById('r-name').classList.add('err');
-    document.getElementById('e-rn').classList.add('show'); ok=false;
-  } else {
-    document.getElementById('r-name').classList.remove('err');
-    document.getElementById('e-rn').classList.remove('show');
-  }
-  if(!/^\d{10}$/.test(mob)){
-    document.getElementById('r-mob').classList.add('err');
-    document.getElementById('e-rm').textContent='Sahi 10 digit mobile daalen';
-    document.getElementById('e-rm').classList.add('show'); ok=false;
-  } else {
-    document.getElementById('r-mob').classList.remove('err');
-    document.getElementById('e-rm').classList.remove('show');
-  }
-  if(pass.length < 6){
-    document.getElementById('r-pass').classList.add('err');
-    document.getElementById('e-rp').classList.add('show'); ok=false;
-  } else {
-    document.getElementById('r-pass').classList.remove('err');
-    document.getElementById('e-rp').classList.remove('show');
-  }
-  if(pass !== pass2){
-    document.getElementById('r-pass2').classList.add('err');
-    document.getElementById('e-rp2').classList.add('show'); ok=false;
-  } else {
-    document.getElementById('r-pass2').classList.remove('err');
-    document.getElementById('e-rp2').classList.remove('show');
-  }
+  if(!name){ document.getElementById('r-name').classList.add('err'); document.getElementById('e-rn').classList.add('show'); ok=false; }
+  else { document.getElementById('r-name').classList.remove('err'); document.getElementById('e-rn').classList.remove('show'); }
+  if(!/^\d{10}$/.test(mob)){ document.getElementById('r-mob').classList.add('err'); document.getElementById('e-rm').textContent='Sahi 10 digit mobile daalen'; document.getElementById('e-rm').classList.add('show'); ok=false; }
+  else { document.getElementById('r-mob').classList.remove('err'); document.getElementById('e-rm').classList.remove('show'); }
+  if(pass.length<6){ document.getElementById('r-pass').classList.add('err'); document.getElementById('e-rp').classList.add('show'); ok=false; }
+  else { document.getElementById('r-pass').classList.remove('err'); document.getElementById('e-rp').classList.remove('show'); }
+  if(pass!==pass2){ document.getElementById('r-pass2').classList.add('err'); document.getElementById('e-rp2').classList.add('show'); ok=false; }
+  else { document.getElementById('r-pass2').classList.remove('err'); document.getElementById('e-rp2').classList.remove('show'); }
   if(!ok) return;
 
-  const users = getUsers();
-  if(users.find(u => u.mobile === mob)){
-    document.getElementById('r-mob').classList.add('err');
-    document.getElementById('e-rm').textContent = 'Ye mobile pehle se registered hai';
-    document.getElementById('e-rm').classList.add('show');
-    toast('❌ Mobile pehle se registered hai','fail');
-    return;
-  }
-  users.push({name, mobile:mob, password:pass});
-  saveUsers(users);
-  saveSession({name, mobile:mob, isAdmin:false});
-  showLoginSuccess(name, false, ()=>showUserApp({name, mobile:mob}));
+  showLoading('Account ban raha hai...');
+  try{
+    const existing = await getUserByMobile(mob);
+    if(existing){ hideLoading(); document.getElementById('r-mob').classList.add('err'); document.getElementById('e-rm').textContent='Ye mobile pehle se registered hai'; document.getElementById('e-rm').classList.add('show'); toast('❌ Mobile pehle se registered hai','fail'); return; }
+    await saveUser({name,mobile:mob,password:pass});
+    hideLoading();
+    saveSession({name,mobile:mob,isAdmin:false});
+    showLoginSuccess(name,false,()=>showUserApp({name,mobile:mob}));
+  }catch(e){ hideLoading(); toast('❌ Network error. Internet check karein','fail'); }
 }
 
 // ── SHOW USER APP ──
@@ -1388,16 +1419,16 @@ function submitForm(){
     time:now,status:'Pending'
   };
 
-  const subs=getSubs();
-  subs.push(sub);
-  saveSubs(subs);
-  _uploadedFiles = [];
-
-  document.getElementById('app-no-display').textContent=appNo;
-  document.getElementById('form-view').style.display='none';
-  document.getElementById('success-view').style.display='block';
-  toast('🎉 Application submit ho gayi! App No: '+appNo);
-  window.scrollTo(0,0);
+  showLoading('Application save ho rahi hai...');
+  saveSub(sub).then(()=>{
+    hideLoading();
+    _uploadedFiles=[];
+    document.getElementById('app-no-display').textContent=appNo;
+    document.getElementById('form-view').style.display='none';
+    document.getElementById('success-view').style.display='block';
+    toast('🎉 Application submit ho gayi! App No: '+appNo);
+    window.scrollTo(0,0);
+  }).catch(()=>{ hideLoading(); toast('❌ Submit nahi hua. Internet check karein','fail'); });
 }
 
 function resetForm(){
@@ -1412,10 +1443,13 @@ function resetForm(){
 }
 
 // ── USER DASHBOARD ──
-function renderUserDash(){
+async function renderUserDash(){
   const sess=getSession();
   if(!sess)return;
-  const subs=getSubs().filter(s=>s.userMobile===sess.mobile);
+  showLoading('Data load ho raha hai...');
+  const allSubs = await getSubs();
+  hideLoading();
+  const subs=allSubs.filter(s=>s.userMobile===sess.mobile);
   document.getElementById('u-total').textContent=subs.length;
   document.getElementById('u-pending').textContent=subs.filter(s=>s.status==='Pending').length;
   document.getElementById('u-approved').textContent=subs.filter(s=>s.status==='Approved').length;
@@ -1457,9 +1491,14 @@ function renderUserDash(){
 }
 
 // ── ADMIN DASHBOARD ──
-function renderAdminDash(){
+async function renderAdminDash(){
+  showLoading('Data load ho raha hai...');
   const q=(document.getElementById('search-inp')||{}).value||'';
-  let subs=getSubs();
+  const allSubs = await getSubs();
+  const allUsers = await getUsers();
+  hideLoading();
+
+  let subs = allSubs;
   if(q){
     const ql=q.toLowerCase();
     subs=subs.filter(s=>
@@ -1469,10 +1508,8 @@ function renderAdminDash(){
       (s.userMobile||'').includes(q)
     );
   }
-  const allSubs=getSubs();
-  const users=getUsers();
   document.getElementById('a-total').textContent=allSubs.length;
-  document.getElementById('a-users').textContent=users.length;
+  document.getElementById('a-users').textContent=allUsers.length;
   const today=new Date().toLocaleDateString('hi-IN');
   document.getElementById('a-today').textContent=allSubs.filter(s=>s.time&&s.time.includes(today.split('/')[0])).length;
 
@@ -1492,7 +1529,7 @@ function renderAdminDash(){
         </div>
         <div class="badges">
           <span class="badge badge-${s.status==='Approved'?'green':'gold'}">${s.status==='Approved'?'✅ Approved':'⏳ Pending'}</span>
-          <button onclick="toggleStatus('${s.appNo}')" style="background:rgba(56,139,253,.15);border:1px solid rgba(56,139,253,.3);color:#79b8ff;font-size:.67rem;font-weight:700;padding:3px 10px;border-radius:14px;cursor:pointer;font-family:'Poppins',sans-serif;">${s.status==='Approved'?'↩ Pending Karen':'✅ Approve Karen'}</button>
+          <button onclick="toggleStatus('${s.appNo}','${s.status}')" style="background:rgba(56,139,253,.15);border:1px solid rgba(56,139,253,.3);color:#79b8ff;font-size:.67rem;font-weight:700;padding:3px 10px;border-radius:14px;cursor:pointer;font-family:'Poppins',sans-serif;">${s.status==='Approved'?'↩ Pending Karen':'✅ Approve Karen'}</button>
         </div>
       </div>
       <div class="sub-details">
@@ -1525,51 +1562,74 @@ function renderAdminDash(){
     </div>
   `).join('');
   }
-  // Render users list
-  renderAdminUsers();
+  renderAdminUsers(allUsers);
+}
+
+async function toggleStatus(appNo, currentStatus){
+  const newStatus = currentStatus==='Approved' ? 'Pending' : 'Approved';
+  await updateSubStatus(appNo, newStatus);
+  toast(newStatus==='Approved'?'✅ Application Approved!':'↩ Pending kar diya');
+  renderAdminDash();
+}
+
+async function deleteApp(appNo){
+  if(!confirm('Is application ko delete karna chahte hain?'))return;
+  await deleteSub(appNo);
+  renderAdminDash();
+  toast('🗑️ Application delete ho gayi');
+}
+
+async function clearAll(){
+  if(!confirm('Sabhi applications delete karna chahte hain?'))return;
+  await clearAllSubs();
+  renderAdminDash();
+  toast('🗑️ Sab clear ho gaya');
 }
 
 // ── FILE VIEW / DOWNLOAD ──
-function viewFile(appNo, idx){
-  const sub = getSubs().find(s => s.appNo === appNo);
+async function viewFile(appNo, idx){
+  showLoading('File load ho rahi hai...');
+  const allSubs = await getSubs();
+  hideLoading();
+  const sub = allSubs.find(s => s.appNo === appNo);
   if(!sub || !sub.fileData || !sub.fileData[idx]) { toast('❌ File nahi mili','fail'); return; }
   const f = sub.fileData[idx];
-  // Open in new tab
   const win = window.open('', '_blank');
   if(f.type && f.type.startsWith('image/')){
     win.document.write(`<html><body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh"><img src="${f.data}" style="max-width:100%;max-height:100vh;object-fit:contain"/></body></html>`);
   } else if(f.type === 'application/pdf'){
     win.document.write(`<html><body style="margin:0"><embed src="${f.data}" type="application/pdf" width="100%" height="100%" style="position:fixed;inset:0"/></body></html>`);
   } else {
-    win.document.write(`<html><body style="font-family:sans-serif;padding:20px"><h3>${f.name}</h3><p>Is file ko directly view nahi kiya ja sakta. Download karein.</p></body></html>`);
+    win.document.write(`<html><body style="font-family:sans-serif;padding:20px"><h3>${f.name}</h3><p>Download karein.</p></body></html>`);
   }
   win.document.close();
 }
 
-function downloadFile(appNo, idx){
-  const sub = getSubs().find(s => s.appNo === appNo);
+async function downloadFile(appNo, idx){
+  showLoading('File download ho rahi hai...');
+  const allSubs = await getSubs();
+  hideLoading();
+  const sub = allSubs.find(s => s.appNo === appNo);
   if(!sub || !sub.fileData || !sub.fileData[idx]) { toast('❌ File nahi mili','fail'); return; }
   const f = sub.fileData[idx];
   const a = document.createElement('a');
   a.href = f.data;
   a.download = f.name;
   a.click();
-  toast('⬇️ Download shuru ho gaya: ' + f.name);
+  toast('⬇️ Download shuru: ' + f.name);
 }
 
 // ── RENDER REGISTERED USERS ──
-function renderAdminUsers(){
-  const users = getUsers();
+async function renderAdminUsers(usersData){
+  const users = usersData || await getUsers();
   const badge = document.getElementById('users-count-badge');
   const container = document.getElementById('admin-users-list');
   if(!container) return;
   if(badge) badge.textContent = users.length + ' Users';
-
   if(users.length === 0){
     container.innerHTML = '<div class="empty-state"><div>👤</div><div>Abhi koi user registered nahi hai</div></div>';
     return;
   }
-
   container.innerHTML = users.map((u, i) => `
     <div style="background:rgba(255,255,255,.04);border:1px solid rgba(56,139,253,.15);border-radius:14px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
       <div style="display:flex;align-items:center;gap:12px;">
@@ -1597,30 +1657,6 @@ function togglePwView(i, pw){
   el.textContent = el.textContent === '••••••••' ? pw : '••••••••';
 }
 
-function toggleStatus(appNo){
-  const subs=getSubs();
-  const idx=subs.findIndex(s=>s.appNo===appNo);
-  if(idx===-1)return;
-  subs[idx].status=subs[idx].status==='Approved'?'Pending':'Approved';
-  saveSubs(subs);
-  renderAdminDash();
-  toast(subs[idx].status==='Approved'?'✅ Application Approved!':'↩ Pending kar diya');
-}
-
-function deleteApp(appNo){
-  if(!confirm('Is application ko delete karna chahte hain?'))return;
-  saveSubs(getSubs().filter(s=>s.appNo!==appNo));
-  renderAdminDash();
-  toast('🗑️ Application delete ho gayi');
-}
-
-function clearAll(){
-  if(!confirm('Sabhi applications delete karna chahte hain?'))return;
-  saveSubs([]);
-  renderAdminDash();
-  toast('🗑️ Sab clear ho gaya');
-}
-
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'){
     const lf=document.getElementById('login-form');
@@ -1629,6 +1665,7 @@ document.addEventListener('keydown',e=>{
     else if(rf&&rf.style.display!=='none')doRegister();
   }
 });
+
 </script>
 </body>
 </html>
