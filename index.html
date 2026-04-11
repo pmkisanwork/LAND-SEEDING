@@ -262,6 +262,39 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* Achieve section */
 .achieve-section{display:none;margin-top:12px;padding:14px 16px;background:linear-gradient(135deg,#f0faf4,#e8f5e9);border:1.5px solid #a5d6a7;border-radius:12px}
 .achieve-section.open{display:block}
+/* ══ USER DASH PAGE — Admin-style light theme ══ */
+#user-dash-page{background:linear-gradient(160deg,#f0faf4 0%,#e8f5e9 50%,#f9fbe7 100%)!important}
+#user-dash-page .header{background:rgba(255,255,255,.97)!important;border-bottom:1px solid rgba(37,168,74,.2)!important;box-shadow:0 2px 12px rgba(37,168,74,.1)!important}
+#user-dash-page .logo-text{background:linear-gradient(90deg,#0d4a1f,#1a7a35)!important;-webkit-background-clip:text!important;background-clip:text!important}
+#user-dash-page .user-btn{background:rgba(37,168,74,.09)!important;border-color:rgba(37,168,74,.25)!important;color:#1a3a20!important}
+#user-dash-page .u-dd{background:#fff!important;border-color:rgba(37,168,74,.2)!important}
+#user-dash-page .u-dd-name{color:#0d2e0d!important}
+#user-dash-page .u-dd-mob{color:rgba(15,50,15,.55)!important}
+#user-dash-page .dd-btn{color:rgba(15,50,15,.7)!important}
+#user-dash-page .dd-btn:hover{background:rgba(37,168,74,.08)!important;color:#0d2e0d!important}
+#user-dash-page .dd-btn.red{color:#c0392b!important}
+#user-dash-page .dash-hero{background:linear-gradient(135deg,#1a7a35,#25a84a,#2ecc71)!important}
+#user-dash-page .dash-title{color:#fff!important}
+#user-dash-page .dash-subtitle{color:rgba(255,255,255,.85)!important}
+#user-dash-page .new-app-btn{background:rgba(255,255,255,.2)!important;border:1.5px solid rgba(255,255,255,.5)!important;color:#fff!important}
+#user-dash-page .dash-content{background:transparent!important}
+#user-dash-page .stat-card{background:rgba(255,255,255,.92)!important;border:1px solid rgba(37,168,74,.2)!important;box-shadow:0 2px 12px rgba(37,168,74,.07)!important}
+#user-dash-page .stat-val{color:#0d4a1f!important}
+#user-dash-page .stat-lbl{color:rgba(15,50,25,.6)!important}
+#user-dash-page .sub-card{background:rgba(255,255,255,.96)!important;border:1px solid rgba(37,168,74,.18)!important;box-shadow:0 2px 10px rgba(37,168,74,.07)!important}
+#user-dash-page .sub-card:hover{border-color:rgba(37,168,74,.4)!important}
+#user-dash-page .sub-name{color:#0d2e0d!important;font-weight:700!important}
+#user-dash-page .sub-appno{color:rgba(15,50,15,.6)!important}
+#user-dash-page .sub-appno span{color:#1a6e2e!important;font-weight:700!important}
+#user-dash-page .sub-detail{background:rgba(37,168,74,.07)!important;border:1px solid rgba(37,168,74,.13)!important}
+#user-dash-page .sub-detail-lbl{color:rgba(15,50,15,.55)!important}
+#user-dash-page .sub-detail-val{color:#0d2e0d!important;font-weight:600!important}
+#user-dash-page .sub-icon{background:linear-gradient(135deg,#1a7a35,#25a84a)!important}
+#user-dash-page .sub-time{color:rgba(15,50,15,.5)!important}
+#user-dash-page .sub-card-foot{border-top:1px solid rgba(37,168,74,.12)!important}
+#user-dash-page .empty-state{color:rgba(15,50,15,.5)!important}
+#user-dash-page footer{background:rgba(10,40,18,.95)!important}
+
 /* Stat card clickable */
 .stat-card-clickable{cursor:pointer;transition:transform .15s,box-shadow .15s}
 .stat-card-clickable:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,168,74,.18)!important}
@@ -653,10 +686,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="dash-stats">
       <div class="stat-card"><div class="stat-val" id="u-total">0</div><div class="stat-lbl">Total Applications</div></div>
       <div class="stat-card"><div class="stat-val" id="u-pending" style="color:var(--gold2)">0</div><div class="stat-lbl">Pending</div></div>
-      <div class="stat-card"><div class="stat-val" id="u-approved" style="color:var(--g4)">0</div><div class="stat-lbl">Approved</div></div>
+      <div class="stat-card stat-card-clickable" id="u-approved-card" onclick="openUserApprovedFromCard()" title="Click karein approved dekhne ke liye" style="cursor:pointer"><div class="stat-val" id="u-approved" style="color:var(--g4)">0</div><div class="stat-lbl">Approved <span style="font-size:.6rem">👆</span></div></div>
     </div>
-    <div class="section-head"><h3>📋 Meri Applications</h3></div>
-    <div class="submissions-list" id="user-submissions"></div>
+    <!-- ⏳ Pending Section -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;margin-top:8px">
+      <h3 style="font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:#8a5c00">⏳ Pending Applications</h3>
+      <span id="u-pending-badge" style="background:rgba(240,165,0,.15);border:1px solid rgba(240,165,0,.4);color:#7a4f00;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:14px">0</span>
+    </div>
+    <div class="submissions-list" id="user-pending-list"></div>
+
+    <!-- ✅ Approved Section (hidden, shown on stat card click) -->
+    <div id="user-approved-list" style="display:none;margin-top:4px"></div>
   </div>
 </div>
 
@@ -1793,26 +1833,49 @@ async function userChangeFiles(input, appNo){
   });
 }
 
+let _userApprovedOpen = false;
+function toggleUserApproved(){
+  _userApprovedOpen = !_userApprovedOpen;
+  const list = document.getElementById('user-approved-list');
+  const card = document.getElementById('u-approved-card');
+  if(list) list.style.display = _userApprovedOpen ? 'flex' : 'none';
+  if(list) list.style.flexDirection = 'column';
+  if(list) list.style.gap = '14px';
+  if(card) card.classList.toggle('active', _userApprovedOpen);
+}
+function openUserApprovedFromCard(){
+  if(!_userApprovedOpen) toggleUserApproved();
+  setTimeout(()=>{
+    const list = document.getElementById('user-approved-list');
+    if(list) list.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 80);
+}
+
+
 async function renderUserDash(){
   const sess=getSession();
   if(!sess)return;
   showLoading('Data load ho raha hai...');
   const allSubs = await getSubs();
   hideLoading();
-  const subs=allSubs.filter(s=>s.userMobile===sess.mobile);
-  document.getElementById('u-total').textContent=subs.length;
-  document.getElementById('u-pending').textContent=subs.filter(s=>s.status==='Pending').length;
-  document.getElementById('u-approved').textContent=subs.filter(s=>s.status==='Approved').length;
-  const container=document.getElementById('user-submissions');
-  if(subs.length===0){
-    container.innerHTML='<div class="empty-state"><div>📭</div><div style="font-size:.9rem;margin-bottom:16px">Abhi koi application nahi hai</div><button class="new-app-btn" onclick="showPage(\'form-page\');resetForm()">➕ Pehla Application Bharein</button></div>';
-    return;
-  }
-  container.innerHTML=subs.slice().reverse().map(s=>`
-    <div class="sub-card">
+  const subs = allSubs.filter(s=>s.userMobile===sess.mobile);
+  const pendingSubs  = subs.filter(s=>s.status!=='Approved').slice().reverse();
+  const approvedSubs = subs.filter(s=>s.status==='Approved').slice().reverse();
+
+  document.getElementById('u-total').textContent   = subs.length;
+  document.getElementById('u-pending').textContent  = pendingSubs.length;
+  document.getElementById('u-approved').textContent = approvedSubs.length;
+  const pb = document.getElementById('u-pending-badge');
+  const ab = document.getElementById('u-approved-badge');
+  if(pb) pb.textContent = pendingSubs.length;
+  if(ab) ab.textContent = approvedSubs.length;
+
+  function buildCard(s){
+    return `
+    <div class="sub-card" style="${s.status==='Approved'?'background:rgba(232,245,233,.96);border:1.5px solid rgba(37,168,74,.25)':''}">
       <div class="sub-card-top">
         <div class="sub-card-info">
-          <div class="sub-icon">🌾</div>
+          <div class="sub-icon" style="${s.status==='Approved'?'background:linear-gradient(135deg,#1a7a35,#2ecc71)':''}">🌾</div>
           <div>
             <div class="sub-name">${s.name}</div>
             <div class="sub-appno">App No: <span>${s.appNo}</span></div>
@@ -1842,12 +1905,27 @@ async function renderUserDash(){
       <div class="sub-card-foot">
         <span class="sub-time">📅 ${s.time}</span>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          <button onclick='showReceipt(${JSON.stringify(s).replace(/'/g,"\\'")})' style="background:linear-gradient(135deg,#f0a500,#ffd056);border:none;color:#0d4a1f;font-size:.7rem;font-weight:700;padding:5px 12px;border-radius:16px;cursor:pointer;font-family:'Poppins',sans-serif">🖨️ Receipt</button>
+          <button onclick='showReceipt(${JSON.stringify(s).replace(/'/g,"\\'")})'  style="background:linear-gradient(135deg,#f0a500,#ffd056);border:none;color:#0d4a1f;font-size:.7rem;font-weight:700;padding:5px 12px;border-radius:16px;cursor:pointer;font-family:'Poppins',sans-serif">🖨️ Receipt</button>
         </div>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }
+
+  const pendingEl  = document.getElementById('user-pending-list');
+  const approvedEl = document.getElementById('user-approved-list');
+
+  if(pendingEl){
+    pendingEl.innerHTML = pendingSubs.length === 0
+      ? '<div class="empty-state" style="padding:24px 0"><div>✅</div><div style="font-size:.85rem">Koi pending application nahi!</div></div>'
+      : pendingSubs.map(s=>buildCard(s)).join('');
+  }
+  if(approvedEl){
+    approvedEl.innerHTML = approvedSubs.length === 0
+      ? '<div class="empty-state" style="padding:20px 0"><div>📭</div><div style="font-size:.85rem">Koi approved application nahi</div></div>'
+      : approvedSubs.map(s=>buildCard(s)).join('');
+  }
 }
+
 
 // ── ADMIN DASHBOARD ──
 async function renderAdminDash(){
