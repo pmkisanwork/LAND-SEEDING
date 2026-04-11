@@ -48,44 +48,44 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .dd-btn.red:hover{background:rgba(255,82,82,.1)}
 
 /* ═══ AUTH PAGE ═══ */
-#auth-page{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 16px}
+#auth-page{display:flex;flex-direction:column;min-height:100vh;background:linear-gradient(160deg,#f0faf4 0%,#e8f5e9 50%,#f9fbe7 100%)}
 .auth-logo{display:flex;align-items:center;gap:12px;margin-bottom:28px;text-decoration:none}
 .auth-logo-icon{width:52px;height:52px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 6px 22px rgba(240,165,0,.4)}
-.auth-logo-text{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.6rem;background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.auth-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:36px 32px;width:100%;max-width:420px;backdrop-filter:blur(20px);box-shadow:0 24px 60px rgba(0,0,0,.4);animation:slideUp .5s ease both}
+.auth-logo-text{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.6rem;background:linear-gradient(90deg,#0d4a1f,#1a7a35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.auth-card{background:#fff;border:1.5px solid rgba(37,168,74,.22);border-radius:24px;padding:36px 32px;width:100%;max-width:440px;box-shadow:0 8px 40px rgba(37,168,74,.13),0 2px 8px rgba(0,0,0,.06);animation:slideUp .5s ease both}
 @keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-.auth-tabs{display:flex;background:rgba(255,255,255,.06);border-radius:12px;padding:4px;margin-bottom:26px;gap:4px}
-.auth-tab{flex:1;text-align:center;padding:10px;border-radius:9px;font-size:.84rem;font-weight:600;cursor:pointer;transition:all .25s;color:rgba(255,255,255,.5);user-select:none}
-.auth-tab.active{background:linear-gradient(135deg,var(--g2),var(--g3));color:#fff;box-shadow:0 4px 14px rgba(37,168,74,.4)}
-.auth-title{font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:800;margin-bottom:4px}
-.auth-sub{color:rgba(255,255,255,.5);font-size:.82rem;margin-bottom:22px}
+.auth-tabs{display:flex;background:rgba(37,168,74,.09);border-radius:12px;padding:4px;margin-bottom:26px;gap:4px;border:1px solid rgba(37,168,74,.15)}
+.auth-tab{flex:1;text-align:center;padding:10px;border-radius:9px;font-size:.84rem;font-weight:600;cursor:pointer;transition:all .25s;color:#4a7a4a;user-select:none}
+.auth-tab.active{background:linear-gradient(135deg,var(--g2),var(--g3));color:#fff;box-shadow:0 4px 14px rgba(37,168,74,.35)}
+.auth-title{font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:800;margin-bottom:4px;color:#0d4a1f}
+.auth-sub{color:#6a8f6a;font-size:.82rem;margin-bottom:22px}
 .fg{margin-bottom:15px}
-.flabel{display:block;font-size:.76rem;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:6px;letter-spacing:.04em}
+.flabel{display:block;font-size:.76rem;font-weight:700;color:#2a5c2a;margin-bottom:6px;letter-spacing:.04em}
 .iw{position:relative}
-.ii{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none}
-.fi{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:11px;padding:12px 13px 12px 40px;color:#fff;font-family:'Poppins',sans-serif;font-size:.88rem;outline:none;transition:all .2s}
-.fi::placeholder{color:rgba(255,255,255,.27)}
-.fi:focus{border-color:var(--g3);background:rgba(37,168,74,.08);box-shadow:0 0 0 3px rgba(37,168,74,.1)}
+.ii{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;color:#1a7a35}
+.fi{width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:12px 13px 12px 40px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.88rem;outline:none;transition:all .2s}
+.fi::placeholder{color:#9abf9a}
+.fi:focus{border-color:var(--g3);background:#edf8ef;box-shadow:0 0 0 3px rgba(37,168,74,.12)}
 .fi.err{border-color:var(--error)}
-.tpw{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:14px;padding:0;transition:color .2s}
-.tpw:hover{color:#fff}
+.tpw{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#6a9a6a;cursor:pointer;font-size:14px;padding:0;transition:color .2s}
+.tpw:hover{color:#0d4a1f}
 .errmsg{color:var(--error);font-size:.71rem;margin-top:4px;display:none}
 .errmsg.show{display:block}
 .frgt{text-align:right;margin:-8px 0 14px}
-.frgt a{color:var(--gold2);font-size:.75rem;text-decoration:none}
+.frgt a{color:#1a7a35;font-size:.75rem;text-decoration:none;font-weight:600}
 .btn-main{width:100%;padding:13px;background:linear-gradient(135deg,var(--g2),var(--g3));border:none;border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;transition:all .25s;box-shadow:0 6px 20px rgba(37,168,74,.35);letter-spacing:.03em;margin-top:4px}
 .btn-main:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,168,74,.5)}
-.divdr{display:flex;align-items:center;gap:10px;margin:16px 0;color:rgba(255,255,255,.3);font-size:.75rem}
-.divdr::before,.divdr::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
-.switch-txt{text-align:center;font-size:.8rem;color:rgba(255,255,255,.5)}
-.switch-txt a{color:var(--gold2);font-weight:600;text-decoration:none;cursor:pointer}
+.divdr{display:flex;align-items:center;gap:10px;margin:16px 0;color:#9abf9a;font-size:.75rem}
+.divdr::before,.divdr::after{content:'';flex:1;height:1px;background:rgba(37,168,74,.18)}
+.switch-txt{text-align:center;font-size:.8rem;color:#5a7a5a}
+.switch-txt a{color:#1a7a35;font-weight:700;text-decoration:none;cursor:pointer}
 .pw-bars{display:flex;gap:4px;margin-top:7px;height:3px}
-.pw-bar{flex:1;border-radius:3px;background:rgba(255,255,255,.1);transition:background .3s}
+.pw-bar{flex:1;border-radius:3px;background:rgba(37,168,74,.12);transition:background .3s}
 .pw-bar.weak{background:var(--error)}
 .pw-bar.medium{background:var(--gold)}
 .pw-bar.strong{background:var(--g4)}
 .pw-lbl{font-size:.68rem;margin-top:3px}
-.pw-lbl.weak{color:var(--error)}.pw-lbl.medium{color:var(--gold)}.pw-lbl.strong{color:var(--g4)}
+.pw-lbl.weak{color:var(--error)}.pw-lbl.medium{color:#c07800}.pw-lbl.strong{color:#1a7a35}
 
 /* ═══ FORM PAGE ═══ */
 #form-page{padding-bottom:60px}
@@ -222,6 +222,50 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .form-card{padding:24px 16px}
   .dash-content{padding:20px 14px}
 }
+
+/* ═══ ADMIN LIGHT THEME ═══ */
+#admin-dash-page{background:linear-gradient(160deg,#e8f5ee 0%,#f0f7f2 40%,#faf8ef 100%)!important}
+#admin-dash-page .header{background:rgba(255,255,255,.97)!important;border-bottom:2px solid rgba(37,168,74,.25)!important;box-shadow:0 2px 16px rgba(37,168,74,.13)}
+#admin-dash-page .logo-text{background:linear-gradient(90deg,#0d4a1f,#1a7a35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+#admin-dash-page .admin-badge{background:rgba(240,165,0,.15);border-color:rgba(240,165,0,.4);color:#7a4f00}
+#admin-dash-page .user-btn{background:rgba(37,168,74,.1);border-color:rgba(37,168,74,.3);color:#1a3a20!important}
+#admin-dash-page .user-btn span{color:#1a3a20!important}
+#admin-dash-page .u-dd{background:#fff!important;border-color:rgba(37,168,74,.25)!important;box-shadow:0 12px 36px rgba(37,168,74,.18)!important}
+#admin-dash-page .u-dd-name{color:#1a3a20!important}
+#admin-dash-page .u-dd-mob{color:rgba(20,60,30,.6)!important}
+#admin-dash-page .dd-btn{color:rgba(15,50,25,.78)!important}
+#admin-dash-page .dd-btn:hover{background:rgba(37,168,74,.09)!important;color:#1a3a20!important}
+#admin-dash-page .dd-btn.red{color:#b71c1c!important}
+#admin-dash-page #admin-session-bar{background:rgba(37,168,74,.08)!important;border-bottom:1px solid rgba(37,168,74,.18)!important;color:rgba(15,50,25,.65)!important}
+#admin-dash-page #admin-session-time{color:#1a6e2e!important}
+#admin-dash-page .dash-hero{background:linear-gradient(135deg,#1a7a35,#25a84a,#2ecc71)!important}
+#admin-dash-page .dash-title{color:#fff!important}
+#admin-dash-page .dash-subtitle{color:rgba(255,255,255,.85)!important}
+#admin-dash-page .stat-card{background:rgba(255,255,255,.92)!important;border:1px solid rgba(37,168,74,.2)!important;box-shadow:0 2px 12px rgba(37,168,74,.07)!important}
+#admin-dash-page .stat-lbl{color:rgba(15,50,25,.6)!important}
+#admin-dash-page .section-head h3{color:#1a3a20!important}
+#admin-dash-page .search-bar{background:rgba(255,255,255,.95)!important;border-color:rgba(37,168,74,.25)!important}
+#admin-dash-page .search-bar input{color:#1a3a20!important}
+#admin-dash-page .search-bar input::placeholder{color:rgba(20,60,30,.4)!important}
+#admin-dash-page .sub-card{background:rgba(255,255,255,.93)!important;border:1px solid rgba(37,168,74,.16)!important;box-shadow:0 2px 10px rgba(37,168,74,.06)!important}
+#admin-dash-page .sub-card:hover{border-color:rgba(37,168,74,.4)!important}
+#admin-dash-page .sub-name{color:#0d2e0d!important;font-weight:700}
+#admin-dash-page .sub-appno{color:rgba(15,50,15,.6)!important}
+#admin-dash-page .sub-detail{background:rgba(37,168,74,.07)!important;border:1px solid rgba(37,168,74,.13)!important}
+#admin-dash-page .sub-detail-lbl{color:rgba(15,50,15,.55)!important}
+#admin-dash-page .sub-detail-val{color:#0d2e0d!important;font-weight:600}
+#admin-dash-page .sub-time{color:rgba(15,50,15,.5)!important}
+#admin-dash-page .empty-state{color:rgba(15,50,15,.45)!important}
+/* Approved panel toggle */
+.approved-panel{display:none}
+.approved-panel.open{display:flex;flex-direction:column;gap:14px}
+/* Achieve section */
+.achieve-section{display:none;margin-top:12px;padding:14px 16px;background:linear-gradient(135deg,#f0faf4,#e8f5e9);border:1.5px solid #a5d6a7;border-radius:12px}
+.achieve-section.open{display:block}
+/* Stat card clickable */
+.stat-card-clickable{cursor:pointer;transition:transform .15s,box-shadow .15s}
+.stat-card-clickable:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,168,74,.18)!important}
+.stat-card-clickable.active{border-color:rgba(37,168,74,.5)!important;background:rgba(232,245,233,.95)!important}
 </style>
 </head>
 <body>
@@ -229,126 +273,116 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- ══ AUTH PAGE ══ -->
 <div id="auth-page" class="page" style="display:flex;flex-direction:column;min-height:100vh;">
 
-  <!-- TOP NAVBAR -->
-  <nav style="background:rgba(10,30,16,.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(37,168,74,.2);padding:0 20px;position:sticky;top:0;z-index:100;">
-    <div style="max-width:1100px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-      <!-- Logo -->
-      <a href="#" style="display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0">
-        <div style="width:34px;height:34px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 4px 12px rgba(240,165,0,.35)">🌾</div>
-        <span style="font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">All Work Online</span>
+  <!-- TOP NAVBAR — Light -->
+  <nav style="background:#fff;border-bottom:2px solid rgba(37,168,74,.18);padding:0 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 14px rgba(37,168,74,.1);">
+    <div style="max-width:1200px;margin:0 auto;height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+      <a href="#" style="display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 12px rgba(240,165,0,.35)">🌾</div>
+        <span style="font-family:'Baloo 2',cursive;font-weight:800;font-size:1.05rem;background:linear-gradient(90deg,#0d4a1f,#1a7a35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">All Work Online</span>
       </a>
-      <!-- Nav Links -->
       <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
-        <a href="#" onclick="scrollToTop()" style="display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:20px;color:rgba(255,255,255,.7);font-size:.78rem;font-weight:600;text-decoration:none;transition:all .2s;background:rgba(255,255,255,.05);" onmouseover="this.style.background='rgba(37,168,74,.15)';this.style.color='#4ecb6e'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.color='rgba(255,255,255,.7)'">🏠 Home</a>
-        <a href="#" onclick="showServicesInfo()" style="display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:20px;color:rgba(255,255,255,.7);font-size:.78rem;font-weight:600;text-decoration:none;transition:all .2s;background:rgba(255,255,255,.05);" onmouseover="this.style.background='rgba(37,168,74,.15)';this.style.color='#4ecb6e'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.color='rgba(255,255,255,.7)'">⚙️ Services</a>
-        <a href="#" onclick="showStatusInfo()" style="display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:20px;color:rgba(255,255,255,.7);font-size:.78rem;font-weight:600;text-decoration:none;transition:all .2s;background:rgba(255,255,255,.05);" onmouseover="this.style.background='rgba(37,168,74,.15)';this.style.color='#4ecb6e'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.color='rgba(255,255,255,.7)'">📋 Status</a>
-        <a href="#" onclick="switchAuthTab('login')" style="display:flex;align-items:center;gap:5px;padding:7px 16px;border-radius:20px;background:linear-gradient(135deg,var(--g2),var(--g3));color:#fff;font-size:.78rem;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(37,168,74,.35);">🔐 Login</a>
+        <a href="#" onclick="scrollToTop()" style="padding:7px 13px;border-radius:20px;color:#2a5c2a;font-size:.78rem;font-weight:600;text-decoration:none;background:rgba(37,168,74,.08);transition:all .2s" onmouseover="this.style.background='rgba(37,168,74,.18)'" onmouseout="this.style.background='rgba(37,168,74,.08)'">🏠 Home</a>
+        <a href="#" onclick="showServicesInfo()" style="padding:7px 13px;border-radius:20px;color:#2a5c2a;font-size:.78rem;font-weight:600;text-decoration:none;background:rgba(37,168,74,.08);transition:all .2s" onmouseover="this.style.background='rgba(37,168,74,.18)'" onmouseout="this.style.background='rgba(37,168,74,.08)'">⚙️ Services</a>
+        <a href="#" onclick="showStatusInfo()" style="padding:7px 13px;border-radius:20px;color:#2a5c2a;font-size:.78rem;font-weight:600;text-decoration:none;background:rgba(37,168,74,.08);transition:all .2s" onmouseover="this.style.background='rgba(37,168,74,.18)'" onmouseout="this.style.background='rgba(37,168,74,.08)'">📋 Status</a>
+        <a href="#" onclick="switchAuthTab('login')" style="padding:7px 16px;border-radius:20px;background:linear-gradient(135deg,var(--g2),var(--g3));color:#fff;font-size:.78rem;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(37,168,74,.35);">🔐 Login</a>
       </div>
     </div>
   </nav>
 
-  <!-- HERO SECTION -->
-  <div style="background:linear-gradient(135deg,#071510,#0d3319,#0f4a22);padding:48px 20px 36px;text-align:center;position:relative;overflow:hidden;">
-    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(37,168,74,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(37,168,74,.04) 1px,transparent 1px);background-size:50px 50px;pointer-events:none"></div>
-    <div style="position:relative;z-index:1;max-width:600px;margin:0 auto;">
-      <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(78,203,110,.12);border:1px solid rgba(78,203,110,.28);color:var(--g4);font-size:.68rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:25px;margin-bottom:16px">● CSC Authorized Portal</div>
-      <h1 style="font-family:'Baloo 2',cursive;font-size:clamp(1.6rem,5vw,2.4rem);font-weight:800;color:#fff;margin-bottom:10px">PM KISAN <span style="color:var(--gold2)">Land Seeding</span><br>Registration Portal</h1>
-      <p style="color:rgba(255,255,255,.55);font-size:.88rem;margin-bottom:24px;line-height:1.7">किसानों के लिए ऑनलाइन रजिस्ट्रेशन सेवा — तेज़, सुरक्षित और आसान</p>
+  <!-- HERO SECTION — Light full width -->
+  <div style="background:linear-gradient(135deg,#e0f2e9,#f1f8e9,#fffde7);padding:50px 20px 38px;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid rgba(37,168,74,.12);">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(37,168,74,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(37,168,74,.06) 1px,transparent 1px);background-size:44px 44px;pointer-events:none"></div>
+    <div style="position:relative;z-index:1;max-width:640px;margin:0 auto;">
+      <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(37,168,74,.12);border:1.5px solid rgba(37,168,74,.3);color:#1a6e2e;font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 16px;border-radius:25px;margin-bottom:18px">● CSC Authorized Portal</div>
+      <h1 style="font-family:'Baloo 2',cursive;font-size:clamp(1.7rem,5vw,2.5rem);font-weight:800;color:#0d4a1f;margin-bottom:10px;line-height:1.2">PM KISAN <span style="color:#c07800">Land Seeding</span><br>Registration Portal</h1>
+      <p style="color:#3d6e3d;font-size:.9rem;margin-bottom:26px;line-height:1.75">किसानों के लिए ऑनलाइन रजिस्ट्रेशन सेवा — तेज़, सुरक्षित और आसान</p>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-        <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:8px 14px;border-radius:10px;font-size:.75rem;color:rgba(255,255,255,.6)">✅ 100% Secure</div>
-        <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:8px 14px;border-radius:10px;font-size:.75rem;color:rgba(255,255,255,.6)">⚡ Fast Processing</div>
-        <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:8px 14px;border-radius:10px;font-size:.75rem;color:rgba(255,255,255,.6)">🏆 CSC Authorized</div>
+        <div style="display:flex;align-items:center;gap:6px;background:#fff;border:1.5px solid rgba(37,168,74,.25);padding:9px 16px;border-radius:12px;font-size:.76rem;font-weight:600;color:#1a6e2e;box-shadow:0 2px 8px rgba(37,168,74,.1)">✅ 100% Secure</div>
+        <div style="display:flex;align-items:center;gap:6px;background:#fff;border:1.5px solid rgba(37,168,74,.25);padding:9px 16px;border-radius:12px;font-size:.76rem;font-weight:600;color:#1a6e2e;box-shadow:0 2px 8px rgba(37,168,74,.1)">⚡ Fast Processing</div>
+        <div style="display:flex;align-items:center;gap:6px;background:#fff;border:1.5px solid rgba(37,168,74,.25);padding:9px 16px;border-radius:12px;font-size:.76rem;font-weight:600;color:#1a6e2e;box-shadow:0 2px 8px rgba(37,168,74,.1)">🏆 CSC Authorized</div>
       </div>
     </div>
   </div>
 
-  <!-- AUTH CARD -->
-  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 16px;">
-  <div class="auth-card">
-    <div class="auth-tabs">
-      <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">🔐 Login</div>
-      <div class="auth-tab" id="tab-reg" onclick="switchAuthTab('reg')">📝 Register</div>
-    </div>
+  <!-- AUTH CARD — centered, full stretch -->
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 16px;background:linear-gradient(180deg,#edf7f0 0%,#f5fbf6 100%);">
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">🔐 Login</div>
+        <div class="auth-tab" id="tab-reg" onclick="switchAuthTab('reg')">📝 Register</div>
+      </div>
 
-    <!-- LOGIN -->
-    <div id="login-form">
-      <div class="auth-title">Swagat Hai! 🙏</div>
-      <div class="auth-sub">Apne account mein login karein</div>
-      <div class="fg">
-        <label class="flabel">📱 Mobile Number</label>
-        <div class="iw"><span class="ii">📞</span><input class="fi" id="l-mob" type="tel" placeholder="10 digit mobile number" maxlength="10"/></div>
-        <div class="errmsg" id="e-lm">Mobile number daalna zaroori hai</div>
-      </div>
-      <div class="fg">
-        <label class="flabel">🔑 Password</label>
-        <div class="iw"><span class="ii">🔒</span><input class="fi" id="l-pass" type="password" placeholder="Password daalen"/><button class="tpw" onclick="tpw('l-pass',this)">👁️</button></div>
-        <div class="errmsg" id="e-lp">Password daalna zaroori hai</div>
-      </div>
-      <div class="frgt"><a href="#">Password bhool gaye?</a></div>
-      <!-- Custom Captcha Login -->
-      <div style="margin-bottom:14px;">
-        <label class="flabel">🔐 Captcha Verify Karein</label>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <canvas id="captcha-canvas-login" width="160" height="48" style="border-radius:8px;cursor:pointer;" title="Click to refresh"></canvas>
-          <button type="button" onclick="generateCaptcha('login')" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:1rem;" title="Naya captcha">🔄</button>
+      <!-- LOGIN -->
+      <div id="login-form">
+        <div class="auth-title">Swagat Hai! 🙏</div>
+        <div class="auth-sub">Apne account mein login karein</div>
+        <div class="fg">
+          <label class="flabel">📱 Mobile Number</label>
+          <div class="iw"><span class="ii">📞</span><input class="fi" id="l-mob" type="tel" placeholder="10 digit mobile number" maxlength="10"/></div>
+          <div class="errmsg" id="e-lm">Mobile number daalna zaroori hai</div>
         </div>
-        <div class="iw"><span class="ii">🔤</span><input class="fi" id="captcha-input-login" type="text" placeholder="Upar dikhaa code yahan likhein" maxlength="6" autocomplete="off"/></div>
-        <div class="errmsg" id="e-captcha-login">⚠️ Captcha galat hai, dobara try karein</div>
+        <div class="fg">
+          <label class="flabel">🔑 Password</label>
+          <div class="iw"><span class="ii">🔒</span><input class="fi" id="l-pass" type="password" placeholder="Password daalen"/><button class="tpw" onclick="tpw('l-pass',this)">👁️</button></div>
+          <div class="errmsg" id="e-lp">Password daalna zaroori hai</div>
+        </div>
+        <div class="frgt"><a href="#" onclick="openForgotPass();return false;">Password bhool gaye?</a></div>
+        <div style="margin-bottom:14px;">
+          <label class="flabel">🔐 Captcha Verify Karein</label>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <canvas id="captcha-canvas-login" width="160" height="48" style="border-radius:8px;cursor:pointer;border:1.5px solid rgba(37,168,74,.22);" title="Click to refresh"></canvas>
+            <button type="button" onclick="generateCaptcha('login')" style="background:rgba(37,168,74,.1);border:1.5px solid rgba(37,168,74,.25);color:#1a7a35;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:1rem;" title="Naya captcha">🔄</button>
+          </div>
+          <div class="iw"><span class="ii">🔤</span><input class="fi" id="captcha-input-login" type="text" placeholder="Upar dikhaa code yahan likhein" maxlength="6" autocomplete="off"/></div>
+          <div class="errmsg" id="e-captcha-login">⚠️ Captcha galat hai, dobara try karein</div>
+        </div>
+        <button class="btn-main" onclick="doLogin()">Login Karein →</button>
+        <div class="divdr">ya</div>
+        <div class="switch-txt">Account nahi hai? <a onclick="switchAuthTab('reg')">Register karein</a></div>
       </div>
-      <button class="btn-main" onclick="doLogin()">Login Karein →</button>
-      <div class="divdr">ya</div>
-      <div class="switch-txt">Account nahi hai? <a onclick="switchAuthTab('reg')">Register karein</a></div>
-    </div>
 
-    <!-- REGISTER -->
-    <div id="reg-form" style="display:none">
-      <div class="auth-title">Naya Account 🆕</div>
-      <div class="auth-sub">Register karein — bilkul free!</div>
-      <div class="fg">
-        <label class="flabel">👤 Poora Naam</label>
-        <div class="iw"><span class="ii">😊</span><input class="fi" id="r-name" type="text" placeholder="Apna poora naam"/></div>
-        <div class="errmsg" id="e-rn">Naam daalna zaroori hai</div>
-      </div>
-      <div class="fg">
-        <label class="flabel">📱 Mobile Number</label>
-        <div class="iw"><span class="ii">📞</span><input class="fi" id="r-mob" type="tel" placeholder="10 digit mobile number" maxlength="10"/></div>
-        <div class="errmsg" id="e-rm">Sahi 10 digit mobile daalen</div>
-      </div>
-      <div class="fg">
-        <label class="flabel">🔑 Password</label>
-        <div class="iw"><span class="ii">🔒</span><input class="fi" id="r-pass" type="password" placeholder="Min 6 characters" oninput="checkPw(this.value)"/><button class="tpw" onclick="tpw('r-pass',this)">👁️</button></div>
-        <div class="pw-bars"><div class="pw-bar" id="pb1"></div><div class="pw-bar" id="pb2"></div><div class="pw-bar" id="pb3"></div></div>
-        <div class="pw-lbl" id="pw-lbl" style="display:none"></div>
-        <div class="errmsg" id="e-rp">Min 6 characters ka password daalen</div>
-      </div>
-      <div class="fg">
-        <label class="flabel">🔑 Confirm Password</label>
-        <div class="iw"><span class="ii">🔒</span><input class="fi" id="r-pass2" type="password" placeholder="Password dobara likhein"/><button class="tpw" onclick="tpw('r-pass2',this)">👁️</button></div>
-        <div class="errmsg" id="e-rp2">Dono passwords match nahi kar rahe</div>
-      </div>
-      <!-- Custom Captcha Register -->
-      <div style="margin-bottom:14px;">
-        <label class="flabel">🔐 Captcha Verify Karein</label>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <canvas id="captcha-canvas-reg" width="160" height="48" style="border-radius:8px;cursor:pointer;" title="Click to refresh"></canvas>
-          <button type="button" onclick="generateCaptcha('reg')" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:1rem;" title="Naya captcha">🔄</button>
+      <!-- REGISTER -->
+      <div id="reg-form" style="display:none">
+        <div class="auth-title">Naya Account 🆕</div>
+        <div class="auth-sub">Register karein — bilkul free!</div>
+        <div class="fg">
+          <label class="flabel">👤 Poora Naam</label>
+          <div class="iw"><span class="ii">😊</span><input class="fi" id="r-name" type="text" placeholder="Apna poora naam"/></div>
+          <div class="errmsg" id="e-rn">Naam daalna zaroori hai</div>
         </div>
-        <div class="iw"><span class="ii">🔤</span><input class="fi" id="captcha-input-reg" type="text" placeholder="Upar dikhaa code yahan likhein" maxlength="6" autocomplete="off"/></div>
-        <div class="errmsg" id="e-captcha-reg">⚠️ Captcha galat hai, dobara try karein</div>
+        <div class="fg">
+          <label class="flabel">📱 Mobile Number</label>
+          <div class="iw"><span class="ii">📞</span><input class="fi" id="r-mob" type="tel" placeholder="10 digit mobile number" maxlength="10"/></div>
+          <div class="errmsg" id="e-rm">Sahi 10 digit mobile daalen</div>
+        </div>
+        <div class="fg">
+          <label class="flabel">🔑 Password</label>
+          <div class="iw"><span class="ii">🔒</span><input class="fi" id="r-pass" type="password" placeholder="Min 6 characters" oninput="checkPw(this.value)"/><button class="tpw" onclick="tpw('r-pass',this)">👁️</button></div>
+          <div class="pw-bars"><div class="pw-bar" id="pb1"></div><div class="pw-bar" id="pb2"></div><div class="pw-bar" id="pb3"></div></div>
+          <div class="pw-lbl" id="pw-lbl" style="display:none"></div>
+          <div class="errmsg" id="e-rp">Min 6 characters ka password daalen</div>
+        </div>
+        <div class="fg">
+          <label class="flabel">🔑 Confirm Password</label>
+          <div class="iw"><span class="ii">🔒</span><input class="fi" id="r-pass2" type="password" placeholder="Password dobara likhein"/><button class="tpw" onclick="tpw('r-pass2',this)">👁️</button></div>
+          <div class="errmsg" id="e-rp2">Dono passwords match nahi kar rahe</div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label class="flabel">🔐 Captcha Verify Karein</label>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <canvas id="captcha-canvas-reg" width="160" height="48" style="border-radius:8px;cursor:pointer;border:1.5px solid rgba(37,168,74,.22);" title="Click to refresh"></canvas>
+            <button type="button" onclick="generateCaptcha('reg')" style="background:rgba(37,168,74,.1);border:1.5px solid rgba(37,168,74,.25);color:#1a7a35;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:1rem;" title="Naya captcha">🔄</button>
+          </div>
+          <div class="iw"><span class="ii">🔤</span><input class="fi" id="captcha-input-reg" type="text" placeholder="Upar dikhaa code yahan likhein" maxlength="6" autocomplete="off"/></div>
+          <div class="errmsg" id="e-captcha-reg">⚠️ Captcha galat hai, dobara try karein</div>
+        </div>
+        <button class="btn-main" onclick="doRegister()">Account Banayein 🎉</button>
+        <div class="divdr">ya</div>
+        <div class="switch-txt">Pehle se account hai? <a onclick="switchAuthTab('login')">Login karein</a></div>
       </div>
-      <button class="btn-main" onclick="doRegister()">Account Banayein 🎉</button>
-      <div class="divdr">ya</div>
-      <div class="switch-txt">Pehle se account hai? <a onclick="switchAuthTab('login')">Login karein</a></div>
     </div>
-  </div>
-  <div style="margin-top:16px;font-size:.72rem;color:rgba(255,255,255,.3);text-align:center">🔒 Aapka data bilkul safe hai | All Work Online</div>
-  </div><!-- end auth card wrapper -->
+    <div style="margin-top:18px;font-size:.73rem;color:#5a7a5a;text-align:center">🔒 Aapka data bilkul safe hai | All Work Online</div>
   </div><!-- end flex center -->
-
-  <!-- COPYRIGHT -->
-  <div style="background:rgba(5,12,8,.98);border-top:1px solid rgba(255,255,255,.06);padding:12px 20px;text-align:center;">
-    <div style="font-size:.7rem;color:rgba(255,255,255,.2)">© 2025 All Work Online. All rights reserved. | Designed with ❤️ for Indian Farmers | CSC Authorized</div>
-  </div>
 
 </div>
 
@@ -367,6 +401,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           <div class="u-dd-info"><div class="u-dd-name" id="dd-name">—</div><div class="u-dd-mob" id="dd-mob">—</div></div>
           <button class="dd-btn" onclick="showPage('user-dash-page');renderUserDash()">📊 Mera Dashboard</button>
           <button class="dd-btn" onclick="showPage('form-page')">📝 Naya Application</button>
+          <button class="dd-btn" onclick="openUserChangePass()">🔑 Password Change Karein</button>
           <button class="dd-btn red" onclick="doLogout()">🚪 Logout</button>
         </div>
       </div>
@@ -526,6 +561,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <p style="color:rgba(255,255,255,.55);font-size:.85rem;margin-bottom:6px">Aapka Application Number:</p>
         <div class="app-no" id="app-no-display"></div>
         <p style="color:rgba(255,255,255,.5);font-size:.82rem;line-height:1.7;max-width:400px;margin:0 auto 28px">Processing mein 2-3 working days lagte hain. Status apne dashboard mein dekh sakte hain.</p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:12px">
+          <button onclick="showReceipt()" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f0a500,#ffd056);border:none;border-radius:11px;color:#0d4a1f;font-family:'Poppins',sans-serif;font-size:.9rem;font-weight:800;padding:13px 24px;cursor:pointer;box-shadow:0 6px 20px rgba(240,165,0,.45)">🖨️ Receipt / Rasid Print Karein</button>
+        </div>
         <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
           <button class="new-app-btn" onclick="showPage('user-dash-page');renderUserDash()">📊 Dashboard Dekhein</button>
           <button class="btn-outline" onclick="resetForm()">📝 Naya Application</button>
@@ -566,7 +604,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div>
           <div style="font-weight:700;font-size:.76rem;color:rgba(255,255,255,.5);margin-bottom:10px;letter-spacing:.06em;text-transform:uppercase">Contact</div>
           <div style="display:flex;flex-direction:column;gap:7px;">
-            <span style="font-size:.74rem;color:rgba(255,255,255,.35)">📞 8960947991</span>
             <span style="font-size:.74rem;color:rgba(255,255,255,.35)">🕐 Mon–Sat: 9AM – 6PM</span>
             <span style="font-size:.74rem;color:rgba(255,255,255,.35)">📍 CSC Center, India</span>
           </div>
@@ -595,6 +632,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           <div class="u-dd-info"><div class="u-dd-name" id="dd-name2">—</div><div class="u-dd-mob" id="dd-mob2">—</div></div>
           <button class="dd-btn" onclick="showPage('user-dash-page');renderUserDash()">📊 Mera Dashboard</button>
           <button class="dd-btn" onclick="showPage('form-page');resetForm()">📝 Naya Application</button>
+          <button class="dd-btn" onclick="openUserChangePass()">🔑 Password Change Karein</button>
           <button class="dd-btn red" onclick="doLogout()">🚪 Logout</button>
         </div>
       </div>
@@ -620,9 +658,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="section-head"><h3>📋 Meri Applications</h3></div>
     <div class="submissions-list" id="user-submissions"></div>
   </div>
-  <div style="background:rgba(5,12,8,.98);border-top:1px solid rgba(255,255,255,.06);padding:14px 20px;text-align:center;margin-top:40px;">
-    <div style="font-size:.7rem;color:rgba(255,255,255,.2)">© 2025 All Work Online. All rights reserved. | Designed with ❤️ for Indian Farmers | CSC Authorized</div>
-  </div>
 </div>
 
 <!-- ══ ADMIN DASHBOARD ══ -->
@@ -646,6 +681,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
               <div style="font-size:.65rem;color:var(--gold2);margin-top:3px">🛡️ Administrator</div>
             </div>
             <button class="dd-btn" onclick="openChangePass()">🔑 Password Change Karein</button>
+            <button class="dd-btn" onclick="openAdminAchieve()">🏆 Achievements Dekhe</button>
             <button class="dd-btn red" onclick="doLogout()">🚪 Logout</button>
           </div>
         </div>
@@ -673,6 +709,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="stat-card"><div class="stat-val" id="a-total">0</div><div class="stat-lbl">Total Applications</div></div>
       <div class="stat-card"><div class="stat-val" id="a-users" style="color:var(--g4)">0</div><div class="stat-lbl">Total Users</div></div>
       <div class="stat-card"><div class="stat-val" id="a-today" style="color:#79b8ff">0</div><div class="stat-lbl">Aaj Ki Applications</div></div>
+      <div class="stat-card stat-card-clickable" id="approved-stat-card" onclick="toggleApprovedPanel()" title="Click karein approved dekhne ke liye">
+        <div class="stat-val" id="a-approved" style="color:#1a7a35">0</div>
+        <div class="stat-lbl">Total Approved <span style="font-size:.6rem">👆</span></div>
+      </div>
     </div>
     <div class="section-head">
       <h3>📋 Sabhi Applications</h3>
@@ -681,22 +721,41 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <span>🔍</span>
       <input type="text" id="search-inp" placeholder="Naam, Mobile, App No se search karein..." oninput="renderAdminDash()"/>
     </div>
-    <div class="submissions-list" id="admin-submissions"></div>
+
+    <!-- ⏳ PENDING -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <h3 style="font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:#8a5c00">⏳ Pending Applications</h3>
+      <span id="pending-count-badge" style="background:rgba(240,165,0,.15);border:1px solid rgba(240,165,0,.4);color:#7a4f00;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:14px">0</span>
+    </div>
+    <div class="submissions-list" id="admin-pending-list"></div>
+
+    <!-- ✅ APPROVED (hidden, toggle via stat card) -->
+    <div style="margin-top:24px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <h3 style="font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:#1a7a35">✅ Approved Applications</h3>
+        <span id="approved-count-badge" style="background:rgba(37,168,74,.12);border:1px solid rgba(37,168,74,.3);color:#1a5c1a;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:14px">0</span>
+      </div>
+      <div class="approved-panel" id="admin-approved-list"></div>
+    </div>
 
     <!-- ══ REGISTERED USERS LIST ══ -->
     <div style="margin-top:32px">
       <div class="section-head" style="margin-bottom:16px">
-        <h3>👥 Registered Users</h3>
-        <span id="users-count-badge" style="background:rgba(56,139,253,.15);border:1px solid rgba(56,139,253,.3);color:#79b8ff;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:14px">0 Users</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <h3>👥 Registered Users</h3>
+          <span id="users-count-badge" style="background:rgba(56,139,253,.15);border:1px solid rgba(56,139,253,.3);color:#1a3a8f;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:14px">0 Users</span>
+        </div>
+        <button onclick="toggleUsersSection()" id="users-toggle-btn" style="background:rgba(56,139,253,.1);border:1px solid rgba(56,139,253,.28);color:#1a3a8f;font-size:.75rem;font-weight:700;padding:7px 16px;border-radius:10px;cursor:pointer;font-family:'Poppins',sans-serif;transition:all .2s">
+          ▼ ID / Password Dekhe
+        </button>
       </div>
-      <div id="admin-users-list" style="display:flex;flex-direction:column;gap:10px"></div>
+      <div id="admin-users-list" style="display:none;flex-direction:column;gap:10px"></div>
     </div>
   </div>
 
-  <!-- ══ ADMIN COPYRIGHT ══ -->
-  <div style="background:rgba(5,12,8,.98);border-top:1px solid rgba(240,165,0,.12);padding:14px 20px;margin-top:40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-    <div style="font-size:.7rem;color:rgba(255,255,255,.22)">© 2025 All Work Online. All rights reserved.</div>
-    <div style="font-size:.7rem;color:rgba(255,255,255,.18)">Designed with ❤️ for Indian Farmers | CSC Authorized</div>
+  <!-- ══ ADMIN COPYRIGHT (bottom only) ══ -->
+  <div style="background:rgba(10,50,20,.93);border-top:2px solid rgba(37,168,74,.28);padding:16px 24px;margin-top:40px;text-align:center">
+    <div style="font-size:.72rem;color:rgba(255,255,255,.65)">© 2025 All Work Online. All rights reserved. | Designed with ❤️ for Indian Farmers | CSC Authorized</div>
   </div>
 </div>
 
@@ -833,7 +892,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
     <!-- Demo info box -->
     <div style="margin-top:18px;padding:10px 14px;background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);border-radius:10px;font-size:.72rem;color:rgba(255,255,255,.45);text-align:left">
-      💡 <strong style="color:var(--gold2)">Email OTP:</strong> OTP <strong>zdxyzofficial@gmail.com</strong> par bheja gaya hai. Email inbox ya spam folder check karein.
+      💡 <strong style="color:var(--gold2)">Email OTP:</strong> OTP <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ff859b878685909999969c969e93bf98929e9693d19c9092">[email&#160;protected]</a></strong> par bheja gaya hai. Email inbox ya spam folder check karein.
     </div>
   </div>
 </div>
@@ -899,6 +958,16 @@ function deleteSub(appNo){
 }
 function clearAllSubs(){
   return db.ref('submissions').remove();
+}
+
+function deleteUser(mobile){
+  return db.ref('users/'+mobile).remove();
+}
+function updateUserPassword(mobile, newPass){
+  return db.ref('users/'+mobile+'/password').set(newPass);
+}
+function updateSubFiles(appNo, fileData, files){
+  return db.ref('submissions/'+appNo).update({fileData, files});
 }
 
 // ── LOADING UI ──
@@ -1048,6 +1117,92 @@ function switchAuthTab(t){
   document.getElementById('reg-form').style.display=t==='reg'?'block':'none';
   // Refresh captcha on tab switch
   setTimeout(()=>generateCaptcha(t), 100);
+}
+
+// ── FORGOT PASSWORD ──
+function openForgotPass(){
+  document.getElementById('fp-name').value='';
+  document.getElementById('fp-mobile').value='';
+  document.getElementById('fp-result').style.display='none';
+  document.getElementById('fp-notfound').style.display='none';
+  const popup = document.getElementById('forgot-popup');
+  popup.style.display='flex';
+  setTimeout(()=>document.getElementById('fp-name').focus(),100);
+}
+function closeForgotPass(){
+  document.getElementById('forgot-popup').style.display='none';
+}
+
+let _fpTimer=null;
+async function lookupUser(){
+  const name   = (document.getElementById('fp-name').value||'').trim().toLowerCase();
+  const mobile = (document.getElementById('fp-mobile').value||'').trim();
+  document.getElementById('fp-result').style.display='none';
+  document.getElementById('fp-notfound').style.display='none';
+
+  if(name.length < 2 || mobile.length < 10) return;
+
+  // Admin ka password forgot password se nahi dikhega
+  if(mobile === ADMIN_MOB){
+    document.getElementById('fp-notfound').style.display='block';
+    document.getElementById('fp-result').style.display='none';
+    return;
+  }
+
+  clearTimeout(_fpTimer);
+  _fpTimer = setTimeout(async ()=>{
+    const user = await getUserByMobile(mobile);
+    if(user && user.name && user.name.toLowerCase() === name){
+      showFpResult(user.mobile, user.password, user.name);
+    } else {
+      document.getElementById('fp-notfound').style.display='block';
+      document.getElementById('fp-result').style.display='none';
+    }
+  }, 400);
+}
+
+function showFpResult(mobile, password, name){
+  document.getElementById('fp-notfound').style.display='none';
+  const box = document.getElementById('fp-result');
+  box.style.display='block';
+  box.innerHTML=`
+    <div style="background:linear-gradient(135deg,#e8f5e9,#f1f8e9);border:2px solid #25a84a;border-radius:12px;padding:16px 18px">
+      <div style="font-size:.68rem;font-weight:700;color:#1a7a35;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">✅ Account Mila!</div>
+      <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+        <tr style="border-bottom:1px dashed rgba(37,168,74,.2)">
+          <td style="padding:6px 4px;color:#5a7a5a;width:44%">👤 Naam</td>
+          <td style="padding:6px 4px;font-weight:700;color:#0d4a1f">${name}</td>
+        </tr>
+        <tr style="border-bottom:1px dashed rgba(37,168,74,.2)">
+          <td style="padding:6px 4px;color:#5a7a5a">📱 User ID</td>
+          <td style="padding:6px 4px;font-weight:700;color:#0d4a1f;letter-spacing:.04em">${mobile}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 4px;color:#5a7a5a">🔑 Password</td>
+          <td style="padding:6px 4px">
+            <span id="fp-pw-val" style="font-weight:700;color:#0d4a1f;letter-spacing:.08em">••••••••</span>
+            <button onclick="toggleFpPw('${password}')" style="background:none;border:none;color:#1a7a35;cursor:pointer;font-size:13px;margin-left:6px;padding:0">👁️</button>
+          </td>
+        </tr>
+      </table>
+      <button onclick="fillLoginFromFp('${mobile}','${password}');closeForgotPass();"
+        style="margin-top:14px;width:100%;padding:11px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:10px;color:#fff;font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(37,168,74,.35)">
+        🔐 Is Account se Login Karein →
+      </button>
+    </div>`;
+}
+
+function toggleFpPw(pw){
+  const el = document.getElementById('fp-pw-val');
+  if(!el) return;
+  el.textContent = el.textContent === '••••••••' ? pw : '••••••••';
+}
+
+function fillLoginFromFp(mobile, password){
+  document.getElementById('l-mob').value  = mobile;
+  document.getElementById('l-pass').value = password;
+  switchAuthTab('login');
+  toast('✅ Mobile aur Password fill ho gaya!','ok');
 }
 
 function tpw(id,btn){
@@ -1554,6 +1709,7 @@ function submitForm(){
   saveSub(sub).then(()=>{
     hideLoading();
     _uploadedFiles=[];
+    window._lastSub = sub;
     document.getElementById('app-no-display').textContent=appNo;
     document.getElementById('form-view').style.display='none';
     document.getElementById('success-view').style.display='block';
@@ -1574,6 +1730,69 @@ function resetForm(){
 }
 
 // ── USER DASHBOARD ──
+
+// ── USER FILE VIEW ──
+async function userViewFile(appNo){
+  showLoading('Files load ho rahi hain...');
+  const allSubs = await getSubs();
+  hideLoading();
+  const sub = allSubs.find(s => s.appNo === appNo);
+  if(!sub || !sub.fileData || !sub.fileData.length){ toast('❌ Koi file nahi mili','fail'); return; }
+  const win = window.open('','_blank');
+  let html = '<html><head><meta charset="UTF-8"><style>body{margin:0;background:#111;font-family:sans-serif;padding:16px}h2{color:#4ecb6e;margin-bottom:16px}.fcard{background:#1a2e1a;border:1px solid #2e6e2e;border-radius:12px;padding:14px;margin-bottom:14px}.fname{color:#fff;font-weight:700;margin-bottom:10px;font-size:.9rem}img{max-width:100%;border-radius:8px;display:block}embed{width:100%;height:500px;border-radius:8px}</style></head><body>';
+  html += '<h2>📎 Uploaded Files — ' + sub.appNo + '</h2>';
+  sub.fileData.forEach((f, i) => {
+    html += '<div class="fcard"><div class="fname">' + (i+1) + '. ' + f.name + '</div>';
+    if(f.type && f.type.startsWith('image/')){
+      html += '<img src="' + f.data + '"/>';
+    } else if(f.type === 'application/pdf'){
+      html += '<embed src="' + f.data + '" type="application/pdf"/>';
+    } else {
+      html += '<p style="color:#aaa">Preview available nahi hai.</p>';
+    }
+    html += '</div>';
+  });
+  html += '</body></html>';
+  win.document.write(html);
+  win.document.close();
+}
+
+// ── USER FILE CHANGE ──
+async function userChangeFiles(input, appNo){
+  const files = Array.from(input.files);
+  if(!files.length) return;
+
+  const maxSize = 5 * 1024 * 1024; // 5MB per file
+  for(const f of files){
+    if(f.size > maxSize){ toast('❌ File bahut badi hai (max 5MB)','fail'); input.value=''; return; }
+  }
+
+  showLoading('Files update ho rahi hain...');
+  const newFileData = [];
+  let loaded = 0;
+
+  files.forEach(f => {
+    const reader = new FileReader();
+    reader.onload = async function(e){
+      newFileData.push({name: f.name, type: f.type, data: e.target.result});
+      loaded++;
+      if(loaded === files.length){
+        const fileNames = files.map(f=>f.name).join(', ');
+        try{
+          await updateSubFiles(appNo, newFileData, fileNames);
+          hideLoading();
+          toast('✅ Files successfully update ho gayi!','ok');
+          renderUserDash();
+        } catch(err){
+          hideLoading();
+          toast('❌ Update nahi hua. Internet check karein','fail');
+        }
+      }
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
 async function renderUserDash(){
   const sess=getSession();
   if(!sess)return;
@@ -1613,9 +1832,18 @@ async function renderUserDash(){
         <div class="sub-detail"><div class="sub-detail-lbl">Mobile</div><div class="sub-detail-val">${s.mobile}</div></div>
         <div class="sub-detail"><div class="sub-detail-lbl">UTR Number</div><div class="sub-detail-val">${s.utr}</div></div>
       </div>
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(37,168,74,.15);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <button onclick="userViewFile('${s.appNo}')" style="background:rgba(37,168,74,.12);border:1px solid rgba(37,168,74,.3);color:#1a5c1a;font-size:.78rem;font-weight:700;padding:8px 14px;border-radius:10px;cursor:pointer;font-family:'Poppins',sans-serif">👁️ File Dekho</button>
+        <label style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:10px;padding:8px 14px;color:#fff;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;box-shadow:0 3px 10px rgba(37,168,74,.3)">
+          🔄 Re-Upload
+          <input type="file" multiple accept="image/*,.pdf" style="display:none" onchange="userChangeFiles(this,'${s.appNo}')">
+        </label>
+      </div>
       <div class="sub-card-foot">
         <span class="sub-time">📅 ${s.time}</span>
-        <span class="sub-time">📁 ${s.files}</span>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <button onclick='showReceipt(${JSON.stringify(s).replace(/'/g,"\\'")})' style="background:linear-gradient(135deg,#f0a500,#ffd056);border:none;color:#0d4a1f;font-size:.7rem;font-weight:700;padding:5px 12px;border-radius:16px;cursor:pointer;font-family:'Poppins',sans-serif">🖨️ Receipt</button>
+        </div>
       </div>
     </div>
   `).join('');
@@ -1644,55 +1872,91 @@ async function renderAdminDash(){
   const today=new Date().toLocaleDateString('hi-IN');
   document.getElementById('a-today').textContent=allSubs.filter(s=>s.time&&s.time.includes(today.split('/')[0])).length;
 
-  const container=document.getElementById('admin-submissions');
-  if(subs.length===0){
-    container.innerHTML='<div class="empty-state"><div>📭</div><div>Abhi koi application nahi aayi</div></div>';
-  } else {
-  container.innerHTML=subs.slice().reverse().map(s=>`
-    <div class="sub-card">
+  const sortFn=(a,b)=>{
+    const na=parseInt((a.appNo||'').replace(/\D/g,''))||0;
+    const nb=parseInt((b.appNo||'').replace(/\D/g,''))||0;
+    return nb-na;
+  };
+  const pendingSubs  = subs.filter(s=>s.status!=='Approved').sort(sortFn);
+  const approvedSubs = subs.filter(s=>s.status==='Approved').sort(sortFn);
+
+  // Update stat counts
+  const aApprStat = document.getElementById('a-approved');
+  if(aApprStat) aApprStat.textContent = allSubs.filter(s=>s.status==='Approved').length;
+  const pbadge = document.getElementById('pending-count-badge');
+  const abadge = document.getElementById('approved-count-badge');
+  if(pbadge) pbadge.textContent = pendingSubs.length;
+  if(abadge) abadge.textContent = approvedSubs.length;
+
+  function buildCard(s, isApproved){
+    const bgStyle = isApproved
+      ? 'background:rgba(232,245,233,.96);border:1.5px solid rgba(37,168,74,.3)'
+      : 'background:rgba(255,255,255,.93);border:1px solid rgba(37,168,74,.16)';
+    const divLine = isApproved ? 'rgba(37,168,74,.2)' : 'rgba(37,168,74,.1)';
+    return `
+    <div class="sub-card" style="${bgStyle};border-radius:16px;padding:20px 18px;box-shadow:0 2px 10px rgba(37,168,74,.06)">
       <div class="sub-card-top">
         <div class="sub-card-info">
-          <div class="sub-icon">🌾</div>
+          <div class="sub-icon" style="${isApproved?'background:linear-gradient(135deg,#1a7a35,#2ecc71)':''}">🌾</div>
           <div>
-            <div class="sub-name">${s.name}</div>
-            <div class="sub-appno">App No: <span>${s.appNo}</span> &nbsp;|&nbsp; User: <span style="color:#79b8ff">${s.userName||''} (${s.userMobile||''})</span></div>
+            <div style="font-weight:700;font-size:.92rem;color:#0d2e0d">${s.name}</div>
+            <div style="font-size:.7rem;color:rgba(15,50,15,.6);margin-top:2px">App No: <span style="color:#1a6e2e;font-weight:700">${s.appNo}</span> &nbsp;|&nbsp; User: <span style="color:#1a3a8a;font-weight:600">${s.userName||''} (${s.userMobile||''})</span></div>
           </div>
         </div>
         <div class="badges">
-          <span class="badge badge-${s.status==='Approved'?'green':'gold'}">${s.status==='Approved'?'✅ Approved':'⏳ Pending'}</span>
-          <button onclick="toggleStatus('${s.appNo}','${s.status}')" style="background:rgba(56,139,253,.15);border:1px solid rgba(56,139,253,.3);color:#79b8ff;font-size:.67rem;font-weight:700;padding:3px 10px;border-radius:14px;cursor:pointer;font-family:'Poppins',sans-serif;">${s.status==='Approved'?'↩ Pending Karen':'✅ Approve Karen'}</button>
+          <span class="badge badge-${isApproved?'green':'gold'}">${isApproved?'✅ Approved':'⏳ Pending'}</span>
+          <button onclick="toggleStatus('${s.appNo}','${s.status}')" style="background:${isApproved?'rgba(229,62,62,.1)':'rgba(37,168,74,.12)'};border:1px solid ${isApproved?'rgba(229,62,62,.3)':'rgba(37,168,74,.3)'};color:${isApproved?'#b71c1c':'#1a6e2e'};font-size:.67rem;font-weight:700;padding:3px 10px;border-radius:14px;cursor:pointer;font-family:'Poppins',sans-serif">${isApproved?'↩ Pending Karen':'✅ Approve Karen'}</button>
         </div>
       </div>
       <div class="sub-details">
-        <div class="sub-detail"><div class="sub-detail-lbl">Reg. Number</div><div class="sub-detail-val">${s.regno}</div></div>
-        <div class="sub-detail"><div class="sub-detail-lbl">Pita Ka Naam</div><div class="sub-detail-val">${s.father}</div></div>
-        <div class="sub-detail"><div class="sub-detail-lbl">Mobile</div><div class="sub-detail-val">${s.mobile}</div></div>
-        <div class="sub-detail"><div class="sub-detail-lbl">Village</div><div class="sub-detail-val">${s.village}</div></div>
-        <div class="sub-detail"><div class="sub-detail-lbl">Sub District</div><div class="sub-detail-val">${s.sub}</div></div>
-        <div class="sub-detail"><div class="sub-detail-lbl">District</div><div class="sub-detail-val">${s.district}</div></div>
-        <div class="sub-detail"><div class="sub-detail-lbl">State</div><div class="sub-detail-val">${s.state}</div></div>
-        <div class="sub-detail"><div class="sub-detail-lbl">UTR Number</div><div class="sub-detail-val">${s.utr}</div></div>
+        <div class="sub-detail"><div class="sub-detail-lbl" style="color:rgba(15,50,15,.55)">Reg. Number</div><div class="sub-detail-val" style="color:#0d2e0d">${s.regno}</div></div>
+        <div class="sub-detail"><div class="sub-detail-lbl" style="color:rgba(15,50,15,.55)">Pita Ka Naam</div><div class="sub-detail-val" style="color:#0d2e0d">${s.father}</div></div>
+        <div class="sub-detail"><div class="sub-detail-lbl" style="color:rgba(15,50,15,.55)">Mobile</div><div class="sub-detail-val" style="color:#0d2e0d">${s.mobile}</div></div>
+        <div class="sub-detail"><div class="sub-detail-lbl" style="color:rgba(15,50,15,.55)">Village</div><div class="sub-detail-val" style="color:#0d2e0d">${s.village}</div></div>
+        <div class="sub-detail"><div class="sub-detail-lbl" style="color:rgba(15,50,15,.55)">Sub District</div><div class="sub-detail-val" style="color:#0d2e0d">${s.sub}</div></div>
+        <div class="sub-detail"><div class="sub-detail-lbl" style="color:rgba(15,50,15,.55)">District</div><div class="sub-detail-val" style="color:#0d2e0d">${s.district}</div></div>
+        <div class="sub-detail"><div class="sub-detail-lbl" style="color:rgba(15,50,15,.55)">State</div><div class="sub-detail-val" style="color:#0d2e0d">${s.state}</div></div>
+        <div class="sub-detail"><div class="sub-detail-lbl" style="color:rgba(15,50,15,.55)">UTR Number</div><div class="sub-detail-val" style="color:#0d2e0d">${s.utr}</div></div>
       </div>
-      <div class="sub-card-foot">
-        <span class="sub-time">📅 ${s.time} &nbsp;|&nbsp; 📁 ${s.files}</span>
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid ${divLine};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <span style="font-size:.7rem;color:rgba(15,50,15,.5)">📅 ${s.time||''} &nbsp;|&nbsp; 📁 ${s.files||'—'}</span>
         <button class="del-btn" onclick="deleteApp('${s.appNo}')">🗑️ Delete</button>
       </div>
       ${s.fileData && s.fileData.length > 0 ? `
-      <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);">
-        <div style="font-size:.72rem;color:rgba(255,255,255,.4);margin-bottom:8px">📎 Uploaded Documents:</div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;">
-          ${s.fileData.map((f,i) => `
-            <div style="display:flex;align-items:center;gap:6px;background:rgba(56,139,253,.1);border:1px solid rgba(56,139,253,.25);border-radius:10px;padding:6px 10px;">
-              <span style="font-size:.75rem;color:#79b8ff;font-weight:600">📄 ${f.name.substring(0,18)}${f.name.length>18?'…':''}</span>
-              <button onclick="viewFile('${s.appNo}',${i})" style="background:rgba(78,203,110,.15);border:1px solid rgba(78,203,110,.3);color:var(--g4);font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif;">👁️ View</button>
-              <button onclick="downloadFile('${s.appNo}',${i})" style="background:rgba(240,165,0,.12);border:1px solid rgba(240,165,0,.3);color:var(--gold2);font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif;">⬇️ Download</button>
-            </div>
-          `).join('')}
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid ${divLine}">
+        <div style="font-size:.72rem;color:rgba(15,50,15,.55);margin-bottom:8px;font-weight:600">📎 Uploaded Documents:</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          ${s.fileData.map((f,fi)=>`
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(37,168,74,.08);border:1px solid rgba(37,168,74,.22);border-radius:10px;padding:6px 10px">
+              <span style="font-size:.74rem;color:#1a5c1a;font-weight:600">📄 ${f.name.substring(0,18)}${f.name.length>18?'…':''}</span>
+              <button onclick="viewFile('${s.appNo}',${fi})" style="background:rgba(37,168,74,.12);border:1px solid rgba(37,168,74,.28);color:#1a5c1a;font-size:.64rem;font-weight:700;padding:2px 8px;border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif">👁️ View</button>
+              <button onclick="downloadFile('${s.appNo}',${fi})" style="background:rgba(240,165,0,.14);border:1px solid rgba(240,165,0,.35);color:#7a4f00;font-size:.64rem;font-weight:700;padding:2px 8px;border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif">⬇️ Download</button>
+              <button onclick="toggleAchieve('${s.appNo}',${fi})" style="background:linear-gradient(135deg,#f0a500,#ffd056);border:none;color:#0d4a1f;font-size:.64rem;font-weight:800;padding:2px 8px;border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif">🏆 Achieve</button>
+            </div>`).join('')}
         </div>
-      </div>` : `<div style="margin-top:8px;font-size:.7rem;color:rgba(255,255,255,.25)">📎 No files uploaded</div>`}
-    </div>
-  `).join('');
+      </div>` : `<div style="margin-top:8px;font-size:.7rem;color:rgba(15,50,15,.4)">📎 No files uploaded</div>`}
+      <!-- Achievement Section -->
+      <div class="achieve-section" id="achieve-${s.appNo}">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-size:.78rem;font-weight:800;color:#0d4a1f">🏆 Achievement — ${s.userName||s.name}</div>
+          <button onclick="toggleAchieve('${s.appNo}',-1)" style="background:none;border:none;color:#555;cursor:pointer;font-size:14px;padding:0">✕</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px">
+          <div style="background:#fff;border:1px solid #a5d6a7;border-radius:9px;padding:10px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:800;color:#1b5e20" id="ach-total-${s.appNo}">—</div><div style="font-size:.62rem;color:#388e3c;font-weight:600">Total</div></div>
+          <div style="background:#fff;border:1px solid #90caf9;border-radius:9px;padding:10px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:800;color:#0d47a1" id="ach-appr-${s.appNo}">—</div><div style="font-size:.62rem;color:#1565c0;font-weight:600">Approved</div></div>
+          <div style="background:#fff;border:1px solid #ffe082;border-radius:9px;padding:10px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:800;color:#e65100" id="ach-pend-${s.appNo}">—</div><div style="font-size:.62rem;color:#bf360c;font-weight:600">Pending</div></div>
+        </div>
+        <div style="font-size:.72rem;color:#1a7a35;font-weight:700;margin-bottom:6px">📋 Is User Ki Sabhi Applications:</div>
+        <div id="ach-list-${s.appNo}" style="display:flex;flex-direction:column;gap:5px;max-height:180px;overflow-y:auto"></div>
+      </div>
+    </div>`;
   }
+
+  const pendingContainer  = document.getElementById('admin-pending-list');
+  const approvedContainer = document.getElementById('admin-approved-list');
+  pendingContainer.innerHTML  = pendingSubs.length===0  ? '<div class="empty-state" style="color:rgba(15,50,15,.45)"><div>📭</div><div>Koi pending application nahi</div></div>' : pendingSubs.map(s=>buildCard(s,false)).join('');
+  approvedContainer.innerHTML = approvedSubs.length===0 ? '<div class="empty-state" style="color:rgba(15,50,15,.45)"><div>✅</div><div>Koi approved application nahi</div></div>' : approvedSubs.map(s=>buildCard(s,true)).join('');
+
   renderAdminUsers(allUsers);
 }
 
@@ -1727,7 +1991,30 @@ async function viewFile(appNo, idx){
   const f = sub.fileData[idx];
   const win = window.open('', '_blank');
   if(f.type && f.type.startsWith('image/')){
-    win.document.write(`<html><body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh"><img src="${f.data}" style="max-width:100%;max-height:100vh;object-fit:contain"/></body></html>`);
+    win.document.write(`<html><body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh"><img src="${f.data}" style="max-width:100%;max-height:100vh;object-fit:contain"/>
+<!-- ══ USER ACHIEVEMENT OVERLAY ══ -->
+<div id="user-achieve-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:99999;align-items:center;justify-content:center;padding:16px;overflow-y:auto;backdrop-filter:blur(8px)">
+  <div style="width:100%;max-width:500px;margin:auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:#ffd056">🏆 User Achievement</div>
+      <button onclick="closeUserAchieve()" style="padding:9px 18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;color:#fff;font-family:'Poppins',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer">✕ Bandh</button>
+    </div>
+    <div id="user-achieve-content" style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)"></div>
+    <p style="text-align:center;font-size:.66rem;color:rgba(255,255,255,.25);margin-top:10px">🔒 Sirf Admin ke liye — User ka data safe hai</p>
+  </div>
+</div>
+
+<!-- ══ ADMIN ACHIEVEMENT OVERLAY ══ -->
+<div id="admin-achieve-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:99999;align-items:center;justify-content:center;padding:16px;overflow-y:auto;backdrop-filter:blur(8px)">
+  <div style="width:100%;max-width:520px;margin:auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:#ffd056">🏆 Achievement Dashboard</div>
+      <button onclick="closeAdminAchieve()" style="padding:9px 18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;color:#fff;font-family:'Poppins',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer">✕ Bandh</button>
+    </div>
+    <div id="admin-achieve-content" style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)"></div>
+  </div>
+</div>
+</body></html>`);
   } else if(f.type === 'application/pdf'){
     win.document.write(`<html><body style="margin:0"><embed src="${f.data}" type="application/pdf" width="100%" height="100%" style="position:fixed;inset:0"/></body></html>`);
   } else {
@@ -1762,24 +2049,97 @@ async function renderAdminUsers(usersData){
     return;
   }
   container.innerHTML = users.map((u, i) => `
-    <div style="background:rgba(255,255,255,.04);border:1px solid rgba(56,139,253,.15);border-radius:14px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="width:38px;height:38px;background:linear-gradient(135deg,#1a6eff,#00aaff);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#fff;flex-shrink:0">${(u.name||'U')[0].toUpperCase()}</div>
+    <div style="background:rgba(255,255,255,.92);border:1px solid rgba(37,168,74,.18);border-radius:14px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 2px 8px rgba(37,168,74,.06)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:40px;height:40px;background:linear-gradient(135deg,#1a6eff,#00aaff);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;flex-shrink:0;box-shadow:0 3px 10px rgba(26,110,255,.3)">${(u.name||'U')[0].toUpperCase()}</div>
         <div>
-          <div style="font-weight:700;font-size:.88rem;color:#fff">👤 ${u.name}</div>
-          <div style="font-size:.72rem;color:rgba(255,255,255,.45);margin-top:2px">📱 ${u.mobile}</div>
+          <div style="font-weight:700;font-size:.9rem;color:#0d2e0d">👤 ${u.name}</div>
+          <div style="font-size:.72rem;color:rgba(15,50,15,.55);margin-top:2px">📱 ${u.mobile}</div>
         </div>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:6px 12px;font-size:.75rem;">
-          <span style="color:rgba(255,255,255,.4)">🔑 Password: </span>
-          <span id="pw-val-${i}" style="color:#79b8ff;font-weight:600;letter-spacing:.05em">••••••••</span>
-          <button onclick="togglePwView(${i},'${u.password}')" style="background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:11px;margin-left:4px;padding:0">👁️</button>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <div style="background:#f0f7f0;border:1px solid rgba(37,168,74,.22);border-radius:10px;padding:6px 12px;font-size:.75rem">
+          <span style="color:rgba(15,50,15,.55)">🔑 Password: </span>
+          <span id="pw-val-${i}" style="color:#1a3a8a;font-weight:700;letter-spacing:.05em">••••••••</span>
+          <button onclick="togglePwView(${i},'${u.password}')" style="background:none;border:none;color:rgba(15,50,15,.4);cursor:pointer;font-size:12px;margin-left:4px;padding:0">👁️</button>
         </div>
-        <span style="background:rgba(37,168,74,.12);border:1px solid rgba(37,168,74,.25);color:var(--g4);font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:12px">🌾 User</span>
+        <button onclick="openUserAchieve('${u.mobile}','${(u.name||'').replace(/'/g,String.fromCharCode(92)+String.fromCharCode(39))}')" style="background:linear-gradient(135deg,#f0a500,#ffd056);border:none;color:#0d4a1f;font-size:.73rem;font-weight:800;padding:7px 14px;border-radius:10px;cursor:pointer;font-family:'Poppins',sans-serif;box-shadow:0 3px 10px rgba(240,165,0,.25)">🏆 Achievement</button>
+        <button onclick="adminDeleteUser('${u.mobile}','${(u.name||'').replace(/'/g,String.fromCharCode(92)+String.fromCharCode(39))}')" style="background:rgba(255,82,82,.1);border:1px solid rgba(255,82,82,.35);color:#c0392b;font-size:.73rem;font-weight:800;padding:7px 14px;border-radius:10px;cursor:pointer;font-family:'Poppins',sans-serif">🗑️ Delete User</button>
       </div>
     </div>
   `).join('');
+}
+
+
+// ── USER CHANGE PASSWORD ──
+function openUserChangePass(){
+  // Close dropdown
+  document.getElementById('u-dd').classList.remove('open');
+  document.getElementById('u-dd2').classList.remove('open');
+  document.getElementById('ucp-old').value='';
+  document.getElementById('ucp-new').value='';
+  document.getElementById('ucp-new2').value='';
+  document.getElementById('ucp-err').style.display='none';
+  document.getElementById('user-change-pass-popup').style.display='flex';
+  setTimeout(()=>document.getElementById('ucp-old').focus(),100);
+}
+function closeUserChangePass(){
+  document.getElementById('user-change-pass-popup').style.display='none';
+}
+async function doUserChangePass(){
+  const oldP  = document.getElementById('ucp-old').value;
+  const newP  = document.getElementById('ucp-new').value;
+  const newP2 = document.getElementById('ucp-new2').value;
+  const errEl = document.getElementById('ucp-err');
+  errEl.style.display='none';
+
+  if(!oldP || !newP || !newP2){
+    errEl.textContent='❌ Sabhi fields bharein';
+    errEl.style.display='block'; return;
+  }
+  if(newP.length < 6){
+    errEl.textContent='❌ Naya password kam se kam 6 characters ka hona chahiye';
+    errEl.style.display='block'; return;
+  }
+  if(newP !== newP2){
+    errEl.textContent='❌ Dono naye passwords match nahi kar rahe';
+    errEl.style.display='block'; return;
+  }
+
+  const sess = getSession();
+  if(!sess){ toast('❌ Session expire ho gaya, dobara login karein','fail'); return; }
+
+  showLoading('Password verify ho raha hai...');
+  try{
+    const user = await getUserByMobile(sess.mobile);
+    if(!user || user.password !== oldP){
+      hideLoading();
+      errEl.textContent='❌ Purana password galat hai';
+      errEl.style.display='block'; return;
+    }
+    await updateUserPassword(sess.mobile, newP);
+    hideLoading();
+    closeUserChangePass();
+    toast('✅ Password successfully change ho gaya!','ok');
+  } catch(e){
+    hideLoading();
+    toast('❌ Update nahi hua. Internet check karein','fail');
+  }
+}
+
+// ── ADMIN: DELETE USER ──
+async function adminDeleteUser(mobile, name){
+  if(!confirm('⚠️ "' + name + '" ka account DELETE karna chahte hain?\n\nUser ki ID aur password dono hat jaayenge.\nUser ko dobara registration karni padegi.')) return;
+  showLoading('User delete ho raha hai...');
+  try{
+    await deleteUser(mobile);
+    hideLoading();
+    toast('🗑️ User "' + name + '" delete ho gaya!', 'ok');
+    renderAdminDash();
+  } catch(e){
+    hideLoading();
+    toast('❌ Delete nahi hua. Internet check karein','fail');
+  }
 }
 
 function togglePwView(i, pw){
@@ -1790,13 +2150,358 @@ function togglePwView(i, pw){
 
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'){
-    const lf=document.getElementById('login-form');
-    const rf=document.getElementById('reg-form');
-    if(lf&&lf.style.display!=='none')doLogin();
-    else if(rf&&rf.style.display!=='none')doRegister();
+    const ap=document.getElementById('auth-page');
+    if(ap && ap.style.display!=='none'){
+      const lf=document.getElementById('login-form');
+      const rf=document.getElementById('reg-form');
+      if(lf && lf.style.display!=='none') doLogin();
+      else if(rf && rf.style.display!=='none') doRegister();
+    }
   }
 });
 
+// ══════════════════════════════════════
+// RECEIPT SYSTEM
+// ══════════════════════════════════════
+function showReceipt(sub){
+  const s = (typeof sub === 'string' ? JSON.parse(sub) : sub) || window._lastSub;
+  if(!s){ toast('❌ Receipt data nahi mila','fail'); return; }
+
+  // Fill receipt fields
+  document.getElementById('rc-appno').textContent  = s.appNo  || '—';
+  document.getElementById('rc-name').textContent   = s.name   || '—';
+  document.getElementById('rc-father').textContent = s.father || '—';
+  document.getElementById('rc-mobile').textContent = s.mobile || '—';
+  document.getElementById('rc-regno').textContent  = s.regno  || '—';
+  document.getElementById('rc-village').textContent= s.village|| '—';
+  document.getElementById('rc-sub').textContent    = s.sub    || '—';
+  document.getElementById('rc-dist').textContent   = s.district|| '—';
+  document.getElementById('rc-state').textContent  = s.state  || '—';
+  document.getElementById('rc-utr').textContent    = s.utr    || '—';
+  document.getElementById('rc-time').textContent   = s.time   || new Date().toLocaleString('hi-IN');
+
+  // Static QR Code Image
+  const qrBox = document.getElementById('rc-qr');
+  qrBox.innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAAD6AQMAAACyIsh+AAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABwUlEQVRoge2ZMZLDMAhF8aRw6SP4KDqadTQfxUdQmcJjFj5I42x2J32AIhMpTw3D/yCF6FNsjGhEj2tixt7KbbZtrmGAqltLm5+PS77I3m5LoAncgMJ8LE2XE+sOlYNIeOYrICAlhIqSCtvXlsC/AM2nVpBbTgsIuLL4nMx19nL8Kb3ogHu1WhCktxnwZuZfDoxQaZkVF7SwtwgOIJPHIh/ndNl6lwp7zicyGwaQFsWHea8NOdvuQw4sqSbgwMa6YdMgCkrPaCYBILUJGCFSO2jhp05B7AfUq3vJBQFIrwvMkhl4NduQI/FQS0pgAJq6e2hmGzyLTJtBAHgQpkFzILNu9eqRyQQ0cRVevajy4EFVDnhvt64XA0CP0sy4knCdeFVWAvjdlefNXcZm9tCpyJt7BKCSe3Hv3UVPzH06TOAO0EtzN68+hzYTcKDIEORvpNbcabGSY38jjQD0uI3JbEMy9JdAB9yS7I0LzR0Xc3/y6gcCAMgVKgoPFLpckahTlVYTGEDxt+LbC4ZLb0yDkQBv7l5g5NKqCfwG7F6lsa/jb7vXVH83YMpSoL9odaFNCdwALyEDCNcsHv9GJTCAT/EDMg06b8xsr/oAAAAASUVORK5CYII=" style="width:80px;height:80px;display:block">';
+
+  document.getElementById('receipt-overlay').style.display='flex';
+}
+
+function printReceipt(){
+  const card = document.getElementById('receipt-print-area');
+  const win = window.open('','_blank','width=600,height=800');
+  const styles = `<style>
+    @page{size:A4;margin:20mm}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Poppins',sans-serif,Arial;background:#fff;display:flex;align-items:flex-start;justify-content:center;padding:0}
+    #receipt-print-area{width:100%;max-width:600px;margin:0 auto;border:none!important;border-radius:0!important;box-shadow:none!important}
+  </style>`;
+  const head = '<!DOCTYPE html><html><head><meta charset=UTF-8><title>Land Seeding Application Slip</title><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">'+styles+'</head><body>';
+  win.document.write(head + card.outerHTML + '</body></html>');
+  win.document.close();
+  setTimeout(function(){ win.print(); }, 900);
+}
+
+// ── TOGGLE APPROVED PANEL (stat card click) ──
+let _approvedOpen=false;
+function toggleApprovedPanel(){
+  _approvedOpen=!_approvedOpen;
+  const panel=document.getElementById('admin-approved-list');
+  const card=document.getElementById('approved-stat-card');
+  if(panel) panel.classList.toggle('open',_approvedOpen);
+  if(card)  card.classList.toggle('active',_approvedOpen);
+}
+
+// ── TOGGLE ACHIEVE SECTION inside card ──
+async function toggleAchieve(appNo,fileIdx){
+  const section=document.getElementById('achieve-'+appNo);
+  if(!section)return;
+  if(fileIdx===-1){section.classList.remove('open');return;}
+  if(section.classList.contains('open')){section.classList.remove('open');return;}
+  showLoading('Achievement load ho raha hai...');
+  const allSubs=await getSubs();
+  hideLoading();
+  const thisSub=allSubs.find(s=>s.appNo===appNo);
+  if(!thisSub){section.classList.add('open');return;}
+  const userSubs=allSubs.filter(s=>s.userMobile===thisSub.userMobile);
+  const total=userSubs.length,approved=userSubs.filter(s=>s.status==='Approved').length,pending=userSubs.filter(s=>s.status==='Pending').length;
+  const tEl=document.getElementById('ach-total-'+appNo);
+  const aEl=document.getElementById('ach-appr-'+appNo);
+  const pEl=document.getElementById('ach-pend-'+appNo);
+  if(tEl)tEl.textContent=total;
+  if(aEl)aEl.textContent=approved;
+  if(pEl)pEl.textContent=pending;
+  const listEl=document.getElementById('ach-list-'+appNo);
+  if(listEl){
+    listEl.innerHTML=userSubs.slice().reverse().map((s,i)=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:7px 10px">
+        <div>
+          <div style="font-size:.73rem;font-weight:700;color:#0d2e0d">${i+1}. ${s.name}</div>
+          <div style="font-size:.65rem;color:#888;margin-top:1px">${s.appNo} &nbsp;|&nbsp; ${s.time||''}</div>
+        </div>
+        <span style="background:${s.status==='Approved'?'#e8f5e9':'#fff8e1'};color:${s.status==='Approved'?'#2e7d32':'#e65100'};padding:2px 8px;border-radius:6px;font-size:.65rem;font-weight:700">${s.status}</span>
+      </div>`).join('');
+  }
+  section.classList.add('open');
+}
+
+// ── TOGGLE REGISTERED USERS ──
+let _usersVisible=false;
+function toggleUsersSection(){
+  _usersVisible=!_usersVisible;
+  const list=document.getElementById('admin-users-list');
+  const btn=document.getElementById('users-toggle-btn');
+  if(_usersVisible){list.style.display='flex';btn.innerHTML='▲ Users Chhupao';btn.style.background='rgba(56,139,253,.18)';}
+  else{list.style.display='none';btn.innerHTML='▼ ID / Password Dekhe';btn.style.background='rgba(56,139,253,.1)';}
+}
+
+// ── USER ACHIEVEMENT (from registered user card) ──
+async function openUserAchieve(mob,name){
+  showLoading('Achievement load ho raha hai...');
+  const allSubs=await getSubs();
+  hideLoading();
+  const subs=allSubs.filter(s=>s.userMobile===mob);
+  const total=subs.length,approved=subs.filter(s=>s.status==='Approved').length,pending=subs.filter(s=>s.status==='Pending').length;
+  let medal='🥉',mtext='Naya Kisan';
+  if(approved>=10){medal='🏆';mtext='Gold Achiever';}else if(approved>=5){medal='🥇';mtext='Senior Kisan';}else if(approved>=2){medal='🥈';mtext='Active Kisan';}
+  const rows=subs.length===0?'<tr><td colspan="4" style="text-align:center;padding:14px;color:#999">Koi application nahi</td></tr>':
+    subs.slice().reverse().map((s,idx)=>`<tr style="border-bottom:1px solid #f0f0f0"><td style="padding:7px 8px;font-size:.73rem;color:#0d2e0d;font-weight:600">${idx+1}. ${s.name}</td><td style="padding:7px 8px;font-size:.7rem;color:#555">${s.appNo}</td><td style="padding:7px 8px"><span style="background:${s.status==='Approved'?'#e8f5e9':'#fff8e1'};color:${s.status==='Approved'?'#2e7d32':'#e65100'};padding:2px 7px;border-radius:6px;font-size:.67rem;font-weight:700">${s.status}</span></td><td style="padding:7px 8px;font-size:.68rem;color:#888">${s.time||'—'}</td></tr>`).join('');
+  document.getElementById('user-achieve-content').innerHTML=`
+    <div style="background:linear-gradient(135deg,#0d4a1f,#1a7a35,#25a84a);padding:26px 22px;text-align:center">
+      <div style="font-size:3rem;margin-bottom:5px">${medal}</div>
+      <div style="font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:800;color:#ffd056">${mtext}</div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.75);margin-top:3px">👤 ${name} &nbsp;|&nbsp; 📱 ${mob}</div>
+    </div>
+    <div style="padding:18px 20px;background:#fff">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+        <div style="background:#e8f5e9;border:1.5px solid #a5d6a7;border-radius:11px;padding:12px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.7rem;font-weight:800;color:#1b5e20">${total}</div><div style="font-size:.67rem;color:#388e3c;font-weight:600">Total</div></div>
+        <div style="background:#e3f2fd;border:1.5px solid #90caf9;border-radius:11px;padding:12px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.7rem;font-weight:800;color:#0d47a1">${approved}</div><div style="font-size:.67rem;color:#1565c0;font-weight:600">Approved</div></div>
+        <div style="background:#fff8e1;border:1.5px solid #ffe082;border-radius:11px;padding:12px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.7rem;font-weight:800;color:#e65100">${pending}</div><div style="font-size:.67rem;color:#bf360c;font-weight:600">Pending</div></div>
+      </div>
+      <div style="background:#f0faf4;border:1.5px solid #a5d6a7;border-radius:11px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between">
+        <div><div style="font-size:.72rem;color:#1b5e20;font-weight:700">💰 Total Amount</div><div style="font-size:.62rem;color:#666;margin-top:1px">${total} × ₹400</div></div>
+        <div style="font-family:'Baloo 2',cursive;font-size:1.7rem;font-weight:800;color:#0d4a1f">₹${(total*400).toLocaleString('en-IN')}</div>
+      </div>
+      <div style="overflow-x:auto;border-radius:9px;border:1px solid #e0e0e0">
+        <table style="width:100%;border-collapse:collapse;font-family:Poppins,sans-serif">
+          <thead><tr style="background:#f1f8e9"><th style="padding:8px;font-size:.67rem;color:#1b5e20;text-align:left">Naam</th><th style="padding:8px;font-size:.67rem;color:#1b5e20;text-align:left">App No</th><th style="padding:8px;font-size:.67rem;color:#1b5e20;text-align:left">Status</th><th style="padding:8px;font-size:.67rem;color:#1b5e20;text-align:left">Time</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>`;
+  document.getElementById('user-achieve-overlay').style.display='flex';
+}
+function closeUserAchieve(){document.getElementById('user-achieve-overlay').style.display='none';}
+
+// ── ADMIN ACHIEVEMENT POPUP ──
+async function openAdminAchieve(){
+  document.getElementById('admin-dd').classList.remove('open');
+  showLoading('Achievements load ho rahe hain...');
+  const allSubs=await getSubs();
+  const allUsers=await getUsers();
+  hideLoading();
+  const totalSubs=allSubs.length,totalApproved=allSubs.filter(s=>s.status==='Approved').length,totalPending=allSubs.filter(s=>s.status==='Pending').length;
+  const userRows=allUsers.map(u=>{
+    const usubs=allSubs.filter(s=>s.userMobile===u.mobile);
+    const uapp=usubs.filter(s=>s.status==='Approved').length;
+    let medal='🥉';
+    if(uapp>=10)medal='🏆';else if(uapp>=5)medal='🥇';else if(uapp>=2)medal='🥈';
+    return {name:u.name,mobile:u.mobile,total:usubs.length,approved:uapp,pending:usubs.filter(s=>s.status==='Pending').length,medal};
+  }).sort((a,b)=>b.approved-a.approved);
+  document.getElementById('admin-achieve-content').innerHTML=`
+    <div style="background:linear-gradient(135deg,#0d4a1f,#1a7a35,#25a84a);padding:28px 24px;text-align:center">
+      <div style="font-size:2.5rem;margin-bottom:6px">🏆</div>
+      <div style="font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:800;color:#ffd056">Admin Achievement Board</div>
+      <div style="font-size:.8rem;color:rgba(255,255,255,.7);margin-top:3px">👤 Shivam Gupta &nbsp;|&nbsp; 🛡️ Administrator</div>
+    </div>
+    <div style="padding:20px 22px;background:#fff">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px">
+        <div style="background:#e8f5e9;border:1.5px solid #a5d6a7;border-radius:12px;padding:14px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.8rem;font-weight:800;color:#1b5e20">${totalSubs}</div><div style="font-size:.68rem;color:#388e3c;font-weight:600">Total Apps</div></div>
+        <div style="background:#e3f2fd;border:1.5px solid #90caf9;border-radius:12px;padding:14px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.8rem;font-weight:800;color:#0d47a1">${totalApproved}</div><div style="font-size:.68rem;color:#1565c0;font-weight:600">Approved</div></div>
+        <div style="background:#fff8e1;border:1.5px solid #ffe082;border-radius:12px;padding:14px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.8rem;font-weight:800;color:#e65100">${totalPending}</div><div style="font-size:.68rem;color:#bf360c;font-weight:600">Pending</div></div>
+      </div>
+      <div style="background:#f0faf4;border:1.5px solid #a5d6a7;border-radius:12px;padding:13px 18px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between">
+        <div><div style="font-size:.73rem;color:#1b5e20;font-weight:700">💰 Total Revenue</div><div style="font-size:.63rem;color:#555;margin-top:1px">${totalApproved} approved × ₹400</div></div>
+        <div style="font-family:'Baloo 2',cursive;font-size:1.8rem;font-weight:800;color:#0d4a1f">₹${(totalApproved*400).toLocaleString('en-IN')}</div>
+      </div>
+      <div style="font-size:.73rem;font-weight:700;color:#1a7a35;margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">👥 User-wise Leaderboard</div>
+      <div style="display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto">
+        ${userRows.length===0?'<div style="text-align:center;padding:20px;color:#999">Koi user nahi hai</div>':userRows.map((u,i)=>`
+        <div style="display:flex;align-items:center;justify-content:space-between;background:${i===0?'linear-gradient(135deg,#fff8e1,#fff3cd)':'#f9f9f9'};border:1px solid ${i===0?'#ffd056':'#e0e0e0'};border-radius:10px;padding:10px 14px;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:1.3rem">${u.medal}</div>
+            <div><div style="font-size:.78rem;font-weight:700;color:#0d2e0d">${u.name}</div><div style="font-size:.65rem;color:#777">📱 ${u.mobile}</div></div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <span style="background:#e8f5e9;color:#2e7d32;font-size:.67rem;font-weight:700;padding:2px 8px;border-radius:6px">${u.approved} ✅</span>
+            <span style="background:#fff8e1;color:#e65100;font-size:.67rem;font-weight:700;padding:2px 8px;border-radius:6px">${u.pending} ⏳</span>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  document.getElementById('admin-achieve-overlay').style.display='flex';
+}
+function closeAdminAchieve(){document.getElementById('admin-achieve-overlay').style.display='none';}
 </script>
+
+<!-- ══ RECEIPT OVERLAY ══ -->
+<div id="receipt-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:99999;align-items:center;justify-content:center;padding:16px;overflow-y:auto;backdrop-filter:blur(8px)">
+  <div style="width:100%;max-width:500px;margin:auto">
+    <!-- Action buttons -->
+    <div style="display:flex;gap:10px;margin-bottom:14px">
+      <button onclick="printReceipt()" style="flex:1;padding:12px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(37,168,74,.4)">🖨️ Print / PDF Save Karein</button>
+      <button onclick="document.getElementById('receipt-overlay').style.display='none'" style="padding:12px 18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer">✕</button>
+    </div>
+
+    <!-- PRINTABLE RECEIPT CARD -->
+    <div id="receipt-print-area" style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);font-family:'Poppins',sans-serif">
+
+      <!-- Simple Header -->
+      <div style="border-bottom:3px solid #0d4a1f;padding:18px 24px 14px;text-align:center;background:#fff">
+        <div style="font-size:1.1rem;font-weight:800;color:#0d4a1f;letter-spacing:.05em;text-transform:uppercase">Land Seeding Application</div>
+        <div style="font-size:.68rem;color:#555;margin-top:3px;letter-spacing:.08em">PM KISAN — CSC Authorized Portal | All Work Online</div>
+        <div style="height:2px;background:linear-gradient(90deg,#f0a500,#ffd056);margin-top:10px;border-radius:2px"></div>
+      </div>
+
+      <!-- App No + QR Row -->
+      <div style="padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #e0e0e0">
+        <div>
+          <div style="font-size:.6rem;color:#888;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Application Number</div>
+          <div id="rc-appno" style="font-size:1.4rem;font-weight:800;color:#0d4a1f;letter-spacing:2px;line-height:1.2;margin-top:2px">—</div>
+        </div>
+        <div style="border:1.5px solid #ccc;border-radius:8px;padding:4px;flex-shrink:0">
+          <div id="rc-qr" style="width:80px;height:80px;display:flex;align-items:center;justify-content:center"></div>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div style="padding:16px 24px 20px;background:#fff">
+
+        <!-- Kisan Info -->
+        <div style="margin-bottom:14px">
+          <div style="font-size:.62rem;font-weight:700;color:#0d4a1f;letter-spacing:.1em;text-transform:uppercase;border-bottom:1.5px solid #c8e6c9;padding-bottom:4px;margin-bottom:8px">Farmer Information / किसान जानकारी</div>
+          <table style="width:100%;border-collapse:collapse;font-size:.8rem">
+            <tr style="border-bottom:1px solid #f0f0f0"><td style="padding:5px 4px;color:#666;width:44%">किसान का नाम</td><td id="rc-name" style="padding:5px 4px;font-weight:700;color:#111">—</td></tr>
+            <tr style="border-bottom:1px solid #f0f0f0"><td style="padding:5px 4px;color:#666">पिता का नाम</td><td id="rc-father" style="padding:5px 4px;font-weight:700;color:#111">—</td></tr>
+            <tr style="border-bottom:1px solid #f0f0f0"><td style="padding:5px 4px;color:#666">मोबाइल</td><td id="rc-mobile" style="padding:5px 4px;font-weight:700;color:#111">—</td></tr>
+            <tr><td style="padding:5px 4px;color:#666">Reg. No.</td><td id="rc-regno" style="padding:5px 4px;font-weight:700;color:#111">—</td></tr>
+          </table>
+        </div>
+
+        <!-- Address -->
+        <div style="margin-bottom:18px">
+          <div style="font-size:.62rem;font-weight:700;color:#0d4a1f;letter-spacing:.1em;text-transform:uppercase;border-bottom:1.5px solid #c8e6c9;padding-bottom:4px;margin-bottom:8px">Address / पता</div>
+          <table style="width:100%;border-collapse:collapse;font-size:.8rem">
+            <tr style="border-bottom:1px solid #f0f0f0"><td style="padding:5px 4px;color:#666;width:44%">ग्राम / Village</td><td id="rc-village" style="padding:5px 4px;font-weight:700;color:#111">—</td></tr>
+            <tr style="border-bottom:1px solid #f0f0f0"><td style="padding:5px 4px;color:#666">Sub District</td><td id="rc-sub" style="padding:5px 4px;font-weight:700;color:#111">—</td></tr>
+            <tr style="border-bottom:1px solid #f0f0f0"><td style="padding:5px 4px;color:#666">जिला / District</td><td id="rc-dist" style="padding:5px 4px;font-weight:700;color:#111">—</td></tr>
+            <tr><td style="padding:5px 4px;color:#666">राज्य / State</td><td id="rc-state" style="padding:5px 4px;font-weight:700;color:#111">—</td></tr>
+          </table>
+        </div>
+
+        <!-- Hidden fields to keep JS working -->
+        <span id="rc-utr" style="display:none">—</span>
+        <span id="rc-time" style="display:none">—</span>
+
+        <!-- Status Banner -->
+        <div style="border:2px solid #0d4a1f;border-radius:8px;padding:12px 16px;text-align:center;background:#f1f8e9">
+          <div style="font-size:.85rem;font-weight:800;color:#0d4a1f;letter-spacing:.04em;text-transform:uppercase">⏳ Pending for Authority Level</div>
+          <div style="font-size:.65rem;color:#555;margin-top:4px">This application is under review by the concerned authority.</div>
+        </div>
+      </div>
+
+    </div><!-- end receipt card -->
+  </div>
+</div>
+
+
+<!-- ══ USER CHANGE PASSWORD POPUP ══ -->
+<div id="user-change-pass-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:99997;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(8px)">
+  <div style="background:#fff;border-radius:22px;padding:32px 28px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:slideUp .35s ease both;font-family:'Poppins',sans-serif">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
+      <div>
+        <div style="font-family:'Baloo 2',cursive;font-size:1.25rem;font-weight:800;color:#0d4a1f">🔑 Password Change Karein</div>
+        <div style="font-size:.73rem;color:#7a9a7a;margin-top:2px">Apna naya password set karein</div>
+      </div>
+      <button onclick="closeUserChangePass()" style="background:rgba(37,168,74,.1);border:none;color:#1a7a35;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
+    <!-- Old Password -->
+    <div style="margin-bottom:14px">
+      <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">🔒 Purana Password</label>
+      <div style="position:relative">
+        <input id="ucp-old" type="password" placeholder="Apna purana password daalen"
+          style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 40px 11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+          onfocus="this.style.borderColor='#25a84a'" onblur="this.style.borderColor='rgba(37,168,74,.28)'"/>
+        <button onclick="tpw('ucp-old',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#6a9a6a;cursor:pointer;font-size:14px;padding:0">👁️</button>
+      </div>
+    </div>
+    <!-- New Password -->
+    <div style="margin-bottom:14px">
+      <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">🔑 Naya Password</label>
+      <div style="position:relative">
+        <input id="ucp-new" type="password" placeholder="Naya password (min 6 characters)"
+          style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 40px 11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+          onfocus="this.style.borderColor='#25a84a'" onblur="this.style.borderColor='rgba(37,168,74,.28)'"/>
+        <button onclick="tpw('ucp-new',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#6a9a6a;cursor:pointer;font-size:14px;padding:0">👁️</button>
+      </div>
+    </div>
+    <!-- Confirm Password -->
+    <div style="margin-bottom:18px">
+      <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">✅ Naya Password Confirm</label>
+      <div style="position:relative">
+        <input id="ucp-new2" type="password" placeholder="Naya password dobara daalen"
+          style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 40px 11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+          onfocus="this.style.borderColor='#25a84a'" onblur="this.style.borderColor='rgba(37,168,74,.28)'"/>
+        <button onclick="tpw('ucp-new2',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#6a9a6a;cursor:pointer;font-size:14px;padding:0">👁️</button>
+      </div>
+    </div>
+    <!-- Error msg -->
+    <div id="ucp-err" style="display:none;background:#fff3f3;border:1px solid #ffaaaa;border-radius:9px;padding:10px 14px;font-size:.76rem;color:#c0392b;margin-bottom:14px"></div>
+    <!-- Buttons -->
+    <button onclick="doUserChangePass()" style="width:100%;padding:13px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(37,168,74,.35);margin-bottom:10px">✅ Password Update Karein</button>
+    <button onclick="closeUserChangePass()" style="width:100%;padding:10px;background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.1);border-radius:11px;color:#555;font-family:'Poppins',sans-serif;font-size:.82rem;cursor:pointer">Cancel</button>
+  </div>
+</div>
+
+<!-- ══ FORGOT PASSWORD POPUP ══ -->
+<div id="forgot-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99998;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(6px)">
+  <div style="background:#fff;border-radius:22px;padding:32px 28px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:slideUp .35s ease both;font-family:'Poppins',sans-serif">
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div>
+        <div style="font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:#0d4a1f">🔑 Password Dhundein</div>
+        <div style="font-size:.72rem;color:#7a9a7a;margin-top:2px">Apna naam aur mobile no. daalen</div>
+      </div>
+      <button onclick="closeForgotPass()" style="background:rgba(37,168,74,.1);border:none;color:#1a7a35;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center">✕</button>
+    </div>
+
+    <!-- Input: Name -->
+    <div style="margin-bottom:13px">
+      <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">👤 Poora Naam</label>
+      <input id="fp-name" type="text" placeholder="Registered naam likhein" oninput="lookupUser()"
+        style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+        onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
+        onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+    </div>
+
+    <!-- Input: Mobile -->
+    <div style="margin-bottom:18px">
+      <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">📱 Mobile Number</label>
+      <input id="fp-mobile" type="tel" placeholder="10 digit mobile number" maxlength="10" oninput="lookupUser()"
+        style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+        onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
+        onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+    </div>
+
+    <!-- Result Box -->
+    <div id="fp-result" style="display:none"></div>
+
+    <!-- Not found message -->
+    <div id="fp-notfound" style="display:none;background:#fff3f3;border:1.5px solid #ffaaaa;border-radius:10px;padding:12px 14px;text-align:center;font-size:.78rem;color:#c0392b">
+      ❌ Koi account nahi mila. Naam aur mobile dobara check karein.
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
