@@ -503,14 +503,24 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <a href="#" class="logo"><div class="logo-icon">🌾</div><span class="logo-text">All Work Online</span></a>
       <div class="user-menu">
         <button class="user-btn" onclick="toggleUdd()">
-          <div class="u-avatar" id="hdr-av">U</div>
+          <div class="u-avatar" id="hdr-av" style="overflow:hidden;padding:0">U</div>
           <span id="hdr-nm">User</span>
           <span style="font-size:.65rem;margin-left:2px">▾</span>
         </button>
         <div class="u-dd" id="u-dd">
-          <div class="u-dd-info"><div class="u-dd-name" id="dd-name">—</div><div class="u-dd-mob" id="dd-mob">—</div></div>
+          <div class="u-dd-info">
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px">
+              <div id="dd-dp-mini" style="width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(37,168,74,.4);display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--g2),var(--g3));font-size:14px;font-weight:700;color:#fff">U</div>
+              <div>
+                <div class="u-dd-name" id="dd-name">—</div>
+                <div style="font-size:.62rem;color:var(--g4);font-weight:600;margin-top:1px">🌾 Operator</div>
+                <div class="u-dd-mob" id="dd-mob">—</div>
+              </div>
+            </div>
+          </div>
           <button class="dd-btn" onclick="showPage('user-dash-page');renderUserDash()">📊 Mera Dashboard</button>
           <button class="dd-btn" onclick="showPage('form-page')">📝 Naya Application</button>
+          <button class="dd-btn" onclick="openUserProfile();document.getElementById('u-dd').classList.remove('open')">👤 Profile Update Karein</button>
           <button class="dd-btn" onclick="openUserChangePass()">🔑 Password Change Karein</button>
           <button class="dd-btn red" onclick="doLogout()">🚪 Logout</button>
         </div>
@@ -736,14 +746,24 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <a href="#" class="logo"><div class="logo-icon">🌾</div><span class="logo-text">All Work Online</span></a>
       <div class="user-menu">
         <button class="user-btn" onclick="toggleUdd2()">
-          <div class="u-avatar" id="hdr-av2">U</div>
+          <div class="u-avatar" id="hdr-av2" style="overflow:hidden;padding:0">U</div>
           <span id="hdr-nm2">User</span>
           <span style="font-size:.65rem;margin-left:2px">▾</span>
         </button>
         <div class="u-dd" id="u-dd2">
-          <div class="u-dd-info"><div class="u-dd-name" id="dd-name2">—</div><div class="u-dd-mob" id="dd-mob2">—</div></div>
+          <div class="u-dd-info">
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px">
+              <div id="dd-dp-mini2" style="width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(37,168,74,.4);display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--g2),var(--g3));font-size:14px;font-weight:700;color:#fff">U</div>
+              <div>
+                <div class="u-dd-name" id="dd-name2">—</div>
+                <div style="font-size:.62rem;color:var(--g4);font-weight:600;margin-top:1px">🌾 Operator</div>
+                <div class="u-dd-mob" id="dd-mob2">—</div>
+              </div>
+            </div>
+          </div>
           <button class="dd-btn" onclick="showPage('user-dash-page');renderUserDash()">📊 Mera Dashboard</button>
           <button class="dd-btn" onclick="showPage('form-page');resetForm()">📝 Naya Application</button>
+          <button class="dd-btn" onclick="openUserProfile();document.getElementById('u-dd2').classList.remove('open')">👤 Profile Update Karein</button>
           <button class="dd-btn" onclick="openUserChangePass()">🔑 Password Change Karein</button>
           <button class="dd-btn red" onclick="doLogout()">🚪 Logout</button>
         </div>
@@ -821,16 +841,22 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <!-- Admin Profile Dropdown -->
         <div class="user-menu">
           <button class="user-btn" onclick="toggleAdminMenu()">
-            <div class="u-avatar" style="background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;font-weight:800">S</div>
-            <span>Shivam</span>
+            <div class="u-avatar" id="admin-hdr-av" style="background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;font-weight:800;overflow:hidden;padding:0">S</div>
+            <span id="admin-hdr-nm">Shivam</span>
             <span style="font-size:.65rem;margin-left:2px">▾</span>
           </button>
           <div class="u-dd" id="admin-dd">
             <div class="u-dd-info">
-              <div class="u-dd-name">👤 Shivam Gupta</div>
-              <div class="u-dd-mob">📱 8960947991</div>
-              <div style="font-size:.65rem;color:var(--gold2);margin-top:3px">🛡️ Administrator</div>
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px">
+                <div id="admin-dd-dp" style="width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(240,165,0,.5);display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--gold),var(--gold2));font-size:14px;font-weight:800;color:#0d4a1f">S</div>
+                <div>
+                  <div class="u-dd-name" id="admin-dd-name">👤 Shivam Gupta</div>
+                  <div style="font-size:.62rem;color:var(--gold2);font-weight:700;margin-top:1px">🛡️ Administration</div>
+                  <div class="u-dd-mob" id="admin-dd-mob">📱 8960947991</div>
+                </div>
+              </div>
             </div>
+            <button class="dd-btn" onclick="openAdminProfile();document.getElementById('admin-dd').classList.remove('open')">👤 Profile Update Karein</button>
             <button class="dd-btn" onclick="openChangePass()">🔑 Password Change Karein</button>
             <button class="dd-btn" onclick="openQRReplace()">📷 QR Code Replace Karein</button>
             <button class="dd-btn" onclick="openAdminAchieve()">🏆 Achievements Dekhe</button>
@@ -1718,10 +1744,10 @@ function showStatusInfo(){
     window.scrollTo({top:0,behavior:'smooth'});
   }
 }
-const EJS_PUBLIC_KEY  = '7XAzpjHoLgU58b8yL';
-const EJS_SERVICE_ID  = 'service_a68bp5u';
-const EJS_TEMPLATE_ID = 'template_npuj0gh';
-const ADMIN_EMAIL     = 'zdxyzofficial@gmail.com';
+const EJS_PUBLIC_KEY  = 'oxyRIaQ-IoizhZPAG';
+const EJS_SERVICE_ID  = 'service_bol8ldq';
+const EJS_TEMPLATE_ID = 'template_zegeumr';
+const ADMIN_EMAIL     = 'shivamgupta18@zohomail.in';
 emailjs.init({publicKey: EJS_PUBLIC_KEY});
 
 // ── OTP SYSTEM ──
@@ -1758,7 +1784,7 @@ async function resendOtp(){
 }
 
 function showOtpModal(mobile){
-  document.getElementById('otp-mob-show').textContent='📧 OTP bheja: zdxyzofficial@gmail.com';
+  document.getElementById('otp-mob-show').textContent='📧 OTP bheja: shivamgupta18@zohomail.in';
   ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach(id=>{document.getElementById(id).value='';document.getElementById(id).classList.remove('filled','shake');});
   document.getElementById('otp-err').style.display='none';
   document.getElementById('otp-overlay').classList.add('show');
@@ -1808,9 +1834,8 @@ function verifyOtp(){
     clearInterval(_otpTimer);
     document.getElementById('otp-overlay').classList.remove('show');
     saveSession(_otpPending);
-    toast('✅ OTP sahi hai! Swagat hai Admin ji 🙏');
-    setTimeout(()=>showAdminDash(),600);
     _otpCode='';_otpPending=null;
+    showLoginSuccess('Shivam', true, ()=>showAdminDash());
   }else{
     document.getElementById('otp-err').style.display='block';
     ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach(id=>{
@@ -1879,8 +1904,10 @@ async function doLogin(){
   }
 
   if(mob===ADMIN_MOB && pass===getAdminPass()){
-    saveSession({isAdmin:true,name:'Admin (Shivam)',mobile:mob});
-    showLoginSuccess('Shivam',true,()=>showAdminDash());
+    // OTP verification required before admin login
+    _otpPending = {isAdmin:true, name:'Admin (Shivam)', mobile:mob};
+    await sendOtp(mob);
+    showOtpModal(mob);
     return;
   }
   showLoading('Login ho raha hai...');
@@ -1946,11 +1973,8 @@ async function doRegister(){
 function showUserApp(user){
   showPage('form-page');
   loadFormQR();
-  const ini=(user.name||'U')[0].toUpperCase();
-  ['hdr-av','hdr-av2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=ini;});
-  ['hdr-nm','hdr-nm2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=user.name.split(' ')[0];});
-  ['dd-name','dd-name2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=user.name;});
-  ['dd-mob','dd-mob2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=user.mobile;});
+  const dp = localStorage.getItem('user_dp_'+user.mobile);
+  applyUserProfile(user.name||'', user.mobile||'', dp);
   // Show offer popup after short delay
   setTimeout(()=>document.getElementById('offer-popup').classList.add('show'), 1200);
   // Start auto logout timer
@@ -1964,6 +1988,12 @@ function showAdminDash(){
   resetAutoLogout();
   startAdminSessionTimer();
   setTimeout(adminLoadNote, 300);
+  // Load saved admin profile
+  const s=getSession();
+  const dp=localStorage.getItem('admin_dp');
+  const nm=(s&&s.name||'Shivam Gupta').replace('Admin (','').replace(')','');
+  const mob=(s&&s.mobile)||'8960947991';
+  applyAdminProfile(nm, mob, dp);
 }
 
 // ── DROPDOWN ──
@@ -2105,7 +2135,237 @@ function doChangePass(){
   toast('✅ Password successfully change ho gaya!','ok');
 }
 
-// ── LOGOUT ──
+// ══════════════════════════════════════════
+// ── USER PROFILE UPDATE ──
+// ══════════════════════════════════════════
+let _upDpBase64 = null; // temp storage for selected DP
+
+function openUserProfile(){
+  const s = getSession();
+  document.getElementById('up-name').value = s ? s.name||'' : '';
+  document.getElementById('up-mobile').value = s ? s.mobile||'' : '';
+  document.getElementById('up-err').style.display='none';
+  _upDpBase64 = null;
+  // Load saved DP
+  const savedDp = localStorage.getItem('user_dp_'+( s ? s.mobile : ''));
+  const prev = document.getElementById('up-dp-preview');
+  if(savedDp){
+    prev.innerHTML='';
+    prev.style.background='none';
+    const img = document.createElement('img');
+    img.src = savedDp;
+    img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%';
+    prev.appendChild(img);
+  } else {
+    prev.innerHTML = (s&&s.name) ? s.name[0].toUpperCase() : 'U';
+    prev.style.background='linear-gradient(135deg,#1a7a35,#25a84a)';
+  }
+  const popup = document.getElementById('user-profile-popup');
+  popup.style.display='flex';
+}
+function closeUserProfile(){
+  document.getElementById('user-profile-popup').style.display='none';
+  _upDpBase64=null;
+}
+function upDpSelected(inp){
+  const file = inp.files[0];
+  if(!file) return;
+  if(file.size > 3*1024*1024){ toast('⚠️ Photo 3MB se kam honi chahiye','fail'); return; }
+  const reader = new FileReader();
+  reader.onload = function(e){
+    _upDpBase64 = e.target.result;
+    const prev = document.getElementById('up-dp-preview');
+    prev.innerHTML='';
+    prev.style.background='none';
+    const img = document.createElement('img');
+    img.src = _upDpBase64;
+    img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%';
+    prev.appendChild(img);
+  };
+  reader.readAsDataURL(file);
+}
+async function saveUserProfile(){
+  const name = document.getElementById('up-name').value.trim();
+  const mobile = document.getElementById('up-mobile').value.trim();
+  const errEl = document.getElementById('up-err');
+  errEl.style.display='none';
+  if(!name){ errEl.textContent='❌ Naam daalna zaroori hai'; errEl.style.display='block'; return; }
+  if(!/^\d{10}$/.test(mobile)){ errEl.textContent='❌ Sahi 10 digit mobile daalen'; errEl.style.display='block'; return; }
+  const s = getSession();
+  // Save DP
+  if(_upDpBase64){
+    localStorage.setItem('user_dp_'+mobile, _upDpBase64);
+    if(s && s.mobile !== mobile) localStorage.removeItem('user_dp_'+s.mobile);
+  }
+  // Update Firebase user data if mobile changed or name changed
+  showLoading('Profile save ho raha hai...');
+  try{
+    if(s && !s.isAdmin){
+      const oldMob = s.mobile;
+      // Update name in firebase
+      const userRef = db.ref('users/'+oldMob);
+      const snap = await userRef.once('value');
+      if(snap.exists()){
+        const userData = snap.val();
+        if(mobile !== oldMob){
+          await db.ref('users/'+mobile).set({...userData, name, mobile});
+          await userRef.remove();
+        } else {
+          await userRef.update({name, mobile});
+        }
+      }
+    }
+    hideLoading();
+    // Update session
+    const newSession = {...s, name, mobile};
+    saveSession(newSession);
+    // Update all UI elements
+    applyUserProfile(name, mobile, _upDpBase64 || localStorage.getItem('user_dp_'+mobile));
+    closeUserProfile();
+    toast('✅ Profile update ho gaya!','ok');
+  } catch(e){ hideLoading(); toast('❌ Error: '+e.message,'fail'); }
+}
+function applyUserProfile(name, mobile, dp){
+  const ini = (name||'U')[0].toUpperCase();
+  // Header avatars
+  ['hdr-av','hdr-av2'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    if(dp){
+      el.innerHTML='';
+      el.style.background='none';
+      const img=document.createElement('img');
+      img.src=dp;
+      img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%';
+      el.appendChild(img);
+    } else { el.innerHTML=ini; el.style.background='linear-gradient(135deg,var(--g2),var(--g4))'; }
+  });
+  // Dropdown mini DPs
+  ['dd-dp-mini','dd-dp-mini2'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    if(dp){
+      el.innerHTML='';
+      el.style.background='none';
+      const img=document.createElement('img');
+      img.src=dp;
+      img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%';
+      el.appendChild(img);
+    } else { el.innerHTML=ini; el.style.background='linear-gradient(135deg,var(--g2),var(--g4))'; }
+  });
+  ['hdr-nm','hdr-nm2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=name.split(' ')[0];});
+  ['dd-name','dd-name2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=name;});
+  ['dd-mob','dd-mob2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=mobile;});
+  // User dash hero
+  const udav=document.getElementById('udash-av-big');
+  if(udav){
+    if(dp){ udav.innerHTML=''; udav.style.background='none'; const img=document.createElement('img'); img.src=dp; img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%'; udav.appendChild(img); }
+    else udav.textContent='🌾';
+  }
+  const wn=document.getElementById('udash-welcome-name');
+  if(wn) wn.textContent='Namaste, '+name.split(' ')[0]+' Ji! 🙏';
+  const wm=document.getElementById('udash-welcome-mob');
+  if(wm) wm.textContent='📱 '+mobile;
+}
+
+// ══════════════════════════════════════════
+// ── ADMIN PROFILE UPDATE ──
+// ══════════════════════════════════════════
+let _apDpBase64 = null;
+
+function openAdminProfile(){
+  const s = getSession();
+  document.getElementById('ap-name').value = s ? (s.name||'').replace('Admin (','').replace(')','') : 'Shivam';
+  document.getElementById('ap-mobile').value = s ? s.mobile||'8960947991' : '8960947991';
+  document.getElementById('ap-err').style.display='none';
+  _apDpBase64 = null;
+  const savedDp = localStorage.getItem('admin_dp');
+  const prev = document.getElementById('ap-dp-preview');
+  if(savedDp){
+    prev.innerHTML='';
+    prev.style.background='none';
+    const img=document.createElement('img');
+    img.src=savedDp;
+    img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%';
+    prev.appendChild(img);
+  } else {
+    const nm = document.getElementById('ap-name').value||'S';
+    prev.innerHTML = nm[0].toUpperCase();
+    prev.style.background='linear-gradient(135deg,var(--gold),var(--gold2))';
+  }
+  document.getElementById('admin-profile-popup').style.display='flex';
+}
+function closeAdminProfile(){
+  document.getElementById('admin-profile-popup').style.display='none';
+  _apDpBase64=null;
+}
+function apDpSelected(inp){
+  const file=inp.files[0];
+  if(!file) return;
+  if(file.size>3*1024*1024){ toast('⚠️ Photo 3MB se kam honi chahiye','fail'); return; }
+  const reader=new FileReader();
+  reader.onload=function(e){
+    _apDpBase64=e.target.result;
+    const prev=document.getElementById('ap-dp-preview');
+    prev.innerHTML='';
+    prev.style.background='none';
+    const img=document.createElement('img');
+    img.src=_apDpBase64;
+    img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%';
+    prev.appendChild(img);
+  };
+  reader.readAsDataURL(file);
+}
+function saveAdminProfile(){
+  const name=document.getElementById('ap-name').value.trim();
+  const mobile=document.getElementById('ap-mobile').value.trim();
+  const errEl=document.getElementById('ap-err');
+  errEl.style.display='none';
+  if(!name){ errEl.textContent='❌ Naam daalna zaroori hai'; errEl.style.display='block'; return; }
+  if(!/^\d{10}$/.test(mobile)){ errEl.textContent='❌ Sahi 10 digit mobile daalen'; errEl.style.display='block'; return; }
+  if(_apDpBase64) localStorage.setItem('admin_dp', _apDpBase64);
+  const dp = _apDpBase64 || localStorage.getItem('admin_dp');
+  const s = getSession();
+  saveSession({...s, name:'Admin ('+name+')', mobile});
+  applyAdminProfile(name, mobile, dp);
+  closeAdminProfile();
+  toast('✅ Admin profile update ho gaya!','ok');
+}
+function applyAdminProfile(name, mobile, dp){
+  const ini=(name||'S')[0].toUpperCase();
+  const hdrAv=document.getElementById('admin-hdr-av');
+  if(hdrAv){
+    if(dp){ hdrAv.innerHTML=''; hdrAv.style.background='none'; const img=document.createElement('img'); img.src=dp; img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%'; hdrAv.appendChild(img); }
+    else { hdrAv.innerHTML=ini; hdrAv.style.background='linear-gradient(135deg,var(--gold),var(--gold2))'; hdrAv.style.color='#0d4a1f'; }
+  }
+  const hdrNm=document.getElementById('admin-hdr-nm');
+  if(hdrNm) hdrNm.textContent=name.split(' ')[0];
+  const ddDp=document.getElementById('admin-dd-dp');
+  if(ddDp){
+    if(dp){ ddDp.innerHTML=''; ddDp.style.background='none'; const img=document.createElement('img'); img.src=dp; img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%'; ddDp.appendChild(img); }
+    else { ddDp.innerHTML=ini; ddDp.style.background='linear-gradient(135deg,var(--gold),var(--gold2))'; }
+  }
+  const ddNm=document.getElementById('admin-dd-name');
+  if(ddNm) ddNm.textContent='👤 '+name;
+  const ddMob=document.getElementById('admin-dd-mob');
+  if(ddMob) ddMob.textContent='📱 '+mobile;
+}
+// Load saved profiles on page load
+function loadSavedProfiles(){
+  const s=getSession();
+  if(!s) return;
+  if(s.isAdmin){
+    const dp=localStorage.getItem('admin_dp');
+    const nm=(s.name||'Shivam').replace('Admin (','').replace(')','');
+    const mob=s.mobile||'8960947991';
+    applyAdminProfile(nm, mob, dp);
+  } else {
+    const dp=localStorage.getItem('user_dp_'+s.mobile);
+    applyUserProfile(s.name||'', s.mobile||'', dp);
+  }
+}
+
+
 function doLogout(){
   clearTimeout(_autoLogoutTimer);
   clearTimeout(_autoWarnTimer);
@@ -3709,6 +3969,88 @@ async function pmkCheckStatus(){
     <!-- Not found message -->
     <div id="fp-notfound" style="display:none;background:#fff3f3;border:1.5px solid #ffaaaa;border-radius:10px;padding:12px 14px;text-align:center;font-size:.78rem;color:#c0392b">
       ❌ Koi account nahi mila. Naam aur mobile dobara check karein.
+    </div>
+  </div>
+</div>
+
+<!-- ══ USER PROFILE UPDATE POPUP ══ -->
+<div id="user-profile-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:99999;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(10px)">
+  <div style="background:#fff;border-radius:24px;padding:0;width:100%;max-width:420px;box-shadow:0 24px 80px rgba(0,0,0,.3);animation:slideUp .35s ease both;font-family:'Poppins',sans-serif;overflow:hidden">
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#0d4a1f,#1a7a35);padding:22px 26px 18px;position:relative">
+      <button onclick="closeUserProfile()" style="position:absolute;top:14px;right:14px;background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center">✕</button>
+      <div style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;color:#fff">👤 Profile Update</div>
+      <div style="font-size:.73rem;color:rgba(255,255,255,.6);margin-top:2px">Apna naam, mobile aur DP update karein</div>
+    </div>
+    <!-- DP Upload Circle -->
+    <div style="padding:24px 26px 0;text-align:center">
+      <div style="position:relative;display:inline-block;margin-bottom:16px">
+        <div id="up-dp-preview" onclick="document.getElementById('up-dp-input').click()" style="width:90px;height:90px;border-radius:50%;border:3px solid #25a84a;overflow:hidden;cursor:pointer;margin:0 auto;background:linear-gradient(135deg,#1a7a35,#25a84a);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;color:#fff;transition:all .2s;box-shadow:0 4px 16px rgba(37,168,74,.3)" title="Gallery se DP chunein">U</div>
+        <div onclick="document.getElementById('up-dp-input').click()" style="position:absolute;bottom:2px;right:2px;width:26px;height:26px;background:#25a84a;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.3);font-size:13px;border:2px solid #fff">📷</div>
+        <input id="up-dp-input" type="file" accept="image/*" style="display:none" onchange="upDpSelected(this)">
+      </div>
+      <div style="font-size:.72rem;color:#7a9a7a;margin-bottom:4px">Tap karein gallery se photo chunne ke liye</div>
+    </div>
+    <!-- Fields -->
+    <div style="padding:16px 26px 24px">
+      <div style="margin-bottom:14px">
+        <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">👤 Poora Naam</label>
+        <input id="up-name" type="text" placeholder="Apna naam likhein"
+          style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+          onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
+          onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">📱 Mobile Number</label>
+        <input id="up-mobile" type="tel" placeholder="10 digit mobile" maxlength="10"
+          style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+          onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
+          onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+      </div>
+      <div id="up-err" style="display:none;background:#fff3f3;border:1px solid #ffaaaa;border-radius:9px;padding:10px 14px;font-size:.76rem;color:#c0392b;margin-bottom:14px"></div>
+      <button onclick="saveUserProfile()" style="width:100%;padding:13px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(37,168,74,.35);margin-bottom:10px">✅ Profile Save Karein</button>
+      <button onclick="closeUserProfile()" style="width:100%;padding:10px;background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.1);border-radius:11px;color:#555;font-family:'Poppins',sans-serif;font-size:.82rem;cursor:pointer">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN PROFILE UPDATE POPUP ══ -->
+<div id="admin-profile-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99999;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(10px)">
+  <div style="background:#0d2e15;border:1.5px solid rgba(240,165,0,.3);border-radius:24px;padding:0;width:100%;max-width:420px;box-shadow:0 24px 80px rgba(0,0,0,.5);animation:slideUp .35s ease both;font-family:'Poppins',sans-serif;overflow:hidden">
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#1a1a0d,#3a3010);padding:22px 26px 18px;position:relative;border-bottom:1px solid rgba(240,165,0,.2)">
+      <button onclick="closeAdminProfile()" style="position:absolute;top:14px;right:14px;background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.6);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center">✕</button>
+      <div style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;color:#ffd056">🛡️ Admin Profile Update</div>
+      <div style="font-size:.73rem;color:rgba(255,255,255,.5);margin-top:2px">Naam, mobile aur DP update karein</div>
+    </div>
+    <!-- DP Upload -->
+    <div style="padding:24px 26px 0;text-align:center">
+      <div style="position:relative;display:inline-block;margin-bottom:16px">
+        <div id="ap-dp-preview" onclick="document.getElementById('ap-dp-input').click()" style="width:90px;height:90px;border-radius:50%;border:3px solid #f0a500;overflow:hidden;cursor:pointer;margin:0 auto;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;color:#0d4a1f;transition:all .2s;box-shadow:0 4px 16px rgba(240,165,0,.4)" title="Gallery se DP chunein">S</div>
+        <div onclick="document.getElementById('ap-dp-input').click()" style="position:absolute;bottom:2px;right:2px;width:26px;height:26px;background:#f0a500;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4);font-size:13px;border:2px solid #0d2e15">📷</div>
+        <input id="ap-dp-input" type="file" accept="image/*" style="display:none" onchange="apDpSelected(this)">
+      </div>
+      <div style="font-size:.72rem;color:rgba(255,255,255,.4);margin-bottom:4px">Tap karein gallery se photo chunne ke liye</div>
+    </div>
+    <!-- Fields -->
+    <div style="padding:16px 26px 24px">
+      <div style="margin-bottom:14px">
+        <label style="display:block;font-size:.75rem;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:6px">👤 Poora Naam</label>
+        <input id="ap-name" type="text" placeholder="Admin naam likhein"
+          style="width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(240,165,0,.3);border-radius:11px;padding:11px 14px;color:#fff;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+          onfocus="this.style.borderColor='#ffd056';this.style.boxShadow='0 0 0 3px rgba(240,165,0,.15)'"
+          onblur="this.style.borderColor='rgba(240,165,0,.3)';this.style.boxShadow='none'"/>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:block;font-size:.75rem;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:6px">📱 Mobile Number</label>
+        <input id="ap-mobile" type="tel" placeholder="10 digit mobile" maxlength="10"
+          style="width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(240,165,0,.3);border-radius:11px;padding:11px 14px;color:#fff;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+          onfocus="this.style.borderColor='#ffd056';this.style.boxShadow='0 0 0 3px rgba(240,165,0,.15)'"
+          onblur="this.style.borderColor='rgba(240,165,0,.3)';this.style.boxShadow='none'"/>
+      </div>
+      <div id="ap-err" style="display:none;background:rgba(255,82,82,.1);border:1px solid rgba(255,82,82,.3);border-radius:9px;padding:10px 14px;font-size:.76rem;color:#ff7070;margin-bottom:14px"></div>
+      <button onclick="saveAdminProfile()" style="width:100%;padding:13px;background:linear-gradient(135deg,#f0a500,#ffd056);border:none;border-radius:11px;color:#0d4a1f;font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:800;cursor:pointer;box-shadow:0 6px 20px rgba(240,165,0,.35);margin-bottom:10px">✅ Profile Save Karein</button>
+      <button onclick="closeAdminProfile()" style="width:100%;padding:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:11px;color:rgba(255,255,255,.4);font-family:'Poppins',sans-serif;font-size:.82rem;cursor:pointer">Cancel</button>
     </div>
   </div>
 </div>
