@@ -1965,10 +1965,11 @@ function showStatusInfo(){
     window.scrollTo({top:0,behavior:'smooth'});
   }
 }
-const EJS_PUBLIC_KEY  = 'oxyRIaQ-IoizhZPAG';
-const EJS_SERVICE_ID  = 'service_bol8ldq';
-const EJS_TEMPLATE_ID = 'template_zegeumr';
-const ADMIN_EMAIL     = 'shivamgupta18@zohomail.in';
+const EJS_PUBLIC_KEY       = 'oxyRIaQ-IoizhZPAG';
+const EJS_SERVICE_ID       = 'service_0odznsj';
+const EJS_TEMPLATE_ID      = 'template_00s6fhl';       // Forgot Password (user + admin)
+const EJS_ADMIN_TEMPLATE_ID= 'template_zegeumr';       // Admin Login OTP
+const ADMIN_EMAIL          = 'shivamgupta18@zohomail.in';
 emailjs.init({publicKey: EJS_PUBLIC_KEY});
 
 // ── OTP SYSTEM ──
@@ -1986,8 +1987,10 @@ async function sendOtp(mobile, targetEmail){
   // targetEmail: user ki apni email ya admin email
   const emailTo = targetEmail || ADMIN_EMAIL;
   const recipientName = targetEmail ? (_otpPending && _otpPending.name ? _otpPending.name : 'User') : 'Shivam';
+  // Admin login OTP ke liye alag template use karo
+  const templateId = (!targetEmail) ? EJS_ADMIN_TEMPLATE_ID : EJS_TEMPLATE_ID;
   try{
-    await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+    await emailjs.send(EJS_SERVICE_ID, templateId, {
       email:      emailTo,
       otp_code:   _otpCode,
       admin_name: recipientName,
@@ -2229,18 +2232,9 @@ async function doLogin(){
         toast('⛔ Account deactivated','fail');
         return;
       }
-      // ── USER OTP VERIFICATION ──
-      if(!user.email){
-        // No email saved — direct login (email popup will appear after)
-        saveSession({name:user.name,mobile:user.mobile,isAdmin:false,email:''});
-        showLoginSuccess(user.name,false,()=>showUserApp(user));
-      } else {
-        // Email exists — send OTP to user's email
-        hideLoading();
-        _otpPending = {name:user.name, mobile:user.mobile, isAdmin:false, email:user.email||''};
-        await sendOtp(user.mobile, user.email);
-        showOtpModal(user.mobile, user.email);
-      }
+      // ── DIRECT LOGIN (OTP sirf Forgot Password ke liye) ──
+      saveSession({name:user.name,mobile:user.mobile,isAdmin:false,email:user.email||''});
+      showLoginSuccess(user.name,false,()=>showUserApp(user));
     } else {
       document.getElementById('l-mob').classList.add('err');
       document.getElementById('l-pass').classList.add('err');
