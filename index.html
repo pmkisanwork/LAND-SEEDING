@@ -1689,86 +1689,229 @@ function switchAuthTab(t){
 
 // ── FORGOT PASSWORD ──
 function openForgotPass(){
-  document.getElementById('fp-name').value='';
-  document.getElementById('fp-mobile').value='';
-  document.getElementById('fp-result').style.display='none';
-  document.getElementById('fp-notfound').style.display='none';
-  const popup = document.getElementById('forgot-popup');
-  popup.style.display='flex';
-  setTimeout(()=>document.getElementById('fp-name').focus(),100);
+  fpSetRole('user');
+  ['fp-mobile','fp-email','fp-admin-mobile','fp-admin-email','fp-newpass','fp-newpass2'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  ['fp-step1-err','fp-otp-err','fp-step3-err'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display='none';
+  });
+  document.getElementById('fp-step1').style.display='block';
+  document.getElementById('fp-step2').style.display='none';
+  document.getElementById('fp-step3').style.display='none';
+  document.getElementById('forgot-popup').style.display='flex';
+  setTimeout(()=>document.getElementById('fp-mobile').focus(),100);
 }
 function closeForgotPass(){
   document.getElementById('forgot-popup').style.display='none';
+  clearInterval(_fpOtpTimer);
+  _fpOtpCode=''; _fpOtpRole='user'; _fpOtpMobile=''; _fpOtpEmail='';
+}
+function fpSetRole(role){
+  _fpOtpRole = role;
+  const uBtn = document.getElementById('fp-tab-user');
+  const aBtn = document.getElementById('fp-tab-admin');
+  const uF   = document.getElementById('fp-user-fields');
+  const aF   = document.getElementById('fp-admin-fields');
+  if(role==='user'){
+    uBtn.style.background='linear-gradient(135deg,#1a7a35,#25a84a)'; uBtn.style.color='#fff'; uBtn.style.borderColor='#25a84a';
+    aBtn.style.background='#f4fbf5'; aBtn.style.color='#5a8a5a'; aBtn.style.borderColor='rgba(37,168,74,.3)';
+    uF.style.display='block'; aF.style.display='none';
+  } else {
+    aBtn.style.background='linear-gradient(135deg,#1a7a35,#25a84a)'; aBtn.style.color='#fff'; aBtn.style.borderColor='#25a84a';
+    uBtn.style.background='#f4fbf5'; uBtn.style.color='#5a8a5a'; uBtn.style.borderColor='rgba(37,168,74,.3)';
+    aF.style.display='block'; uF.style.display='none';
+  }
 }
 
-let _fpTimer=null;
-async function lookupUser(){
-  const name   = (document.getElementById('fp-name').value||'').trim().toLowerCase();
-  const mobile = (document.getElementById('fp-mobile').value||'').trim();
-  document.getElementById('fp-result').style.display='none';
-  document.getElementById('fp-notfound').style.display='none';
+// ── FP OTP state ──
+let _fpOtpCode='', _fpOtpRole='user', _fpOtpMobile='', _fpOtpEmail='';
+let _fpOtpTimer=null;
 
-  if(name.length < 2 || mobile.length < 10) return;
+async function fpSendOtp(){
+  const errEl = document.getElementById('fp-step1-err');
+  errEl.style.display='none';
 
-  // Admin ka password forgot password se nahi dikhega
-  if(mobile === ADMIN_MOB){
-    document.getElementById('fp-notfound').style.display='block';
-    document.getElementById('fp-result').style.display='none';
-    return;
+  let mobile='', email='';
+  if(_fpOtpRole==='user'){
+    mobile = document.getElementById('fp-mobile').value.trim();
+    email  = document.getElementById('fp-email').value.trim();
+    if(!/^\d{10}$/.test(mobile)){ errEl.textContent='❌ Sahi 10 digit mobile daalen'; errEl.style.display='block'; return; }
+    if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ errEl.textContent='❌ Sahi email ID daalen'; errEl.style.display='block'; return; }
+    // Verify user exists and email matches
+    showLoading('Account verify ho raha hai...');
+    try{
+      const user = await getUserByMobile(mobile);
+      hideLoading();
+      if(!user){ errEl.textContent='❌ Is mobile se koi account nahi mila'; errEl.style.display='block'; return; }
+      if(!user.email || user.email.toLowerCase()!==email.toLowerCase()){
+        errEl.textContent='❌ Yeh email is account se match nahi karti'; errEl.style.display='block'; return;
+      }
+    }catch(e){ hideLoading(); errEl.textContent='❌ Network error. Internet check karein'; errEl.style.display='block'; return; }
+  } else {
+    // Admin
+    mobile = document.getElementById('fp-admin-mobile').value.trim();
+    email  = document.getElementById('fp-admin-email').value.trim();
+    if(mobile !== ADMIN_MOB){ errEl.textContent='❌ Admin mobile number galat hai'; errEl.style.display='block'; return; }
+    if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ errEl.textContent='❌ Sahi email ID daalen'; errEl.style.display='block'; return; }
+    if(email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()){
+      errEl.textContent='❌ Yeh email admin account se match nahi karti'; errEl.style.display='block'; return;
+    }
   }
 
-  clearTimeout(_fpTimer);
-  _fpTimer = setTimeout(async ()=>{
-    const user = await getUserByMobile(mobile);
-    if(user && user.name && user.name.toLowerCase() === name){
-      showFpResult(user.mobile, user.password, user.name);
+  _fpOtpMobile = mobile;
+  _fpOtpEmail  = email;
+  _fpOtpCode   = generateOtp();
+
+  showLoading('OTP bheja ja raha hai...');
+  try{
+    await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+      email:      email,
+      otp_code:   _fpOtpCode,
+      admin_name: _fpOtpRole==='admin' ? 'Shivam' : 'User',
+      mobile:     mobile
+    });
+    hideLoading();
+  }catch(err){
+    hideLoading();
+    errEl.textContent='❌ OTP send nahi hua. EmailJS settings check karein';
+    errEl.style.display='block'; return;
+  }
+
+  // Show step 2
+  document.getElementById('fp-step1').style.display='none';
+  document.getElementById('fp-step2').style.display='block';
+  document.getElementById('fp-otp-sent-text').textContent='OTP bhej diya: '+maskEmail(email)+' — 6 digit code enter karein';
+  // Clear OTP boxes
+  ['fp-otp1','fp-otp2','fp-otp3','fp-otp4','fp-otp5','fp-otp6'].forEach(id=>{ const el=document.getElementById(id); if(el){el.value='';el.style.borderColor='rgba(37,168,74,.3)';} });
+  document.getElementById('fp-otp-err').style.display='none';
+  fpSetupOtpJump();
+  fpStartTimer();
+  setTimeout(()=>document.getElementById('fp-otp1').focus(),150);
+  toast('📧 OTP aapki email par bhej diya gaya!','ok');
+}
+
+function fpSetupOtpJump(){
+  const ids=['fp-otp1','fp-otp2','fp-otp3','fp-otp4','fp-otp5','fp-otp6'];
+  ids.forEach((id,idx)=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    el.oninput=null; el.onkeydown=null;
+    el.addEventListener('input',function(){
+      this.value=this.value.replace(/[^0-9]/g,'');
+      if(this.value.length>1) this.value=this.value.slice(-1);
+      this.style.borderColor = this.value ? '#25a84a' : 'rgba(37,168,74,.3)';
+      if(this.value && idx<5) document.getElementById(ids[idx+1]).focus();
+    });
+    el.addEventListener('keydown',function(e){
+      if(e.key==='Backspace'&&!this.value&&idx>0) document.getElementById(ids[idx-1]).focus();
+    });
+    el.addEventListener('paste',function(e){
+      e.preventDefault();
+      const p=(e.clipboardData||window.clipboardData).getData('text').replace(/[^0-9]/g,'').slice(0,6);
+      ids.forEach((i,k)=>{ const inp=document.getElementById(i); inp.value=p[k]||''; inp.style.borderColor=inp.value?'#25a84a':'rgba(37,168,74,.3)'; });
+      document.getElementById(ids[Math.min(p.length,5)]).focus();
+    });
+  });
+}
+
+function fpStartTimer(){
+  clearInterval(_fpOtpTimer);
+  document.getElementById('fp-resend-btn').disabled=true;
+  let secs=120;
+  function tick(){
+    const m=Math.floor(secs/60), s=secs%60;
+    const el=document.getElementById('fp-otp-countdown');
+    if(el) el.textContent=m+':'+(s<10?'0':'')+s;
+    if(secs<=0){ clearInterval(_fpOtpTimer); if(el) el.textContent='0:00'; document.getElementById('fp-resend-btn').disabled=false; return; }
+    secs--;
+  }
+  tick();
+  _fpOtpTimer=setInterval(tick,1000);
+}
+
+async function fpResendOtp(){
+  document.getElementById('fp-resend-btn').disabled=true;
+  _fpOtpCode=generateOtp();
+  try{
+    await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+      email: _fpOtpEmail, otp_code: _fpOtpCode,
+      admin_name: _fpOtpRole==='admin'?'Shivam':'User', mobile: _fpOtpMobile
+    });
+    toast('📧 OTP dobara bhej diya!','ok');
+  }catch(e){ toast('❌ Resend fail hua','fail'); }
+  fpStartTimer();
+}
+
+function fpVerifyOtp(){
+  const entered=['fp-otp1','fp-otp2','fp-otp3','fp-otp4','fp-otp5','fp-otp6'].map(id=>document.getElementById(id).value).join('');
+  const errEl=document.getElementById('fp-otp-err');
+  if(entered.length<6){ toast('⚠️ 6 digit OTP daalna zaroori hai','fail'); return; }
+  if(entered===_fpOtpCode){
+    clearInterval(_fpOtpTimer);
+    errEl.style.display='none';
+    document.getElementById('fp-step2').style.display='none';
+    document.getElementById('fp-step3').style.display='block';
+    document.getElementById('fp-newpass').value='';
+    document.getElementById('fp-newpass2').value='';
+    document.getElementById('fp-step3-err').style.display='none';
+    setTimeout(()=>document.getElementById('fp-newpass').focus(),100);
+    toast('✅ OTP verify ho gaya!','ok');
+  } else {
+    errEl.style.display='block';
+    ['fp-otp1','fp-otp2','fp-otp3','fp-otp4','fp-otp5','fp-otp6'].forEach(id=>{
+      const el=document.getElementById(id);
+      el.style.borderColor='#ff5252';
+      el.value='';
+      setTimeout(()=>{ el.style.borderColor='rgba(37,168,74,.3)'; },600);
+    });
+    document.getElementById('fp-otp1').focus();
+    toast('❌ Galat OTP! Dobara try karein','fail');
+  }
+}
+
+function fpGoBack(){
+  clearInterval(_fpOtpTimer);
+  document.getElementById('fp-step2').style.display='none';
+  document.getElementById('fp-step1').style.display='block';
+}
+
+async function fpSaveNewPass(){
+  const np  = document.getElementById('fp-newpass').value;
+  const np2 = document.getElementById('fp-newpass2').value;
+  const errEl = document.getElementById('fp-step3-err');
+  errEl.style.display='none';
+  if(np.length<6){ errEl.textContent='❌ Password kam se kam 6 characters ka hona chahiye'; errEl.style.display='block'; return; }
+  if(np!==np2){ errEl.textContent='❌ Dono passwords match nahi kar rahe'; errEl.style.display='block'; return; }
+
+  showLoading('Password save ho raha hai...');
+  try{
+    if(_fpOtpRole==='admin'){
+      saveAdminPass(np);
+      hideLoading();
+      closeForgotPass();
+      toast('✅ Admin password reset ho gaya! Ab login karein','ok');
     } else {
-      document.getElementById('fp-notfound').style.display='block';
-      document.getElementById('fp-result').style.display='none';
+      await db.ref('users/'+_fpOtpMobile).update({password: np});
+      hideLoading();
+      // Auto fill login
+      document.getElementById('l-mob').value  = _fpOtpMobile;
+      document.getElementById('l-pass').value = np;
+      closeForgotPass();
+      switchAuthTab('login');
+      toast('✅ Password reset ho gaya! Ab login karein','ok');
     }
-  }, 400);
+  }catch(e){ hideLoading(); errEl.textContent='❌ Error: '+e.message; errEl.style.display='block'; }
 }
 
-function showFpResult(mobile, password, name){
-  document.getElementById('fp-notfound').style.display='none';
-  const box = document.getElementById('fp-result');
-  box.style.display='block';
-  box.innerHTML=`
-    <div style="background:linear-gradient(135deg,#e8f5e9,#f1f8e9);border:2px solid #25a84a;border-radius:12px;padding:16px 18px">
-      <div style="font-size:.68rem;font-weight:700;color:#1a7a35;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">✅ Account Mila!</div>
-      <table style="width:100%;border-collapse:collapse;font-size:.82rem">
-        <tr style="border-bottom:1px dashed rgba(37,168,74,.2)">
-          <td style="padding:6px 4px;color:#5a7a5a;width:44%">👤 Naam</td>
-          <td style="padding:6px 4px;font-weight:700;color:#0d4a1f">${name}</td>
-        </tr>
-        <tr style="border-bottom:1px dashed rgba(37,168,74,.2)">
-          <td style="padding:6px 4px;color:#5a7a5a">📱 User ID</td>
-          <td style="padding:6px 4px;font-weight:700;color:#0d4a1f;letter-spacing:.04em">${mobile}</td>
-        </tr>
-        <tr>
-          <td style="padding:6px 4px;color:#5a7a5a">🔑 Password</td>
-          <td style="padding:6px 4px">
-            <span id="fp-pw-val" style="font-weight:700;color:#0d4a1f;letter-spacing:.08em">••••••••</span>
-            <button onclick="toggleFpPw('${password}')" style="background:none;border:none;color:#1a7a35;cursor:pointer;font-size:13px;margin-left:6px;padding:0">👁️</button>
-          </td>
-        </tr>
-      </table>
-      <button onclick="fillLoginFromFp('${mobile}','${password}');closeForgotPass();"
-        style="margin-top:14px;width:100%;padding:11px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:10px;color:#fff;font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(37,168,74,.35)">
-        🔐 Is Account se Login Karein →
-      </button>
-    </div>`;
-}
-
-function toggleFpPw(pw){
-  const el = document.getElementById('fp-pw-val');
-  if(!el) return;
-  el.textContent = el.textContent === '••••••••' ? pw : '••••••••';
-}
-
-function fillLoginFromFp(mobile, password){
-  document.getElementById('l-mob').value  = mobile;
-  document.getElementById('l-pass').value = password;
+// ── Keep old stubs so nothing else breaks ──
+let _fpTimer=null;
+function lookupUser(){}
+function showFpResult(){}
+function toggleFpPw(){}
+function fillLoginFromFp(mobile,password){
+  document.getElementById('l-mob').value=mobile;
+  document.getElementById('l-pass').value=password;
   switchAuthTab('login');
   toast('✅ Mobile aur Password fill ho gaya!','ok');
 }
@@ -4118,42 +4261,141 @@ async function pmkCheckStatus(){
 </div>
 
 <!-- ══ FORGOT PASSWORD POPUP ══ -->
-<div id="forgot-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99998;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(6px)">
-  <div style="background:#fff;border-radius:22px;padding:32px 28px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:slideUp .35s ease both;font-family:'Poppins',sans-serif">
+<!-- ══ FORGOT PASSWORD POPUP (OTP Based) ══ -->
+<div id="forgot-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:99998;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(8px)">
+  <div style="background:#fff;border-radius:24px;width:100%;max-width:420px;box-shadow:0 24px 80px rgba(0,0,0,.25);animation:slideUp .35s ease both;font-family:'Poppins',sans-serif;overflow:hidden">
+
     <!-- Header -->
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-      <div>
-        <div style="font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:#0d4a1f">🔑 Password Dhundein</div>
-        <div style="font-size:.72rem;color:#7a9a7a;margin-top:2px">Apna naam aur mobile no. daalen</div>
+    <div style="background:linear-gradient(135deg,#0d4a1f,#1a7a35);padding:20px 24px 16px;position:relative">
+      <button onclick="closeForgotPass()" style="position:absolute;top:13px;right:13px;background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px">✕</button>
+      <div style="font-family:'Baloo 2',cursive;font-size:1.25rem;font-weight:800;color:#fff">🔑 Password Reset</div>
+      <div style="font-size:.72rem;color:rgba(255,255,255,.6);margin-top:2px">OTP se password reset karein</div>
+    </div>
+
+    <!-- STEP 1: Role select + inputs -->
+    <div id="fp-step1" style="padding:22px 24px 24px">
+
+      <!-- Role Tabs -->
+      <div style="display:flex;gap:8px;margin-bottom:20px">
+        <button id="fp-tab-user" onclick="fpSetRole('user')"
+          style="flex:1;padding:10px;border-radius:10px;font-size:.8rem;font-weight:700;cursor:pointer;border:2px solid #25a84a;background:linear-gradient(135deg,#1a7a35,#25a84a);color:#fff;font-family:'Poppins',sans-serif;transition:all .2s">
+          🌾 User
+        </button>
+        <button id="fp-tab-admin" onclick="fpSetRole('admin')"
+          style="flex:1;padding:10px;border-radius:10px;font-size:.8rem;font-weight:700;cursor:pointer;border:2px solid rgba(37,168,74,.3);background:#f4fbf5;color:#5a8a5a;font-family:'Poppins',sans-serif;transition:all .2s">
+          🛡️ Admin
+        </button>
       </div>
-      <button onclick="closeForgotPass()" style="background:rgba(37,168,74,.1);border:none;color:#1a7a35;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center">✕</button>
+
+      <!-- User fields -->
+      <div id="fp-user-fields">
+        <div style="margin-bottom:13px">
+          <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">📱 Mobile Number</label>
+          <input id="fp-mobile" type="tel" placeholder="10 digit registered mobile" maxlength="10"
+            style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+            onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
+            onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+        </div>
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">📧 Registered Email ID</label>
+          <input id="fp-email" type="email" placeholder="Woh email jo account mein save hai"
+            style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+            onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
+            onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+        </div>
+      </div>
+
+      <!-- Admin fields -->
+      <div id="fp-admin-fields" style="display:none">
+        <div style="margin-bottom:13px">
+          <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">📱 Admin Mobile</label>
+          <input id="fp-admin-mobile" type="tel" placeholder="Admin mobile number" maxlength="10"
+            style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+            onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
+            onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+        </div>
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">📧 Admin Email ID</label>
+          <input id="fp-admin-email" type="email" placeholder="Admin ki email ID"
+            style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+            onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
+            onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+        </div>
+      </div>
+
+      <div id="fp-step1-err" style="display:none;background:#fff3f3;border:1.5px solid #ffaaaa;border-radius:10px;padding:11px 14px;font-size:.77rem;color:#c0392b;margin-bottom:14px"></div>
+
+      <button onclick="fpSendOtp()"
+        style="width:100%;padding:13px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(37,168,74,.35)">
+        📧 OTP Bhejein →
+      </button>
     </div>
 
-    <!-- Input: Name -->
-    <div style="margin-bottom:13px">
-      <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">👤 Poora Naam</label>
-      <input id="fp-name" type="text" placeholder="Registered naam likhein" oninput="lookupUser()"
-        style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
-        onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
-        onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+    <!-- STEP 2: OTP verify -->
+    <div id="fp-step2" style="display:none;padding:22px 24px">
+      <div id="fp-otp-sent-info" style="background:#e8f5e9;border:1.5px solid #a5d6a7;border-radius:12px;padding:12px 14px;font-size:.78rem;color:#1a5c2a;margin-bottom:18px;display:flex;align-items:flex-start;gap:8px">
+        <span style="font-size:1.1rem">📧</span>
+        <span id="fp-otp-sent-text">OTP bhej diya gaya hai</span>
+      </div>
+      <!-- OTP Boxes -->
+      <div style="display:flex;gap:8px;justify-content:center;margin-bottom:16px">
+        <input id="fp-otp1" type="tel" maxlength="1" style="width:44px;height:50px;text-align:center;font-size:1.3rem;font-weight:800;background:#f4fbf5;border:2px solid rgba(37,168,74,.3);border-radius:11px;color:#0d4a1f;outline:none;font-family:'Poppins',sans-serif;transition:all .2s"/>
+        <input id="fp-otp2" type="tel" maxlength="1" style="width:44px;height:50px;text-align:center;font-size:1.3rem;font-weight:800;background:#f4fbf5;border:2px solid rgba(37,168,74,.3);border-radius:11px;color:#0d4a1f;outline:none;font-family:'Poppins',sans-serif;transition:all .2s"/>
+        <input id="fp-otp3" type="tel" maxlength="1" style="width:44px;height:50px;text-align:center;font-size:1.3rem;font-weight:800;background:#f4fbf5;border:2px solid rgba(37,168,74,.3);border-radius:11px;color:#0d4a1f;outline:none;font-family:'Poppins',sans-serif;transition:all .2s"/>
+        <input id="fp-otp4" type="tel" maxlength="1" style="width:44px;height:50px;text-align:center;font-size:1.3rem;font-weight:800;background:#f4fbf5;border:2px solid rgba(37,168,74,.3);border-radius:11px;color:#0d4a1f;outline:none;font-family:'Poppins',sans-serif;transition:all .2s"/>
+        <input id="fp-otp5" type="tel" maxlength="1" style="width:44px;height:50px;text-align:center;font-size:1.3rem;font-weight:800;background:#f4fbf5;border:2px solid rgba(37,168,74,.3);border-radius:11px;color:#0d4a1f;outline:none;font-family:'Poppins',sans-serif;transition:all .2s"/>
+        <input id="fp-otp6" type="tel" maxlength="1" style="width:44px;height:50px;text-align:center;font-size:1.3rem;font-weight:800;background:#f4fbf5;border:2px solid rgba(37,168,74,.3);border-radius:11px;color:#0d4a1f;outline:none;font-family:'Poppins',sans-serif;transition:all .2s"/>
+      </div>
+      <div id="fp-otp-err" style="display:none;color:#c0392b;font-size:.75rem;text-align:center;margin-bottom:12px">❌ Galat OTP! Dobara try karein</div>
+      <div style="text-align:center;font-size:.72rem;color:#9abf9a;margin-bottom:14px">
+        OTP expire: <span id="fp-otp-countdown" style="font-weight:700;color:#1a7a35">2:00</span>
+        &nbsp;|&nbsp; <button id="fp-resend-btn" onclick="fpResendOtp()" disabled
+          style="background:none;border:none;color:#1a7a35;font-weight:700;cursor:pointer;font-size:.72rem;font-family:'Poppins',sans-serif;text-decoration:underline">🔄 Resend</button>
+      </div>
+      <button onclick="fpVerifyOtp()"
+        style="width:100%;padding:13px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(37,168,74,.35);margin-bottom:10px">
+        ✅ OTP Verify Karein
+      </button>
+      <button onclick="fpGoBack()"
+        style="width:100%;padding:10px;background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.1);border-radius:11px;color:#555;font-family:'Poppins',sans-serif;font-size:.82rem;cursor:pointer">
+        ← Wapas Jaayein
+      </button>
     </div>
 
-    <!-- Input: Mobile -->
-    <div style="margin-bottom:18px">
-      <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">📱 Mobile Number</label>
-      <input id="fp-mobile" type="tel" placeholder="10 digit mobile number" maxlength="10" oninput="lookupUser()"
-        style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
-        onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
-        onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+    <!-- STEP 3: New password -->
+    <div id="fp-step3" style="display:none;padding:22px 24px 24px">
+      <div style="text-align:center;margin-bottom:18px">
+        <div style="font-size:2rem;margin-bottom:6px">🔓</div>
+        <div style="font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:#0d4a1f">Naya Password Set Karein</div>
+        <div style="font-size:.73rem;color:#7a9a7a;margin-top:2px">OTP verify ho gaya! Ab naya password daalen</div>
+      </div>
+      <div style="margin-bottom:13px">
+        <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">🔑 Naya Password</label>
+        <div style="position:relative">
+          <input id="fp-newpass" type="password" placeholder="Min 6 characters"
+            style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 42px 11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+            onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
+            onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+          <button onclick="tpw('fp-newpass',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#6a9a6a;cursor:pointer;font-size:14px">👁️</button>
+        </div>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">🔑 Confirm Password</label>
+        <div style="position:relative">
+          <input id="fp-newpass2" type="password" placeholder="Password dobara likhein"
+            style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 42px 11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+            onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
+            onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+          <button onclick="tpw('fp-newpass2',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#6a9a6a;cursor:pointer;font-size:14px">👁️</button>
+        </div>
+      </div>
+      <div id="fp-step3-err" style="display:none;background:#fff3f3;border:1.5px solid #ffaaaa;border-radius:10px;padding:11px 14px;font-size:.77rem;color:#c0392b;margin-bottom:14px"></div>
+      <button onclick="fpSaveNewPass()"
+        style="width:100%;padding:13px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(37,168,74,.35)">
+        💾 Password Save Karein
+      </button>
     </div>
 
-    <!-- Result Box -->
-    <div id="fp-result" style="display:none"></div>
-
-    <!-- Not found message -->
-    <div id="fp-notfound" style="display:none;background:#fff3f3;border:1.5px solid #ffaaaa;border-radius:10px;padding:12px 14px;text-align:center;font-size:.78rem;color:#c0392b">
-      ❌ Koi account nahi mila. Naam aur mobile dobara check karein.
-    </div>
   </div>
 </div>
 
