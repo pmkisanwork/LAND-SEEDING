@@ -178,13 +178,27 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .toast.ok{border-color:rgba(78,203,110,.4);color:var(--g4)}
 .toast.fail{border-color:rgba(255,82,82,.4);color:#ff5252}
 
-/* OTP BOXES */
-.otp-box{width:46px;height:54px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);border-radius:12px;color:#fff;font-size:1.4rem;font-weight:700;text-align:center;font-family:'Baloo 2',cursive;outline:none;transition:all .2s;caret-color:transparent}
-.otp-box:focus{border-color:var(--g3);background:rgba(37,168,74,.12);box-shadow:0 0 0 3px rgba(37,168,74,.15)}
-.otp-box.filled{border-color:var(--g4)}
-.otp-box.shake{animation:shake .3s ease}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+/* ══ OTP MODAL — NEW STYLISH ══ */
+.otp-box{
+  width:48px;height:56px;background:rgba(255,255,255,.07);
+  border:2px solid rgba(255,255,255,.15);border-radius:14px;
+  color:#fff;font-size:1.5rem;font-weight:800;text-align:center;
+  font-family:'Baloo 2',cursive;outline:none;transition:all .2s;
+  caret-color:transparent;
+}
+.otp-box:focus{
+  border-color:var(--gold2);background:rgba(255,208,86,.1);
+  box-shadow:0 0 0 4px rgba(255,208,86,.2);transform:scale(1.08);
+}
+.otp-box.filled{
+  border-color:var(--g4);background:rgba(37,168,74,.18);
+  color:var(--g4);
+}
+.otp-box.shake{animation:otpShake .4s ease}
+@keyframes otpShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
 #otp-overlay{display:none}
+@keyframes otpModalIn{from{opacity:0;transform:scale(.88) translateY(24px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes gradMove{0%{background-position:0%}100%{background-position:200%}}
 /* OFFER POPUP */
 @keyframes offerPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,80,0,.4)}50%{box-shadow:0 0 0 8px rgba(255,80,0,0)}}
 @keyframes popIn{from{opacity:0;transform:translate(-50%,-50%) scale(.85)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
@@ -1356,39 +1370,75 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 
 <!-- ══ OTP MODAL ══ -->
-<div id="otp-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9998;backdrop-filter:blur(8px);align-items:center;justify-content:center;">
-  <div style="background:linear-gradient(135deg,#071510,#0d2e15);border:1px solid rgba(37,168,74,.35);border-radius:24px;padding:38px 32px;width:100%;max-width:380px;margin:16px;box-shadow:0 24px 60px rgba(0,0,0,.6);animation:slideUp .4s ease both;text-align:center;">
-    <div style="font-size:2.8rem;margin-bottom:12px">🔐</div>
-    <div style="font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:800;color:#fff;margin-bottom:6px">OTP Verification</div>
-    <div style="color:rgba(255,255,255,.5);font-size:.82rem;margin-bottom:6px">Admin ke mobile number par OTP bheja gaya hai</div>
-    <div style="color:var(--gold2);font-size:.8rem;font-weight:600;margin-bottom:24px" id="otp-mob-show"></div>
+<div id="otp-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9998;backdrop-filter:blur(14px);align-items:center;justify-content:center;padding:16px;">
+  <div style="width:100%;max-width:400px;background:#0a1a0d;border-radius:28px;overflow:hidden;box-shadow:0 32px 100px rgba(0,0,0,.7),0 0 0 1px rgba(37,168,74,.25);animation:otpModalIn .4s cubic-bezier(.34,1.56,.64,1) both;">
 
-    <!-- OTP boxes -->
-    <div style="display:flex;gap:10px;justify-content:center;margin-bottom:8px">
-      <input id="otp1" class="otp-box" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" onkeyup="otpNav(this,'','otp2')" oninput="this.value=this.value.replace(/[^0-9]/g,'')"/>
-      <input id="otp2" class="otp-box" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" onkeyup="otpNav(this,'otp1','otp3')" oninput="this.value=this.value.replace(/[^0-9]/g,'')"/>
-      <input id="otp3" class="otp-box" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" onkeyup="otpNav(this,'otp2','otp4')" oninput="this.value=this.value.replace(/[^0-9]/g,'')"/>
-      <input id="otp4" class="otp-box" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" onkeyup="otpNav(this,'otp3','otp5')" oninput="this.value=this.value.replace(/[^0-9]/g,'')"/>
-      <input id="otp5" class="otp-box" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" onkeyup="otpNav(this,'otp4','otp6')" oninput="this.value=this.value.replace(/[^0-9]/g,'')"/>
-      <input id="otp6" class="otp-box" maxlength="1" type="text" inputmode="numeric" pattern="[0-9]" onkeyup="otpNav(this,'otp5','')" oninput="this.value=this.value.replace(/[^0-9]/g,'')"/>
+    <!-- Top gradient bar -->
+    <div style="height:4px;background:linear-gradient(90deg,var(--g2),var(--g4),var(--gold2),var(--g4),var(--g2));background-size:200%;animation:gradMove 3s linear infinite"></div>
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#071510,#0d2e15);padding:28px 28px 22px;text-align:center;border-bottom:1px solid rgba(37,168,74,.15)">
+      <!-- Lock icon with glow ring -->
+      <div style="width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,rgba(37,168,74,.25),rgba(37,168,74,.05));border:2px solid rgba(78,203,110,.4);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 14px;box-shadow:0 0 0 10px rgba(37,168,74,.08),0 0 40px rgba(37,168,74,.2)">🔐</div>
+      <div style="font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:5px;letter-spacing:.5px">OTP Verification</div>
+      <div style="color:rgba(255,255,255,.45);font-size:.8rem;margin-bottom:10px">Admin login ke liye OTP verify karein</div>
+      <!-- Email chip -->
+      <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,208,86,.1);border:1px solid rgba(255,208,86,.3);border-radius:20px;padding:6px 16px;font-size:.74rem;color:var(--gold2);font-weight:700" id="otp-mob-show">📧 OTP bheja: shivamgupta18@zohomail.in</div>
     </div>
-    <div id="otp-err" style="color:var(--error);font-size:.72rem;margin-bottom:14px;display:none">❌ Galat OTP hai, dobara try karein</div>
 
-    <!-- Timer -->
-    <div id="otp-timer" style="color:rgba(255,255,255,.4);font-size:.75rem;margin-bottom:18px">⏱️ OTP valid hai: <span id="otp-countdown" style="color:var(--gold2);font-weight:700">2:00</span></div>
+    <!-- Body -->
+    <div style="padding:26px 28px 24px;text-align:center">
 
-    <!-- Resend -->
-    <div style="margin-bottom:20px;font-size:.78rem;color:rgba(255,255,255,.4)">OTP nahi aaya? <button id="resend-btn" onclick="resendOtp()" style="background:none;border:none;color:var(--gold2);font-weight:700;cursor:pointer;font-size:.78rem;font-family:'Poppins',sans-serif;" disabled>Resend OTP</button></div>
+      <!-- Progress dots -->
+      <div style="display:flex;gap:8px;justify-content:center;margin-bottom:18px" id="otp-dots-row">
+        <div class="otpd" id="otpd1"></div>
+        <div class="otpd" id="otpd2"></div>
+        <div class="otpd" id="otpd3"></div>
+        <div class="otpd" id="otpd4"></div>
+        <div class="otpd" id="otpd5"></div>
+        <div class="otpd" id="otpd6"></div>
+      </div>
 
-    <button onclick="verifyOtp()" style="width:100%;padding:13px;background:linear-gradient(135deg,var(--g2),var(--g3));border:none;border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(37,168,74,.35);transition:all .25s">✅ OTP Verify Karein</button>
-    <button onclick="closeOtpModal()" style="width:100%;margin-top:10px;padding:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;color:rgba(255,255,255,.5);font-family:'Poppins',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s">← Wapas Jaayein</button>
+      <!-- OTP inputs -->
+      <div style="display:flex;gap:9px;justify-content:center;margin-bottom:10px">
+        <input id="otp1" class="otp-box" maxlength="1" type="tel" inputmode="numeric" pattern="[0-9]"/>
+        <input id="otp2" class="otp-box" maxlength="1" type="tel" inputmode="numeric" pattern="[0-9]"/>
+        <input id="otp3" class="otp-box" maxlength="1" type="tel" inputmode="numeric" pattern="[0-9]"/>
+        <input id="otp4" class="otp-box" maxlength="1" type="tel" inputmode="numeric" pattern="[0-9]"/>
+        <input id="otp5" class="otp-box" maxlength="1" type="tel" inputmode="numeric" pattern="[0-9]"/>
+        <input id="otp6" class="otp-box" maxlength="1" type="tel" inputmode="numeric" pattern="[0-9]"/>
+      </div>
 
-    <!-- Demo info box -->
-    <div style="margin-top:18px;padding:10px 14px;background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);border-radius:10px;font-size:.72rem;color:rgba(255,255,255,.45);text-align:left">
-      💡 <strong style="color:var(--gold2)">Email OTP:</strong> OTP <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ff859b878685909999969c969e93bf98929e9693d19c9092">[email&#160;protected]</a></strong> par bheja gaya hai. Email inbox ya spam folder check karein.
+      <!-- Error -->
+      <div id="otp-err" style="display:none;background:rgba(255,82,82,.12);border:1px solid rgba(255,82,82,.3);border-radius:10px;padding:9px 14px;font-size:.75rem;color:#ff6b6b;margin-bottom:12px;font-weight:600">❌ Galat OTP hai, dobara try karein</div>
+
+      <!-- Timer -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px 16px;margin-bottom:20px">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(37,168,74,.2),rgba(78,203,110,.1));border:2px solid rgba(78,203,110,.3);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:var(--g4)" id="otp-countdown">2:00</div>
+        <div id="otp-timer" style="font-size:.78rem;color:rgba(255,255,255,.45)">OTP <span style="color:var(--g4);font-weight:700">2 minutes</span> mein expire hoga</div>
+      </div>
+
+      <!-- Verify button -->
+      <button onclick="verifyOtp()" style="width:100%;padding:14px;background:linear-gradient(135deg,var(--g2),var(--g3));border:none;border-radius:14px;color:#fff;font-family:'Poppins',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(37,168,74,.4);transition:all .25s;letter-spacing:.4px;margin-bottom:10px" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">✅ Verify & Login Karein</button>
+
+      <!-- Back button -->
+      <button onclick="closeOtpModal()" style="width:100%;padding:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;color:rgba(255,255,255,.4);font-family:'Poppins',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s;margin-bottom:16px" onmouseover="this.style.background='rgba(255,255,255,.09)'" onmouseout="this.style.background='rgba(255,255,255,.05)'">← Wapas Login Par Jaayein</button>
+
+      <!-- Resend -->
+      <div style="font-size:.76rem;color:rgba(255,255,255,.35)">OTP nahi aaya? &nbsp;<button id="resend-btn" onclick="resendOtp()" style="background:none;border:none;color:var(--gold2);font-weight:700;cursor:pointer;font-size:.76rem;font-family:'Poppins',sans-serif;text-decoration:underline" disabled>🔄 Resend OTP</button></div>
+    </div>
+
+    <!-- Footer -->
+    <div style="background:rgba(255,255,255,.03);border-top:1px solid rgba(37,168,74,.12);padding:12px 20px;font-size:.7rem;color:rgba(255,255,255,.3);text-align:center">
+      📩 Inbox ya spam folder check karein &nbsp;•&nbsp; OTP 2 min valid hai
     </div>
   </div>
 </div>
+
+<style>
+.otpd{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .3s}
+.otpd.on{background:var(--g4);box-shadow:0 0 8px rgba(78,203,110,.6);transform:scale(1.25)}
+</style>
 
 <script>
 // ── FIREBASE CONFIG ──
@@ -1785,15 +1835,23 @@ async function resendOtp(){
 
 function showOtpModal(mobile){
   document.getElementById('otp-mob-show').textContent='📧 OTP bheja: shivamgupta18@zohomail.in';
-  ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach(id=>{document.getElementById(id).value='';document.getElementById(id).classList.remove('filled','shake');});
+  ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach((id,k)=>{
+    const el=document.getElementById(id);
+    el.value=''; el.classList.remove('filled','shake','otpShake');
+    const dot=document.getElementById('otpd'+(k+1));
+    if(dot) dot.classList.remove('on');
+  });
   document.getElementById('otp-err').style.display='none';
-  document.getElementById('otp-overlay').classList.add('show');
+  document.getElementById('otp-overlay').style.display='flex';
+  document.getElementById('otp-overlay').style.alignItems='center';
+  document.getElementById('otp-overlay').style.justifyContent='center';
+  setupOtpAutoJump();
   setTimeout(()=>document.getElementById('otp1').focus(),200);
   startOtpTimer();
 }
 
 function closeOtpModal(){
-  document.getElementById('otp-overlay').classList.remove('show');
+  document.getElementById('otp-overlay').style.display='none';
   clearInterval(_otpTimer);
   _otpPending=null;
   _otpCode='';
@@ -1806,10 +1864,13 @@ function startOtpTimer(){
   function tick(){
     const m=Math.floor(secs/60);
     const s=secs%60;
-    document.getElementById('otp-countdown').textContent=m+':'+(s<10?'0':'')+s;
+    const cd=document.getElementById('otp-countdown');
+    const tm=document.getElementById('otp-timer');
+    if(cd) cd.textContent=m+':'+(s<10?'0':'')+s;
     if(secs<=0){
       clearInterval(_otpTimer);
-      document.getElementById('otp-timer').innerHTML='⏱️ OTP expire ho gaya — Resend karein';
+      if(tm) tm.innerHTML='OTP expire ho gaya — Resend karein';
+      if(cd) cd.textContent='0:00';
       document.getElementById('resend-btn').disabled=false;
       return;
     }
@@ -1819,10 +1880,48 @@ function startOtpTimer(){
   _otpTimer=setInterval(tick,1000);
 }
 
+// ── OTP AUTO-JUMP (Event Listener based) ──
+const _otpBoxIds = ['otp1','otp2','otp3','otp4','otp5','otp6'];
+function setupOtpAutoJump(){
+  _otpBoxIds.forEach((id,idx)=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    // Remove old inline handlers
+    el.oninput = null; el.onkeyup = null;
+
+    el.addEventListener('input', function(){
+      this.value = this.value.replace(/[^0-9]/g,'');
+      if(this.value.length > 1) this.value = this.value.slice(-1);
+      this.classList.toggle('filled', this.value !== '');
+      const dot = document.getElementById('otpd'+(idx+1));
+      if(dot) dot.classList.toggle('on', this.value !== '');
+      if(this.value && idx < 5) document.getElementById(_otpBoxIds[idx+1]).focus();
+    });
+
+    el.addEventListener('keydown', function(e){
+      if(e.key==='Backspace' && !this.value && idx > 0){
+        document.getElementById(_otpBoxIds[idx-1]).focus();
+      }
+    });
+
+    el.addEventListener('paste', function(e){
+      e.preventDefault();
+      const pasted = (e.clipboardData||window.clipboardData).getData('text').replace(/[^0-9]/g,'').slice(0,6);
+      _otpBoxIds.forEach((i,k)=>{
+        const inp = document.getElementById(i);
+        inp.value = pasted[k]||'';
+        inp.classList.toggle('filled', inp.value!=='');
+        const dot = document.getElementById('otpd'+(k+1));
+        if(dot) dot.classList.toggle('on', inp.value!=='');
+      });
+      const last = Math.min(pasted.length, 5);
+      document.getElementById(_otpBoxIds[last]).focus();
+    });
+  });
+}
+
 function otpNav(el,prevId,nextId){
-  el.classList.toggle('filled',el.value!=='');
-  if(el.value&&nextId)document.getElementById(nextId).focus();
-  if(!el.value&&prevId&&event.key==='Backspace')document.getElementById(prevId).focus();
+  // Legacy fallback - not used anymore
 }
 
 function verifyOtp(){
@@ -1832,17 +1931,19 @@ function verifyOtp(){
   }
   if(entered===_otpCode){
     clearInterval(_otpTimer);
-    document.getElementById('otp-overlay').classList.remove('show');
+    document.getElementById('otp-overlay').style.display='none';
     saveSession(_otpPending);
     _otpCode='';_otpPending=null;
     showLoginSuccess('Shivam', true, ()=>showAdminDash());
   }else{
     document.getElementById('otp-err').style.display='block';
-    ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach(id=>{
+    ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach((id,k)=>{
       const el=document.getElementById(id);
       el.classList.add('shake');
-      setTimeout(()=>el.classList.remove('shake'),300);
-      el.value='';el.classList.remove('filled');
+      setTimeout(()=>el.classList.remove('shake'),400);
+      el.value=''; el.classList.remove('filled');
+      const dot=document.getElementById('otpd'+(k+1));
+      if(dot) dot.classList.remove('on');
     });
     document.getElementById('otp1').focus();
     toast('❌ Galat OTP! Dobara try karein','fail');
