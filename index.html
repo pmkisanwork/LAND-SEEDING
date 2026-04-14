@@ -505,7 +505,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="fg">
           <label class="flabel">📧 Email ID <span style="color:#ff5252">*</span></label>
           <div class="iw"><span class="ii">📧</span><input class="fi" id="r-email" type="email" placeholder="Apni email ID daalen (jaise: abc@gmail.com)"/></div>
-          <div class="errmsg" id="e-re">Sahi email ID daalen (jaise: abc@gmail.com)</div>
+          <div class="errmsg" id="e-re">Sahi email ID daalen (jaise: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="97f6f5f4d7f0faf6fefbb9f4f8fa">[email&#160;protected]</a>)</div>
         </div>
         <div style="margin-bottom:14px;">
           <label class="flabel">🔐 Captcha Verify Karein</label>
@@ -1456,7 +1456,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .otpd.on{background:var(--g4);box-shadow:0 0 8px rgba(78,203,110,.6);transform:scale(1.25)}
 </style>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── FIREBASE CONFIG ──
 const firebaseConfig = {
   apiKey: "AIzaSyAiECbcapmMwA3caAExg-VrStRM-8kIYI8",
@@ -1473,7 +1473,18 @@ const db = firebase.database();
 // ── CONSTANTS ──
 const ADMIN_MOB = '8960947991';
 function getAdminPass(){ return localStorage.getItem('awo_admin_pass') || 'Shivam@264491'; }
-function saveAdminPass(p){ localStorage.setItem('awo_admin_pass', p); }
+function saveAdminPass(p){ 
+  localStorage.setItem('awo_admin_pass', p);
+  // Firebase mein bhi save karo taaki sab browsers mein kaam kare
+  db.ref('admin_config/password').set(p);
+}
+// App load hone par Firebase se admin password sync karo
+function syncAdminPassFromFirebase(){
+  db.ref('admin_config/password').once('value').then(snap => {
+    const p = snap.val();
+    if(p) localStorage.setItem('awo_admin_pass', p);
+  });
+}
 
 // ── SESSION (still localStorage - device specific login) ──
 function getSession(){try{return JSON.parse(localStorage.getItem('awo_sess')||'null')}catch{return null}}
@@ -1558,6 +1569,7 @@ document.head.appendChild(spinStyle);
 
 // ── INIT ──
 window.onload=function(){
+  syncAdminPassFromFirebase(); // Firebase se admin password sync karo
   const s=getSession();
   if(s){
     if(s.isAdmin)showAdminDash();
@@ -2183,9 +2195,24 @@ async function doLogin(){
     return;
   }
 
-  if(mob===ADMIN_MOB && pass===getAdminPass()){
-    // OTP verification required before admin login
-    _otpPending = {isAdmin:true, name:'Admin (Shivam)', mobile:mob};
+  if(mob===ADMIN_MOB){
+    // Firebase se latest admin password fetch karo
+    showLoading("Password verify ho raha hai...");
+    try{
+      const adminSnap = await db.ref("admin_config/password").once("value");
+      const fbAdminPass = adminSnap.val();
+      const correctPass = fbAdminPass || getAdminPass();
+      if(fbAdminPass) localStorage.setItem("awo_admin_pass", fbAdminPass);
+      hideLoading();
+      if(pass !== correctPass){
+        document.getElementById("l-mob").classList.add("err");
+        document.getElementById("l-pass").classList.add("err");
+        document.getElementById("e-lm").textContent="Mobile ya password galat hai";
+        document.getElementById("e-lm").classList.add("show");
+        return;
+      }
+    }catch(e){ hideLoading(); }
+    _otpPending = {isAdmin:true, name:"Admin (Shivam)", mobile:mob};
     await sendOtp(mob, null);
     showOtpModal(mob, null);
     return;
@@ -4448,7 +4475,7 @@ async function pmkCheckStatus(){
         <div id="up-email-none" style="margin-top:5px;font-size:.7rem;color:#c07800;display:none">
           ⚠️ Abhi koi email save nahi hai — email add karein
         </div>
-        <div id="up-email-err" style="color:#ff5252;font-size:.71rem;margin-top:4px;display:none">Sahi email daalen (jaise: abc@gmail.com)</div>
+        <div id="up-email-err" style="color:#ff5252;font-size:.71rem;margin-top:4px;display:none">Sahi email daalen (jaise: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5637343516313b373f3a7835393b">[email&#160;protected]</a>)</div>
       </div>
       <div id="up-err" style="display:none;background:#fff3f3;border:1px solid #ffaaaa;border-radius:9px;padding:10px 14px;font-size:.76rem;color:#c0392b;margin-bottom:14px"></div>
       <button onclick="saveUserProfile()" style="width:100%;padding:13px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(37,168,74,.35);margin-bottom:10px">✅ Profile Save Karein</button>
@@ -4520,7 +4547,7 @@ async function pmkCheckStatus(){
             onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
             onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
         </div>
-        <div id="ea-err" style="display:none;color:#ff5252;font-size:.71rem;margin-top:4px">Sahi email ID daalen (jaise: abc@gmail.com)</div>
+        <div id="ea-err" style="display:none;color:#ff5252;font-size:.71rem;margin-top:4px">Sahi email ID daalen (jaise: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1c7d7e7f5c7b717d7570327f7371">[email&#160;protected]</a>)</div>
       </div>
       <button onclick="saveEmailAndContinue()"
         style="width:100%;padding:13px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(37,168,74,.35);margin-bottom:10px">
@@ -4531,7 +4558,7 @@ async function pmkCheckStatus(){
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ══ EMAIL ADD POPUP LOGIC ══
 let _emailAddCallback = null;
 
@@ -4565,23 +4592,4 @@ async function saveEmailAndContinue(){
       await db.ref('users/'+s.mobile).update({email: email});
       hideLoading();
     }catch(e){
-      hideLoading();
-      toast('❌ Email save nahi hua. Internet check karein','fail');
-      return;
-    }
-    saveSession({...s, email: email});
-  }
-  document.getElementById('email-add-popup').style.display = 'none';
-  toast('✅ Email save ho gaya!','ok');
-  if(_emailAddCallback){ _emailAddCallback(); _emailAddCallback = null; }
-}
-
-// ── Patch showUserApp to check email ──
-const _origShowUserApp = showUserApp;
-window.showUserApp = function(user){
-  checkAndPromptEmail(user, function(){
-    _origShowUserApp(user);
-  });
-};
-</script>
-</body></html>
+    
