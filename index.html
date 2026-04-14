@@ -172,6 +172,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .search-bar input{background:none;border:none;outline:none;color:#fff;font-family:'Poppins',sans-serif;font-size:.85rem;flex:1}
 .search-bar input::placeholder{color:rgba(255,255,255,.3)}
 
+/* ══ EMAIL ADD POPUP ══ */
+#email-add-popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99999;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(10px)}
+#email-add-popup.open{display:flex}
+.email-add-card{background:#fff;border-radius:22px;padding:0;width:100%;max-width:400px;box-shadow:0 24px 80px rgba(0,0,0,.3);animation:slideUp .35s ease both;overflow:hidden;font-family:'Poppins',sans-serif}
+.email-add-head{background:linear-gradient(135deg,#0d4a1f,#1a7a35);padding:22px 24px 18px;position:relative}
+.email-add-head-title{font-family:'Baloo 2',cursive;font-size:1.25rem;font-weight:800;color:#fff}
+.email-add-head-sub{font-size:.73rem;color:rgba(255,255,255,.65);margin-top:3px}
+.email-add-body{padding:22px 24px 24px}
+.email-add-notice{background:#fff8e1;border:1.5px solid #ffe082;border-radius:12px;padding:12px 14px;font-size:.78rem;color:#7a5800;margin-bottom:18px;display:flex;align-items:flex-start;gap:9px}
+.email-add-notice-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+
 /* TOAST */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#0d2e15;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 20px;font-size:.82rem;font-weight:500;white-space:nowrap;z-index:9999;transition:transform .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 8px 28px rgba(0,0,0,.4)}
 .toast.show{transform:translateX(-50%) translateY(0)}
@@ -490,6 +501,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           <label class="flabel">🔑 Confirm Password</label>
           <div class="iw"><span class="ii">🔒</span><input class="fi" id="r-pass2" type="password" placeholder="Password dobara likhein"/><button class="tpw" onclick="tpw('r-pass2',this)">👁️</button></div>
           <div class="errmsg" id="e-rp2">Dono passwords match nahi kar rahe</div>
+        </div>
+        <div class="fg">
+          <label class="flabel">📧 Email ID <span style="color:#ff5252">*</span></label>
+          <div class="iw"><span class="ii">📧</span><input class="fi" id="r-email" type="email" placeholder="Apni email ID daalen (jaise: abc@gmail.com)"/></div>
+          <div class="errmsg" id="e-re">Sahi email ID daalen (jaise: abc@gmail.com)</div>
         </div>
         <div style="margin-bottom:14px;">
           <label class="flabel">🔐 Captcha Verify Karein</label>
@@ -1383,7 +1399,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div style="font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:5px;letter-spacing:.5px">OTP Verification</div>
       <div style="color:rgba(255,255,255,.45);font-size:.8rem;margin-bottom:10px">Admin login ke liye OTP verify karein</div>
       <!-- Email chip -->
-      <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,208,86,.1);border:1px solid rgba(255,208,86,.3);border-radius:20px;padding:6px 16px;font-size:.74rem;color:var(--gold2);font-weight:700" id="otp-mob-show">📧 OTP bheja: shivamgupta18@zohomail.in</div>
+      <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,208,86,.1);border:1px solid rgba(255,208,86,.3);border-radius:20px;padding:6px 16px;font-size:.74rem;color:var(--gold2);font-weight:700" id="otp-mob-show">📧 OTP bheja: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1d2c9c8d7c0ccc6d4d1d5c09099e1dbcec9ceccc0c8cd8fc8cf">[email&#160;protected]</a></div>
     </div>
 
     <!-- Body -->
@@ -1440,7 +1456,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .otpd.on{background:var(--g4);box-shadow:0 0 8px rgba(78,203,110,.6);transform:scale(1.25)}
 </style>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── FIREBASE CONFIG ──
 const firebaseConfig = {
   apiKey: "AIzaSyAiECbcapmMwA3caAExg-VrStRM-8kIYI8",
@@ -1809,14 +1825,17 @@ function generateOtp(){
   return String(Math.floor(100000+Math.random()*900000));
 }
 
-async function sendOtp(mobile){
+async function sendOtp(mobile, targetEmail){
   _otpCode=generateOtp();
   toast('📧 OTP bheja ja raha hai...','ok');
+  // targetEmail: user ki apni email ya admin email
+  const emailTo = targetEmail || ADMIN_EMAIL;
+  const recipientName = targetEmail ? (_otpPending && _otpPending.name ? _otpPending.name : 'User') : 'Shivam';
   try{
     await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
-      email:      ADMIN_EMAIL,
+      email:      emailTo,
       otp_code:   _otpCode,
-      admin_name: 'Shivam',
+      admin_name: recipientName,
       mobile:     mobile
     });
     toast('📧 OTP aapki email par bhej diya gaya!','ok');
@@ -1829,12 +1848,15 @@ async function sendOtp(mobile){
 async function resendOtp(){
   if(!_otpPending)return;
   document.getElementById('resend-btn').disabled=true;
-  await sendOtp(_otpPending.mobile);
+  const emailTo = _otpPending.isAdmin ? null : (_otpPending.email||null);
+  await sendOtp(_otpPending.mobile, emailTo);
   startOtpTimer();
 }
 
-function showOtpModal(mobile){
-  document.getElementById('otp-mob-show').textContent='📧 OTP bheja: shivamgupta18@zohomail.in';
+function showOtpModal(mobile, displayEmail){
+  // Show masked email in modal
+  const maskedEmail = displayEmail ? maskEmail(displayEmail) : 'shivamgupta18@zohomail.in';
+  document.getElementById('otp-mob-show').textContent='📧 OTP bheja: '+maskedEmail;
   ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach((id,k)=>{
     const el=document.getElementById(id);
     el.value=''; el.classList.remove('filled','shake','otpShake');
@@ -1848,6 +1870,14 @@ function showOtpModal(mobile){
   setupOtpAutoJump();
   setTimeout(()=>document.getElementById('otp1').focus(),200);
   startOtpTimer();
+}
+
+// Email masking: abc@gmail.com → a**@gmail.com
+function maskEmail(email){
+  const [local, domain] = email.split('@');
+  if(!domain) return email;
+  const masked = local[0] + '*'.repeat(Math.max(local.length-1,2)) + '@' + domain;
+  return masked;
 }
 
 function closeOtpModal(){
@@ -1932,9 +1962,15 @@ function verifyOtp(){
   if(entered===_otpCode){
     clearInterval(_otpTimer);
     document.getElementById('otp-overlay').style.display='none';
-    saveSession(_otpPending);
+    const pending = _otpPending;
+    saveSession(pending);
     _otpCode='';_otpPending=null;
-    showLoginSuccess('Shivam', true, ()=>showAdminDash());
+    if(pending.isAdmin){
+      showLoginSuccess('Shivam', true, ()=>showAdminDash());
+    } else {
+      // User login OTP verified
+      showLoginSuccess(pending.name, false, ()=>showUserApp(pending));
+    }
   }else{
     document.getElementById('otp-err').style.display='block';
     ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach((id,k)=>{
@@ -2007,8 +2043,8 @@ async function doLogin(){
   if(mob===ADMIN_MOB && pass===getAdminPass()){
     // OTP verification required before admin login
     _otpPending = {isAdmin:true, name:'Admin (Shivam)', mobile:mob};
-    await sendOtp(mob);
-    showOtpModal(mob);
+    await sendOtp(mob, null);
+    showOtpModal(mob, null);
     return;
   }
   showLoading('Login ho raha hai...');
@@ -2023,8 +2059,18 @@ async function doLogin(){
         toast('⛔ Account deactivated','fail');
         return;
       }
-      saveSession({name:user.name,mobile:user.mobile,isAdmin:false});
-      showLoginSuccess(user.name,false,()=>showUserApp(user));
+      // ── USER OTP VERIFICATION ──
+      if(!user.email){
+        // No email saved — direct login (email popup will appear after)
+        saveSession({name:user.name,mobile:user.mobile,isAdmin:false,email:''});
+        showLoginSuccess(user.name,false,()=>showUserApp(user));
+      } else {
+        // Email exists — send OTP to user's email
+        hideLoading();
+        _otpPending = {name:user.name, mobile:user.mobile, isAdmin:false, email:user.email||''};
+        await sendOtp(user.mobile, user.email);
+        showOtpModal(user.mobile, user.email);
+      }
     } else {
       document.getElementById('l-mob').classList.add('err');
       document.getElementById('l-pass').classList.add('err');
@@ -2038,10 +2084,11 @@ async function doLogin(){
 
 // ── REGISTER ──
 async function doRegister(){
-  const name = document.getElementById('r-name').value.trim();
-  const mob  = document.getElementById('r-mob').value.trim();
-  const pass = document.getElementById('r-pass').value;
-  const pass2= document.getElementById('r-pass2').value;
+  const name  = document.getElementById('r-name').value.trim();
+  const mob   = document.getElementById('r-mob').value.trim();
+  const pass  = document.getElementById('r-pass').value;
+  const pass2 = document.getElementById('r-pass2').value;
+  const email = document.getElementById('r-email').value.trim();
   let ok = true;
   if(!name){ document.getElementById('r-name').classList.add('err'); document.getElementById('e-rn').classList.add('show'); ok=false; }
   else { document.getElementById('r-name').classList.remove('err'); document.getElementById('e-rn').classList.remove('show'); }
@@ -2051,6 +2098,11 @@ async function doRegister(){
   else { document.getElementById('r-pass').classList.remove('err'); document.getElementById('e-rp').classList.remove('show'); }
   if(pass!==pass2){ document.getElementById('r-pass2').classList.add('err'); document.getElementById('e-rp2').classList.add('show'); ok=false; }
   else { document.getElementById('r-pass2').classList.remove('err'); document.getElementById('e-rp2').classList.remove('show'); }
+  // Email validation
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    document.getElementById('r-email').classList.add('err');
+    document.getElementById('e-re').classList.add('show'); ok=false;
+  } else { document.getElementById('r-email').classList.remove('err'); document.getElementById('e-re').classList.remove('show'); }
   if(!ok) return;
 
   // Captcha check
@@ -2063,10 +2115,10 @@ async function doRegister(){
   try{
     const existing = await getUserByMobile(mob);
     if(existing){ hideLoading(); document.getElementById('r-mob').classList.add('err'); document.getElementById('e-rm').textContent='Ye mobile pehle se registered hai'; document.getElementById('e-rm').classList.add('show'); toast('❌ Mobile pehle se registered hai','fail'); return; }
-    await saveUser({name,mobile:mob,password:pass});
+    await saveUser({name, mobile:mob, password:pass, email:email});
     hideLoading();
-    saveSession({name,mobile:mob,isAdmin:false});
-    showLoginSuccess(name,false,()=>showUserApp({name,mobile:mob}));
+    saveSession({name, mobile:mob, isAdmin:false, email:email});
+    showLoginSuccess(name, false, ()=>showUserApp({name, mobile:mob, email:email}));
   }catch(e){ hideLoading(); toast('❌ Network error. Internet check karein','fail'); }
 }
 
@@ -2245,6 +2297,21 @@ function openUserProfile(){
   const s = getSession();
   document.getElementById('up-name').value = s ? s.name||'' : '';
   document.getElementById('up-mobile').value = s ? s.mobile||'' : '';
+  // Load email
+  const savedEmail = s ? s.email||'' : '';
+  document.getElementById('up-email').value = savedEmail;
+  const curEl  = document.getElementById('up-email-current');
+  const noneEl = document.getElementById('up-email-none');
+  const errEl2 = document.getElementById('up-email-err');
+  errEl2.style.display = 'none';
+  if(savedEmail){
+    document.getElementById('up-email-current-val').textContent = savedEmail;
+    curEl.style.display  = 'block';
+    noneEl.style.display = 'none';
+  } else {
+    curEl.style.display  = 'none';
+    noneEl.style.display = 'block';
+  }
   document.getElementById('up-err').style.display='none';
   _upDpBase64 = null;
   // Load saved DP
@@ -2286,40 +2353,56 @@ function upDpSelected(inp){
   reader.readAsDataURL(file);
 }
 async function saveUserProfile(){
-  const name = document.getElementById('up-name').value.trim();
+  const name   = document.getElementById('up-name').value.trim();
   const mobile = document.getElementById('up-mobile').value.trim();
-  const errEl = document.getElementById('up-err');
+  const email  = document.getElementById('up-email').value.trim();
+  const errEl  = document.getElementById('up-err');
+  const emailErrEl = document.getElementById('up-email-err');
   errEl.style.display='none';
-  if(!name){ errEl.textContent='❌ Naam daalna zaroori hai'; errEl.style.display='block'; return; }
-  if(!/^\d{10}$/.test(mobile)){ errEl.textContent='❌ Sahi 10 digit mobile daalen'; errEl.style.display='block'; return; }
+  emailErrEl.style.display='none';
+  let ok = true;
+  if(!name){ errEl.textContent='❌ Naam daalna zaroori hai'; errEl.style.display='block'; ok=false; }
+  if(!/^\d{10}$/.test(mobile)){ errEl.textContent='❌ Sahi 10 digit mobile daalen'; errEl.style.display='block'; ok=false; }
+  // Email: required and must be valid
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    emailErrEl.style.display='block';
+    document.getElementById('up-email').style.borderColor='#ff5252';
+    ok=false;
+  } else {
+    document.getElementById('up-email').style.borderColor='rgba(37,168,74,.28)';
+  }
+  if(!ok) return;
   const s = getSession();
   // Save DP
   if(_upDpBase64){
     localStorage.setItem('user_dp_'+mobile, _upDpBase64);
     if(s && s.mobile !== mobile) localStorage.removeItem('user_dp_'+s.mobile);
   }
-  // Update Firebase user data if mobile changed or name changed
+  // Update Firebase user data
   showLoading('Profile save ho raha hai...');
   try{
     if(s && !s.isAdmin){
       const oldMob = s.mobile;
-      // Update name in firebase
       const userRef = db.ref('users/'+oldMob);
       const snap = await userRef.once('value');
       if(snap.exists()){
         const userData = snap.val();
         if(mobile !== oldMob){
-          await db.ref('users/'+mobile).set({...userData, name, mobile});
+          await db.ref('users/'+mobile).set({...userData, name, mobile, email});
           await userRef.remove();
         } else {
-          await userRef.update({name, mobile});
+          await userRef.update({name, mobile, email});
         }
       }
     }
     hideLoading();
-    // Update session
-    const newSession = {...s, name, mobile};
+    // Update session with email
+    const newSession = {...s, name, mobile, email};
     saveSession(newSession);
+    // Update current email display in popup (for next open)
+    document.getElementById('up-email-current-val').textContent = email;
+    document.getElementById('up-email-current').style.display = 'block';
+    document.getElementById('up-email-none').style.display    = 'none';
     // Update all UI elements
     applyUserProfile(name, mobile, _upDpBase64 || localStorage.getItem('user_dp_'+mobile));
     closeUserProfile();
@@ -4081,7 +4164,7 @@ async function pmkCheckStatus(){
     <div style="background:linear-gradient(135deg,#0d4a1f,#1a7a35);padding:22px 26px 18px;position:relative">
       <button onclick="closeUserProfile()" style="position:absolute;top:14px;right:14px;background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center">✕</button>
       <div style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;color:#fff">👤 Profile Update</div>
-      <div style="font-size:.73rem;color:rgba(255,255,255,.6);margin-top:2px">Apna naam, mobile aur DP update karein</div>
+      <div style="font-size:.73rem;color:rgba(255,255,255,.6);margin-top:2px">Apna naam, mobile, email aur DP update karein</div>
     </div>
     <!-- DP Upload Circle -->
     <div style="padding:24px 26px 0;text-align:center">
@@ -4101,12 +4184,29 @@ async function pmkCheckStatus(){
           onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
           onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
       </div>
-      <div style="margin-bottom:18px">
+      <div style="margin-bottom:14px">
         <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">📱 Mobile Number</label>
         <input id="up-mobile" type="tel" placeholder="10 digit mobile" maxlength="10"
           style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 14px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
           onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
           onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+      </div>
+      <div style="margin-bottom:18px">
+        <label style="display:block;font-size:.75rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">📧 Email ID <span style="font-weight:400;color:#7a9a7a;font-size:.68rem">(current email neeche dikh rahi hai)</span></label>
+        <div style="position:relative">
+          <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none">📧</span>
+          <input id="up-email" type="email" placeholder="jaise: yourname@gmail.com"
+            style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:11px 13px 11px 40px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.87rem;outline:none;transition:all .2s"
+            onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
+            onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+        </div>
+        <div id="up-email-current" style="margin-top:5px;font-size:.7rem;color:#5a8a5a;display:none">
+          📌 Current Email: <span id="up-email-current-val" style="font-weight:700;color:#1a7a35"></span>
+        </div>
+        <div id="up-email-none" style="margin-top:5px;font-size:.7rem;color:#c07800;display:none">
+          ⚠️ Abhi koi email save nahi hai — email add karein
+        </div>
+        <div id="up-email-err" style="color:#ff5252;font-size:.71rem;margin-top:4px;display:none">Sahi email daalen (jaise: abc@gmail.com)</div>
       </div>
       <div id="up-err" style="display:none;background:#fff3f3;border:1px solid #ffaaaa;border-radius:9px;padding:10px 14px;font-size:.76rem;color:#c0392b;margin-bottom:14px"></div>
       <button onclick="saveUserProfile()" style="width:100%;padding:13px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(37,168,74,.35);margin-bottom:10px">✅ Profile Save Karein</button>
@@ -4151,10 +4251,95 @@ async function pmkCheckStatus(){
       </div>
       <div id="ap-err" style="display:none;background:rgba(255,82,82,.1);border:1px solid rgba(255,82,82,.3);border-radius:9px;padding:10px 14px;font-size:.76rem;color:#ff7070;margin-bottom:14px"></div>
       <button onclick="saveAdminProfile()" style="width:100%;padding:13px;background:linear-gradient(135deg,#f0a500,#ffd056);border:none;border-radius:11px;color:#0d4a1f;font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:800;cursor:pointer;box-shadow:0 6px 20px rgba(240,165,0,.35);margin-bottom:10px">✅ Profile Save Karein</button>
-      <button onclick="closeAdminProfile()" style="width:100%;padding:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:11px;color:rgba(255,255,255,.4);font-family:'Poppins',sans-serif;font-size:.82rem;cursor:pointer">Cancel</button>
+      <button onclick="closeAdminProfile()" style="width:100%;padding:10px;backgr
+      <button onclick="closeAdminProfile()" style="width:100%;padding:10px;background:rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.12);border-radius:11px;color:rgba(255,255,255,.5);font-family:'Poppins',sans-serif;font-size:.82rem;cursor:pointer">Cancel</button>
     </div>
   </div>
 </div>
 
-</body>
-</html>
+<!-- ══ EMAIL ADD POPUP (for existing users) ══ -->
+<div id="email-add-popup" class="open" style="display:none">
+  <div class="email-add-card">
+    <div class="email-add-head">
+      <div class="email-add-head-title">📧 Email ID Zaroori Hai!</div>
+      <div class="email-add-head-sub">Account access ke liye email ID add karein</div>
+    </div>
+    <div class="email-add-body">
+      <div class="email-add-notice">
+        <span class="email-add-notice-icon">⚠️</span>
+        <span>Aapke account mein email ID save nahi hai. Koi bhi kaam karne se pehle apni <strong>email ID add karein</strong>. Yeh sirf ek baar karna hoga.</span>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="display:block;font-size:.76rem;font-weight:700;color:#2a5c2a;margin-bottom:6px">📧 Apni Email ID</label>
+        <div style="position:relative">
+          <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none">📧</span>
+          <input id="ea-email" type="email" placeholder="jaise: yourname@gmail.com"
+            style="width:100%;background:#f4fbf5;border:1.5px solid rgba(37,168,74,.28);border-radius:11px;padding:12px 13px 12px 40px;color:#1a2e1a;font-family:'Poppins',sans-serif;font-size:.88rem;outline:none;transition:all .2s"
+            onfocus="this.style.borderColor='#25a84a';this.style.boxShadow='0 0 0 3px rgba(37,168,74,.12)'"
+            onblur="this.style.borderColor='rgba(37,168,74,.28)';this.style.boxShadow='none'"/>
+        </div>
+        <div id="ea-err" style="display:none;color:#ff5252;font-size:.71rem;margin-top:4px">Sahi email ID daalen (jaise: abc@gmail.com)</div>
+      </div>
+      <button onclick="saveEmailAndContinue()"
+        style="width:100%;padding:13px;background:linear-gradient(135deg,#1a7a35,#25a84a);border:none;border-radius:11px;color:#fff;font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(37,168,74,.35);margin-bottom:10px">
+        ✅ Email Save Karein &amp; Aage Badhen
+      </button>
+      <div style="text-align:center;font-size:.72rem;color:#9abf9a">🔒 Aapki email safe rahegi — sirf account ke liye use hogi</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══ EMAIL ADD POPUP LOGIC ══
+let _emailAddCallback = null;
+
+function checkAndPromptEmail(user, callback){
+  if(user && user.email){
+    // Email already exists, proceed directly
+    callback();
+    return;
+  }
+  // No email found — show popup
+  _emailAddCallback = callback;
+  document.getElementById('ea-email').value = '';
+  document.getElementById('ea-err').style.display = 'none';
+  document.getElementById('email-add-popup').style.display = 'flex';
+}
+
+async function saveEmailAndContinue(){
+  const email = document.getElementById('ea-email').value.trim();
+  const errEl  = document.getElementById('ea-err');
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    errEl.style.display = 'block';
+    document.getElementById('ea-email').style.borderColor = '#ff5252';
+    return;
+  }
+  errEl.style.display = 'none';
+  // Save email to Firebase + session
+  const s = getSession();
+  if(s && !s.isAdmin){
+    showLoading('Email save ho raha hai...');
+    try{
+      await db.ref('users/'+s.mobile).update({email: email});
+      hideLoading();
+    }catch(e){
+      hideLoading();
+      toast('❌ Email save nahi hua. Internet check karein','fail');
+      return;
+    }
+    saveSession({...s, email: email});
+  }
+  document.getElementById('email-add-popup').style.display = 'none';
+  toast('✅ Email save ho gaya!','ok');
+  if(_emailAddCallback){ _emailAddCallback(); _emailAddCallback = null; }
+}
+
+// ── Patch showUserApp to check email ──
+const _origShowUserApp = showUserApp;
+window.showUserApp = function(user){
+  checkAndPromptEmail(user, function(){
+    _origShowUserApp(user);
+  });
+};
+</script>
+</body></html>
